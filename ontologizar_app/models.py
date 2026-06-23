@@ -87,7 +87,7 @@ class Concept(models.Model):
         return self.dictionary.subject
 
     def jsonld_path(self):
-        return f"/knowledge/api/concepts/{self.uuid}/jsonld/"
+        return f"/ontologizar/api/concepts/{self.uuid}/jsonld/"
 
     def primary_taxonomy_slug(self) -> str:
         node = TaxonomyNode.objects.filter(concept=self).select_related("taxonomy").first()

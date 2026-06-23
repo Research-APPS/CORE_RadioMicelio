@@ -1,7 +1,7 @@
 from django.urls import path
-from knowledge_app import views
+from ontologizar_app import views
 
-app_name = "knowledge"
+app_name = "ontologizar"
 
 urlpatterns = [
     path("api/concepts/<uuid:uuid>/jsonld/", views.concept_jsonld, name="concept_jsonld"),

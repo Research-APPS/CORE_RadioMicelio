@@ -1,12 +1,12 @@
 from django.test import TestCase
 
-from knowledge_app.models import Concept, Dictionary, Subject, Taxonomy, TaxonomyNode
+from ontologizar_app.models import Concept, Dictionary, Subject, Taxonomy, TaxonomyNode
 from research_app.models import LearningMarker, ProyectoInvestigacion, ProjectCurriculumDeclaration
 from research_app.project_hub import get_project_digital_profile
 
 
 class CurriculumTests(TestCase):
-    databases = {"default", "research_db", "knowledge_db"}
+    databases = {"default", "research_db", "ontologizar_db"}
 
     def test_marker_and_expediente(self):
         subj = Subject.objects.create(slug="musica", name="Música")

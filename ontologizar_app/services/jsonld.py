@@ -1,7 +1,7 @@
 import json
 from django.conf import settings
 
-from knowledge_app.models import Concept, Taxonomy, TaxonomyNode
+from ontologizar_app.models import Concept, Taxonomy, TaxonomyNode
 
 
 def concept_to_jsonld(concept: Concept) -> dict:

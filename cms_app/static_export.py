@@ -10,7 +10,7 @@ from django.test import RequestFactory
 
 from airam_app.graph import build_graph
 from cms_app import views_public
-from knowledge_app.models import Concept, Dictionary, Subject, Taxonomy
+from ontologizar_app.models import Concept, Dictionary, Subject, Taxonomy
 
 
 def _make_request(path: str):

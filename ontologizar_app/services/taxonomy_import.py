@@ -4,7 +4,7 @@ from typing import Any
 
 from django.db import transaction
 
-from knowledge_app.models import Concept, Dictionary, Taxonomy, TaxonomyNode
+from ontologizar_app.models import Concept, Dictionary, Taxonomy, TaxonomyNode
 
 
 def validar_estructura_json(data: dict, nivel: int = 0) -> tuple[bool, list[str]]:
@@ -61,7 +61,7 @@ def import_taxonomy_from_json(
 
 
 def import_taxonomy_from_text(taxonomy, dictionary, text: str, **kwargs):
-    from knowledge_app.services.taxonomy_import import parse_indentation_to_json
+    from ontologizar_app.services.taxonomy_import import parse_indentation_to_json
     data = parse_indentation_to_json(text)
     if data is None:
         return False, "Texto vacío o inválido", 0
@@ -69,7 +69,7 @@ def import_taxonomy_from_text(taxonomy, dictionary, text: str, **kwargs):
 
 
 def parse_indentation_to_json(text: str) -> dict | None:
-    """Port simplificado del parser Leximus (Python)."""
+    """Parser de taxonomía por indentación (texto → árbol JSON)."""
     lines = []
     for raw in text.split("\n"):
         line = raw.rstrip()

@@ -2,12 +2,12 @@ from django.contrib.auth import get_user_model
 from django.core.management import call_command
 from django.test import Client, TestCase
 
-from knowledge_app.models import Concept, ConceptProperty, Dictionary, Subject, Taxonomy, TaxonomyNode
-from knowledge_app.services.taxonomy_import import import_taxonomy_from_json
+from ontologizar_app.models import Concept, ConceptProperty, Dictionary, Subject, Taxonomy, TaxonomyNode
+from ontologizar_app.services.taxonomy_import import import_taxonomy_from_json
 
 
 class CmsTests(TestCase):
-    databases = {"default", "research_db", "knowledge_db"}
+    databases = {"default", "research_db", "ontologizar_db"}
 
     def setUp(self):
         self.client = Client()

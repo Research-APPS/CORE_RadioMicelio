@@ -19,7 +19,7 @@ cd /Users/ivansimo/Documents/2026/CORE_RadioMicelio
 pip install -r requirements.txt
 python manage.py migrate
 python manage.py migrate --database=research_db
-python manage.py migrate --database=knowledge_db
+python manage.py migrate --database=ontologizar_db
 python manage.py seed_curriculum
 python manage.py runserver 8003
 ```
@@ -112,7 +112,7 @@ El workflow (`.github/workflows/deploy-pages.yml`) hace:
 ```bash
 python manage.py migrate
 python manage.py migrate --database=research_db
-python manage.py migrate --database=knowledge_db
+python manage.py migrate --database=ontologizar_db
 python manage.py seed_curriculum
 python manage.py export_static_site --output dist
 ```

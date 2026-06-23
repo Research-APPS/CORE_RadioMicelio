@@ -7,21 +7,21 @@ SECRET_KEY = os.environ.get("SECRET_KEY", "django-insecure-dev-only")
 DEBUG = os.environ.get("DEBUG", "1") == "1"
 ALLOWED_HOSTS = [h.strip() for h in os.environ.get("ALLOWED_HOSTS", "127.0.0.1,localhost").split(",") if h.strip()]
 CORE_INSTITUTE_NAME = os.environ.get("CORE_INSTITUTE_NAME", "CORE Radio Micelio")
-CORE_ENABLED_MODULES = [m.strip() for m in os.environ.get("CORE_ENABLED_MODULES", "research,logs,knowledge").split(",") if m.strip()]
+CORE_ENABLED_MODULES = [m.strip() for m in os.environ.get("CORE_ENABLED_MODULES", "research,logs,ontologizar").split(",") if m.strip()]
 CORE_URL_MAP = {
     "research": os.environ.get("CORE_URL_RESEARCH", "http://127.0.0.1:8000/research"),
     "logs": os.environ.get("CORE_URL_LOGS", "http://127.0.0.1:8000/logs"),
-    "knowledge": os.environ.get("CORE_URL_KNOWLEDGE", "http://127.0.0.1:8000/knowledge"),
+    "ontologizar": os.environ.get("CORE_URL_ONTOLOGIZAR", "http://127.0.0.1:8000/ontologizar"),
 }
 INSTALLED_APPS = [
     "django.contrib.admin", "django.contrib.auth", "django.contrib.contenttypes",
     "django.contrib.sessions", "django.contrib.messages", "django.contrib.staticfiles",
     "rest_framework", "mptt",
-    "knowledge_app", "research_app", "logs_app", "cms_app", "airam_app",
+    "ontologizar_app", "research_app", "logs_app", "cms_app", "airam_app",
 ]
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
-    "core_retiro.middleware.DomainUrlConfMiddleware",
+    "core_micelio.middleware.DomainUrlConfMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -29,22 +29,22 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
-ROOT_URLCONF = "core_retiro.urls"
-URLCONFS_BY_HOST = {"127.0.0.1": "core_retiro.urls", "localhost": "core_retiro.urls"}
+ROOT_URLCONF = "core_micelio.urls"
+URLCONFS_BY_HOST = {"127.0.0.1": "core_micelio.urls", "localhost": "core_micelio.urls"}
 TEMPLATES = [{
     "BACKEND": "django.template.backends.django.DjangoTemplates",
     "DIRS": [BASE_DIR / "templates"], "APP_DIRS": True,
     "OPTIONS": {"context_processors": [
         "django.template.context_processors.debug", "django.template.context_processors.request",
         "django.contrib.auth.context_processors.auth", "django.contrib.messages.context_processors.messages",
-        "core_retiro.context_processors.institute",
+        "core_micelio.context_processors.institute",
     ]},
 }]
-WSGI_APPLICATION = "core_retiro.wsgi.application"
+WSGI_APPLICATION = "core_micelio.wsgi.application"
 DATABASES = {
     "default": {"ENGINE": "django.db.backends.sqlite3", "NAME": BASE_DIR / "db_default.sqlite3"},
     "research_db": {"ENGINE": "django.db.backends.sqlite3", "NAME": BASE_DIR / "db_research.sqlite3"},
-    "knowledge_db": {"ENGINE": "django.db.backends.sqlite3", "NAME": BASE_DIR / "db_knowledge.sqlite3"},
+    "ontologizar_db": {"ENGINE": "django.db.backends.sqlite3", "NAME": BASE_DIR / "db_ontologizar.sqlite3"},
 }
 if os.environ.get("POSTGRES_HOST"):
     _pg = {"ENGINE": "django.db.backends.postgresql", "HOST": os.environ["POSTGRES_HOST"],
@@ -53,9 +53,9 @@ if os.environ.get("POSTGRES_HOST"):
     DATABASES = {
         "default": {**_pg, "NAME": os.environ.get("POSTGRES_DB_DEFAULT", "core_default")},
         "research_db": {**_pg, "NAME": os.environ.get("POSTGRES_DB_RESEARCH", "core_research")},
-        "knowledge_db": {**_pg, "NAME": os.environ.get("POSTGRES_DB_KNOWLEDGE", "core_knowledge")},
+        "ontologizar_db": {**_pg, "NAME": os.environ.get("POSTGRES_DB_ONTOLOGIZAR", "core_ontologizar")},
     }
-DATABASE_ROUTERS = ["research_app.db_router.ResearchRouter", "knowledge_app.db_router.KnowledgeRouter"]
+DATABASE_ROUTERS = ["research_app.db_router.ResearchRouter", "ontologizar_app.db_router.OntologizarRouter"]
 AUTH_PASSWORD_VALIDATORS = [
     {"NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"},
     {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator"},

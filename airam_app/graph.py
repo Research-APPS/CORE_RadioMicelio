@@ -1,6 +1,6 @@
 from django.conf import settings
 
-from knowledge_app.models import Concept, ConceptRelation, Dictionary, Subject, SubjectMaterial, Taxonomy, TaxonomyNode
+from ontologizar_app.models import Concept, ConceptRelation, Dictionary, Subject, SubjectMaterial, Taxonomy, TaxonomyNode
 from research_app.models import LearningMarker, ProyectoInvestigacion, ScientificActivity, ScientificResult
 
 

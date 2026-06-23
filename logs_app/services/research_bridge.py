@@ -1,7 +1,7 @@
 from __future__ import annotations
 from uuid import UUID
 
-from core_retiro.core_urls import module_url
+from core_micelio.core_urls import module_url
 from logs_app.analytics import build_segment_summary
 from logs_app.models import ProjectPlatformLink
 from logs_app.platforms import get_platform

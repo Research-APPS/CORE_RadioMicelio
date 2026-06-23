@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class LeximusAppConfig(AppConfig):
+class OntologizarAppConfig(AppConfig):
     default_auto_field = "django.db.models.BigAutoField"
-    name = "leximus_app"
+    name = "ontologizar_app"

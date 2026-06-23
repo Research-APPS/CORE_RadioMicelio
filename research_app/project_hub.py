@@ -4,7 +4,7 @@ from uuid import UUID
 
 from django.conf import settings
 
-from core_retiro.core_urls import module_url
+from core_micelio.core_urls import module_url
 from research_app.capability_registry import ProjectCapabilityDescriptor
 from research_app.models import (
     LearningMarker, ProyectoInvestigacion, ProjectCurriculumDeclaration,

@@ -2,7 +2,7 @@ from django.core.management.base import BaseCommand
 from django.core.management import call_command
 from django.utils import timezone
 
-from knowledge_app.models import (
+from ontologizar_app.models import (
     Concept, ConceptDefinition, ConceptProperty, ConceptRelation,
     Dictionary, Subject, SubjectMaterial, Taxonomy, TaxonomyNode,
 )

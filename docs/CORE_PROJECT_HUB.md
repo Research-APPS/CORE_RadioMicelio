@@ -1,4 +1,4 @@
-# CORE Project Hub — CORE_RETIRO MVP
+# CORE Project Hub — CORE Radio Micelio MVP
 
 ## Tesis
 
@@ -10,9 +10,9 @@ Instituto → Proyecto → Capacidad → Resultado
 
 **Mantra:** Las apps implementan capacidades; no definen el proyecto.
 
-## Posicionamiento (Maeztu)
+## Posicionamiento
 
-> CORE es una plataforma de investigación basada en capacidades digitales. Cada proyecto declara las capacidades que necesita (medir, ontologizar, catalogar, geolocalizar, publicar, analizar) y CORE proporciona una infraestructura común para gestionarlas, registrar su actividad, generar resultados FAIR y publicarlos mediante APIs y JSON-LD. Las aplicaciones específicas (Leximus, Fondos, SONARE, ChordIA, etc.) actúan como implementadores de capacidades, no como el centro del sistema, permitiendo que la plataforma sea reutilizable por distintos institutos y dominios científicos.
+> CORE es una plataforma de investigación basada en capacidades digitales. Cada proyecto declara las capacidades que necesita (medir, ontologizar, catalogar, geolocalizar, publicar, analizar) y CORE proporciona una infraestructura común para gestionarlas, registrar su actividad, generar resultados FAIR y publicarlos mediante APIs y JSON-LD. Los módulos del sistema (ontologizar, medir, biblioteca, etc.) actúan como implementadores de capacidades, no como el centro del sistema, permitiendo que la plataforma sea reutilizable por distintos centros y dominios.
 
 ## MVP en este repo
 
@@ -20,7 +20,7 @@ Instituto → Proyecto → Capacidad → Resultado
 |--------|-----------|---------------|
 | research_app | Hub institucional | — |
 | logs_app | `logs` (Medir) | logs |
-| leximus_app | `ontology` (Ontologizar) | leximus |
+| ontologizar_app | `ontology` (Ontologizar) | ontologizar |
 
 ### Endpoints clave
 
@@ -28,7 +28,7 @@ Instituto → Proyecto → Capacidad → Resultado
 - `/research/proyectos/<uuid>/digital-profile.json` — perfil digital
 - `/research/proyectos/<uuid>/digital-profile.json?format=jsonld` — envelope JSON-LD
 - `/logs/<platform>/` — dashboard segmentado (arias, dz)
-- `/leximus/api/taxonomies/<slug>/jsonld/` — taxonomía publicada
+- `/ontologizar/api/taxonomies/<slug>/jsonld/` — taxonomía publicada
 
 ### Arranque local
 
@@ -36,7 +36,7 @@ Instituto → Proyecto → Capacidad → Resultado
 pip install -r requirements.txt
 python manage.py migrate
 python manage.py migrate --database=research_db
-python manage.py migrate --database=leximus_db
+python manage.py migrate --database=ontologizar_db
 python manage.py seed_demo
 python manage.py runserver
 ```

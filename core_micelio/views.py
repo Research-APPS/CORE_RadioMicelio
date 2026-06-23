@@ -1,7 +1,7 @@
 from django.conf import settings
 from django.shortcuts import render
 
-from knowledge_app.models import Concept, Dictionary, Subject, Taxonomy
+from ontologizar_app.models import Concept, Dictionary, Subject, Taxonomy, TaxonomyNode
 from logs_app.platforms import list_platforms
 from research_app.capability_registry import PUBLIC_CAPABILITIES, get_public_capability_by_slug
 from research_app.models import ProyectoInvestigacion
@@ -10,9 +10,9 @@ from research_app.models import ProyectoInvestigacion
 def _enabled(internal_slug: str) -> bool:
     mapping = {
         "logs": "logs",
-        "ontology": "knowledge",
-        "dataset": "knowledge",
-        "geodata": "knowledge",
+        "ontology": "ontologizar",
+        "dataset": "ontologizar",
+        "geodata": "ontologizar",
         "publish": "research",
         "analysis": "research",
         "visualize": "research",
@@ -61,15 +61,15 @@ def capability_detail(request, public_slug):
         ctx["implementation"] = {"name": "logs", "label": "Sistema de medición", "status": "Activo"}
         ctx["platforms"] = list_platforms()
     elif slug == "ontology" and implemented:
-        ctx["implementation"] = {"name": "knowledge", "label": "Biblioteca semántica", "status": "Activo"}
+        ctx["implementation"] = {"name": "ontologizar", "label": "Biblioteca semántica", "status": "Activo"}
         for tax in Taxonomy.objects.filter(is_active=True).order_by("name"):
             ctx["results"].append({
                 "title": tax.name, "slug": tax.slug,
                 "url": f"/capacidades/ontologizar/taxonomias/{tax.slug}/",
-                "jsonld_url": f"/knowledge/api/taxonomies/{tax.slug}/jsonld/",
+                "jsonld_url": f"/ontologizar/api/taxonomies/{tax.slug}/jsonld/",
             })
     elif slug == "catalogar" and implemented:
-        ctx["implementation"] = {"name": "knowledge", "label": "Biblioteca semántica", "status": "Activo"}
+        ctx["implementation"] = {"name": "ontologizar", "label": "Biblioteca semántica", "status": "Activo"}
         for dic in Dictionary.objects.filter(is_active=True).select_related("subject").order_by("subject__name", "name"):
             ctx["results"].append({
                 "title": dic.name,
@@ -78,13 +78,13 @@ def capability_detail(request, public_slug):
             })
     elif slug == "geolocalizar" and implemented:
         ctx["subjects"] = Subject.objects.filter(slug="geografia", is_active=True)
-        ctx["implementation"] = {"name": "knowledge", "label": "Biblioteca semántica", "status": "Activo"}
+        ctx["implementation"] = {"name": "ontologizar", "label": "Biblioteca semántica", "status": "Activo"}
     elif slug == "publicar" and implemented:
         ctx["implementation"] = {"name": "core", "label": "CORE API", "status": "Activo"}
         for tax in Taxonomy.objects.filter(is_active=True):
             ctx["results"].append({
                 "title": tax.name, "kind": "Ontología",
-                "url": f"/knowledge/api/taxonomies/{tax.slug}/jsonld/",
+                "url": f"/ontologizar/api/taxonomies/{tax.slug}/jsonld/",
             })
 
     return render(request, "core/capability_detail.html", ctx)
@@ -98,18 +98,18 @@ def ontology_taxonomy(request, slug):
     concepts = TaxonomyNode.objects.filter(taxonomy=taxonomy).order_by("tree_id", "lft")
     return render(request, "core/ontology_taxonomy.html", {
         "capability": cap, "taxonomy": taxonomy, "nodes": concepts,
-        "implementation": {"name": "knowledge", "label": "Biblioteca semántica"},
+        "implementation": {"name": "ontologizar", "label": "Biblioteca semántica"},
     })
 
 
 def results_index(request):
     results = []
-    if "knowledge" in getattr(settings, "CORE_ENABLED_MODULES", []):
+    if "ontologizar" in getattr(settings, "CORE_ENABLED_MODULES", []):
         for tax in Taxonomy.objects.filter(is_active=True).order_by("name"):
             results.append({
                 "title": tax.name, "capability": "Ontologizar", "type": "Taxonomía",
                 "url": f"/capacidades/ontologizar/taxonomias/{tax.slug}/",
-                "publish_url": f"/knowledge/api/taxonomies/{tax.slug}/jsonld/",
+                "publish_url": f"/ontologizar/api/taxonomies/{tax.slug}/jsonld/",
             })
     if "logs" in getattr(settings, "CORE_ENABLED_MODULES", []):
         for p in list_platforms():

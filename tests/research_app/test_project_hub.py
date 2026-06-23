@@ -1,13 +1,13 @@
 from django.test import TestCase
 
-from knowledge_app.models import Concept, Dictionary, Subject, Taxonomy, TaxonomyNode
+from ontologizar_app.models import Concept, Dictionary, Subject, Taxonomy, TaxonomyNode
 from logs_app.models import ProjectPlatformLink
 from research_app.models import LearningMarker, ProyectoInvestigacion, ProjectCurriculumDeclaration
 from research_app.project_hub import get_project_digital_profile
 
 
 class ProjectHubTests(TestCase):
-    databases = {"default", "research_db", "knowledge_db"}
+    databases = {"default", "research_db", "ontologizar_db"}
 
     def test_digital_profile_includes_markers_and_declarations(self):
         subj = Subject.objects.create(slug="musica", name="Música")

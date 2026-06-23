@@ -3,11 +3,11 @@ from pathlib import Path
 from django.test import TestCase
 
 from cms_app.static_export import export_static_site
-from knowledge_app.models import Concept, Dictionary, Subject
+from ontologizar_app.models import Concept, Dictionary, Subject
 
 
 class StaticExportTests(TestCase):
-    databases = {"default", "research_db", "knowledge_db"}
+    databases = {"default", "research_db", "ontologizar_db"}
 
     def test_export_creates_biblioteca_and_graph(self):
         out = Path("dist-test-export")

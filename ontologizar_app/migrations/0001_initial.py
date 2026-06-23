@@ -159,7 +159,7 @@ class Migration(migrations.Migration):
                     models.ForeignKey(
                         on_delete=django.db.models.deletion.CASCADE,
                         related_name="definitions",
-                        to="knowledge_app.concept",
+                        to="ontologizar_app.concept",
                     ),
                 ),
             ],
@@ -173,7 +173,7 @@ class Migration(migrations.Migration):
             field=models.ForeignKey(
                 on_delete=django.db.models.deletion.CASCADE,
                 related_name="concepts",
-                to="knowledge_app.dictionary",
+                to="ontologizar_app.dictionary",
             ),
         ),
         migrations.AddField(
@@ -182,7 +182,7 @@ class Migration(migrations.Migration):
             field=models.ForeignKey(
                 on_delete=django.db.models.deletion.CASCADE,
                 related_name="dictionaries",
-                to="knowledge_app.subject",
+                to="ontologizar_app.subject",
             ),
         ),
         migrations.CreateModel(
@@ -215,7 +215,7 @@ class Migration(migrations.Migration):
                         null=True,
                         on_delete=django.db.models.deletion.SET_NULL,
                         related_name="taxonomy_nodes",
-                        to="knowledge_app.concept",
+                        to="ontologizar_app.concept",
                     ),
                 ),
                 (
@@ -225,7 +225,7 @@ class Migration(migrations.Migration):
                         null=True,
                         on_delete=django.db.models.deletion.CASCADE,
                         related_name="children",
-                        to="knowledge_app.taxonomynode",
+                        to="ontologizar_app.taxonomynode",
                     ),
                 ),
                 (
@@ -233,7 +233,7 @@ class Migration(migrations.Migration):
                     models.ForeignKey(
                         on_delete=django.db.models.deletion.CASCADE,
                         related_name="nodes",
-                        to="knowledge_app.taxonomy",
+                        to="ontologizar_app.taxonomy",
                     ),
                 ),
             ],
@@ -277,7 +277,7 @@ class Migration(migrations.Migration):
                     models.ForeignKey(
                         on_delete=django.db.models.deletion.CASCADE,
                         related_name="properties",
-                        to="knowledge_app.concept",
+                        to="ontologizar_app.concept",
                     ),
                 ),
             ],
@@ -320,7 +320,7 @@ class Migration(migrations.Migration):
                     models.ForeignKey(
                         on_delete=django.db.models.deletion.CASCADE,
                         related_name="outgoing_relations",
-                        to="knowledge_app.concept",
+                        to="ontologizar_app.concept",
                     ),
                 ),
                 (
@@ -328,7 +328,7 @@ class Migration(migrations.Migration):
                     models.ForeignKey(
                         on_delete=django.db.models.deletion.CASCADE,
                         related_name="incoming_relations",
-                        to="knowledge_app.concept",
+                        to="ontologizar_app.concept",
                     ),
                 ),
             ],
@@ -369,7 +369,7 @@ class Migration(migrations.Migration):
                     models.ForeignKey(
                         on_delete=django.db.models.deletion.CASCADE,
                         related_name="materials",
-                        to="knowledge_app.subject",
+                        to="ontologizar_app.subject",
                     ),
                 ),
             ],

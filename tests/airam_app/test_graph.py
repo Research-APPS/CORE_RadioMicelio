@@ -3,11 +3,11 @@ from django.test.client import RequestFactory
 
 from airam_app.graph import build_graph
 from airam_app.views import graph_json
-from knowledge_app.models import Concept, ConceptRelation, Dictionary, Subject, Taxonomy, TaxonomyNode
+from ontologizar_app.models import Concept, ConceptRelation, Dictionary, Subject, Taxonomy, TaxonomyNode
 
 
 class AiramGraphTests(TestCase):
-    databases = {"default", "research_db", "knowledge_db"}
+    databases = {"default", "research_db", "ontologizar_db"}
 
     def test_graph_has_centro(self):
         g = build_graph()

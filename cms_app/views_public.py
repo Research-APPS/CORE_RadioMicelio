@@ -1,8 +1,8 @@
 from django.shortcuts import get_object_or_404, render
 
-from knowledge_app.models import Concept, Dictionary, Subject, Taxonomy, TaxonomyNode
-from knowledge_app.services.jsonld import topic_page_jsonld
-from knowledge_app.services.topic_body import render_topic_body
+from ontologizar_app.models import Concept, Dictionary, Subject, Taxonomy, TaxonomyNode
+from ontologizar_app.services.jsonld import topic_page_jsonld
+from ontologizar_app.services.topic_body import render_topic_body
 from research_app.models import LearningMarker, ScientificResult
 
 

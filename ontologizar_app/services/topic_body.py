@@ -2,7 +2,7 @@ from __future__ import annotations
 from django.utils.html import escape
 from django.utils.safestring import mark_safe
 
-from knowledge_app.models import Concept
+from ontologizar_app.models import Concept
 
 
 def render_topic_body(concept: Concept) -> str:

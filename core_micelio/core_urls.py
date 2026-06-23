@@ -7,7 +7,7 @@ def module_url(module, path=""):
     bases = {
         "research": _base("research", "http://127.0.0.1:8000/research"),
         "logs": _base("logs", "http://127.0.0.1:8000/logs"),
-        "knowledge": _base("knowledge", "http://127.0.0.1:8000/knowledge"),
+        "ontologizar": _base("ontologizar", "http://127.0.0.1:8000/ontologizar"),
     }
     base = bases.get(module, "").rstrip("/")
     path = (path or "").lstrip("/")

@@ -18,17 +18,17 @@ services:
       DEBUG: "0"
       SECRET_KEY: change-me-in-docker
       ALLOWED_HOSTS: localhost,127.0.0.1
-      CORE_INSTITUTE_NAME: ICCMU
-      CORE_ENABLED_MODULES: research,logs,leximus
+      CORE_INSTITUTE_NAME: CORE Radio Micelio
+      CORE_ENABLED_MODULES: research,logs,ontologizar
       CORE_URL_RESEARCH: http://localhost:8000/research
       CORE_URL_LOGS: http://localhost:8000/logs
-      CORE_URL_LEXIMUS: http://localhost:8000/leximus
+      CORE_URL_ONTOLOGIZAR: http://localhost:8000/ontologizar
       POSTGRES_HOST: db
       POSTGRES_USER: core
       POSTGRES_PASSWORD: core
       POSTGRES_DB_DEFAULT: core_default
       POSTGRES_DB_RESEARCH: core_research
-      POSTGRES_DB_LEXIMUS: core_leximus
+      POSTGRES_DB_ONTOLOGIZAR: core_ontologizar
     depends_on:
       - db
 

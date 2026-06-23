@@ -2,14 +2,14 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, redirect, render
 
-from knowledge_app.models import Concept, ConceptDefinition, ConceptProperty, ConceptRelation, Dictionary, Taxonomy
-from knowledge_app.services.taxonomy_import import import_taxonomy_from_json, parse_indentation_to_json
+from ontologizar_app.models import Concept, ConceptDefinition, ConceptProperty, ConceptRelation, Dictionary, Taxonomy
+from ontologizar_app.services.taxonomy_import import import_taxonomy_from_json, parse_indentation_to_json
 
 
 @login_required
 def dashboard(request):
     return render(request, "cms/dashboard.html", {
-        "subjects_count": __import__("knowledge_app.models", fromlist=["Subject"]).Subject.objects.filter(is_active=True).count(),
+        "subjects_count": __import__("ontologizar_app.models", fromlist=["Subject"]).Subject.objects.filter(is_active=True).count(),
         "taxonomies": Taxonomy.objects.filter(is_active=True).order_by("name")[:12],
         "concepts": Concept.objects.select_related("dictionary__subject").order_by("-id")[:12],
     })

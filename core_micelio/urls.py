@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.urls import include, path
-from core_retiro import views
+from core_micelio import views
 
 urlpatterns = [
     path("", views.home, name="home"),
@@ -13,5 +13,5 @@ urlpatterns = [
     path("logs/", include("logs_app.urls")),
     path("cms/", include("cms_app.urls")),
     path("biblioteca/", include(("cms_app.urls_public", "biblioteca"), namespace="biblioteca")),
-    path("knowledge/", include("knowledge_app.urls")),
+    path("ontologizar/", include("ontologizar_app.urls")),
 ]
