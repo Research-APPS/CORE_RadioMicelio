@@ -36,7 +36,7 @@ Variables útiles en `.env`:
 
 ```bash
 CORE_INSTITUTE_NAME=CORE Radio Micelio
-SITE_URL=http://127.0.0.1:8003
+SITE_URL=http://127.0.0.1:8003 
 STATIC_SITE_CNAME=   # ej. radiomicelio.org para GitHub Pages
 ```
 
