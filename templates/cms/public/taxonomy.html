@@ -1,7 +1,11 @@
 {% extends "core/base.html" %}
+{% load static %}
 {% block title %}{{ taxonomy.name }}{% endblock %}
+{% block extra_head %}
+<script src="{% static 'core/js/taxonomy_tree.js' %}" defer></script>
+{% endblock %}
 {% block content %}
-<main class="page wiki-page">
+<main class="page wiki-page taxonomy-page">
   <nav class="breadcrumb">
     <a href="{% url 'biblioteca:index' %}">Biblioteca</a> /
     <a href="{% url 'biblioteca:taxonomy_list' %}">Taxonomías</a> / {{ taxonomy.name }}
@@ -10,9 +14,13 @@
   {% if taxonomy.description %}
   <p class="lead">{{ taxonomy.description }}</p>
   {% endif %}
-  <ul class="wiki-tree">
+  <div class="taxonomy-tree-tools" role="toolbar" aria-label="Árbol taxonómico">
+    <button type="button" class="taxonomy-tree-btn" data-taxonomy-action="expand-all">Expandir todo</button>
+    <button type="button" class="taxonomy-tree-btn" data-taxonomy-action="collapse-all">Contraer todo</button>
+  </div>
+  <ul class="wiki-tree taxonomy-tree">
     {% for n in roots %}
-    <li>{% include "cms/public/_taxonomy_node.html" with node=n %}</li>
+    {% include "cms/public/_taxonomy_node.html" with node=n %}
     {% endfor %}
   </ul>
 </main>

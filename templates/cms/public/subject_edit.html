@@ -1,0 +1,33 @@
+{% extends "core/base.html" %}
+{% block title %}Editar — {{ subject.name }}{% endblock %}
+{% block content %}
+<main class="page wiki-page wiki-edit-page">
+  {% include "cms/public/_wiki_edit_bar.html" with public_url=public_url %}
+  <nav class="breadcrumb">
+    <a href="{% url 'biblioteca:index' %}">Biblioteca</a> / {{ subject.name }}
+  </nav>
+  <h1 class="page-title">Editar: {{ subject.name }}</h1>
+  <form method="post" class="wiki-edit-form">
+    {% csrf_token %}
+    <label class="wiki-edit-label" for="description">Introducción de la asignatura</label>
+    <p class="wiki-edit-hint">Este texto aparece al inicio del artículo. Párrafos separados con línea en blanco.</p>
+    <textarea id="description" name="description" class="wiki-edit-textarea" rows="12" autofocus>{{ subject.description }}</textarea>
+    <div class="wiki-edit-actions">
+      <button type="submit" class="wiki-edit-btn">Guardar</button>
+      <a href="{{ public_url }}" class="wiki-edit-btn wiki-edit-btn--ghost">Cancelar</a>
+    </div>
+  </form>
+  {% if materials %}
+  <section class="wiki-aside">
+    <h2>Secciones del artículo</h2>
+    <ul>
+      {% for m in materials %}
+      <li>
+        <a href="{% url 'biblioteca:material_edit' subject.slug m.slug %}" class="wiki-link">{{ m.title }}</a>
+      </li>
+      {% endfor %}
+    </ul>
+  </section>
+  {% endif %}
+</main>
+{% endblock %}

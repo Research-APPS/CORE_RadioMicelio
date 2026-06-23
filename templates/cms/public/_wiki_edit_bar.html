@@ -1,0 +1,19 @@
+{% if not static_export %}
+<aside class="wiki-edit-bar" role="toolbar" aria-label="Edición">
+  {% if user.is_authenticated %}
+    {% if public_url %}
+    <a href="{{ public_url }}" class="wiki-edit-btn wiki-edit-btn--ghost">Ver página</a>
+    {% endif %}
+    {% if edit_url %}
+    <a href="{{ edit_url }}" class="wiki-edit-btn">Editar</a>
+    {% endif %}
+    {% if advanced_edit_url %}
+    <a href="{{ advanced_edit_url }}" class="wiki-edit-btn wiki-edit-btn--ghost">CMS avanzado</a>
+    {% endif %}
+  {% else %}
+    {% if edit_url %}
+    <a href="{% url 'cms:login' %}?next={{ edit_url }}" class="wiki-edit-btn">Iniciar sesión para editar</a>
+    {% endif %}
+  {% endif %}
+</aside>
+{% endif %}

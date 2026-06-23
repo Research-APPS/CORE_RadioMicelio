@@ -1,0 +1,27 @@
+{% extends "core/base.html" %}
+{% block title %}Editar — {{ material.title }}{% endblock %}
+{% block content %}
+<main class="page wiki-page wiki-edit-page">
+  {% include "cms/public/_wiki_edit_bar.html" with public_url=public_url %}
+  <nav class="breadcrumb">
+    <a href="{% url 'biblioteca:index' %}">Biblioteca</a> /
+    <a href="{% url 'biblioteca:subject' subject.slug %}">{{ subject.name }}</a> /
+    {{ material.title }}
+  </nav>
+  <h1 class="page-title">Editar sección</h1>
+  <form method="post" class="wiki-edit-form">
+    {% csrf_token %}
+    <label class="wiki-edit-label" for="title">Título</label>
+    <input id="title" name="title" class="wiki-edit-input" value="{{ material.title }}" required>
+    <label class="wiki-edit-label" for="summary">Resumen (opcional)</label>
+    <input id="summary" name="summary" class="wiki-edit-input" value="{{ material.summary }}">
+    <label class="wiki-edit-label" for="body">Cuerpo</label>
+    <p class="wiki-edit-hint">Párrafos separados con línea en blanco. Enlaces wiki solo dentro de {{ subject.name }}.</p>
+    <textarea id="body" name="body" class="wiki-edit-textarea" rows="16">{{ material.body }}</textarea>
+    <div class="wiki-edit-actions">
+      <button type="submit" class="wiki-edit-btn">Guardar</button>
+      <a href="{{ public_url }}" class="wiki-edit-btn wiki-edit-btn--ghost">Cancelar</a>
+    </div>
+  </form>
+</main>
+{% endblock %}

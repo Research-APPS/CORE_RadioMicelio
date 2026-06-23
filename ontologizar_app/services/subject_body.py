@@ -3,7 +3,7 @@ from __future__ import annotations
 from django.utils.html import escape
 from django.utils.safestring import mark_safe
 
-from ontologizar_app.models import Concept, Subject, Taxonomy
+from ontologizar_app.models import Subject
 from ontologizar_app.services.wiki_links import linkify_paragraphs, linkify_plaintext
 
 
@@ -11,7 +11,9 @@ def render_subject_body(subject: Subject, *, site_root: str = "/") -> str:
     parts: list[str] = []
 
     if subject.description.strip():
-        parts.append(f'<div class="wiki-lead">{linkify_paragraphs(subject.description, site_root=site_root)}</div>')
+        parts.append(
+            f'<div class="wiki-lead">{linkify_paragraphs(subject.description, site_root=site_root, subject_slug=subject.slug)}</div>'
+        )
     else:
         parts.append(
             '<p class="wiki-empty">Esta asignatura aún no tiene artículo editorial. '
@@ -25,7 +27,7 @@ def render_subject_body(subject: Subject, *, site_root: str = "/") -> str:
             block = [f"<h2>{escape(material.title)}</h2>"]
             body = (material.body or material.summary or "").strip()
             if body:
-                block.append(linkify_paragraphs(body, site_root=site_root))
+                block.append(linkify_paragraphs(body, site_root=site_root, subject_slug=subject.slug))
             sections.append("".join(block))
         parts.append(f'<div class="wiki-sections">{"".join(sections)}</div>')
 
@@ -37,31 +39,6 @@ def render_subject_body(subject: Subject, *, site_root: str = "/") -> str:
             for d in dictionaries
         )
         parts.append(f'<section class="wiki-aside"><h2>Diccionarios</h2><ul>{links}</ul></section>')
-
-    concept_ids = set(
-        subject.dictionaries.filter(is_active=True).values_list("concepts__uuid", flat=True)
-    )
-    concept_ids.discard(None)
-    if concept_ids:
-        related = []
-        for tax in Taxonomy.objects.filter(is_active=True, nodes__concept__uuid__in=concept_ids).distinct():
-            related.append(
-                f'<li><a href="{site_root}biblioteca/taxonomias/{tax.slug}/" class="wiki-link">'
-                f"{escape(tax.name)}</a></li>"
-            )
-        if related:
-            parts.append(
-                f'<section class="wiki-aside"><h2>Taxonomías relacionadas</h2><ul>{"".join(related)}</ul></section>'
-            )
-
-    other_subjects = Subject.objects.filter(is_active=True).exclude(pk=subject.pk).order_by("name")
-    if other_subjects.exists():
-        links = "".join(
-            f'<li><a href="{site_root}biblioteca/asignaturas/{s.slug}/" class="wiki-link">'
-            f"{escape(s.name)}</a></li>"
-            for s in other_subjects
-        )
-        parts.append(f'<section class="wiki-aside"><h2>Otras asignaturas</h2><ul>{links}</ul></section>')
 
     if subject.source_url:
         parts.append(

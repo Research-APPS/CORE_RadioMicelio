@@ -4,6 +4,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 
 from ontologizar_app.models import Concept, ConceptDefinition, ConceptProperty, ConceptRelation, Dictionary, Taxonomy
 from ontologizar_app.services.taxonomy_import import import_taxonomy_from_json, parse_indentation_to_json
+from ontologizar_app.services.wiki_content import get_concept_wiki_body, save_concept_wiki_body
 
 
 @login_required
@@ -56,9 +57,7 @@ def concept_edit(request, uuid):
     if request.method == "POST":
         action = request.POST.get("action")
         if action == "definition":
-            ConceptDefinition.objects.create(
-                concept=concept, text=request.POST.get("text", "").strip(), kind=request.POST.get("kind", "definition"),
-            )
+            save_concept_wiki_body(concept, request.POST.get("text", ""))
         elif action == "property":
             ConceptProperty.objects.update_or_create(
                 concept=concept, key=request.POST.get("key", "").strip(),
@@ -73,6 +72,7 @@ def concept_edit(request, uuid):
         return redirect("cms:concept_edit", uuid=concept.uuid)
     return render(request, "cms/concept_edit.html", {
         "concept": concept,
+        "body_text": get_concept_wiki_body(concept),
         "definitions": concept.definitions.all(),
         "properties": concept.properties.all(),
         "relations": concept.outgoing_relations.select_related("target"),

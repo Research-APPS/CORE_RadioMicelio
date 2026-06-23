@@ -6,6 +6,7 @@
     <a href="{% url 'biblioteca:index' %}">Biblioteca</a> / {{ subject.name }}
   </nav>
   <h1 class="page-title">{{ subject.name }}</h1>
+  {% include "cms/public/_wiki_edit_bar.html" %}
   <div class="wiki-body-wrap">{{ body_html }}</div>
 </main>
 {% endblock %}

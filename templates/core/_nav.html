@@ -5,7 +5,12 @@
     {% if not static_export %}
     <a href="{{ site_root }}research/">Cuadernos</a>
     <a href="{{ site_root }}resultados/">Publicaciones</a>
+    {% if user.is_authenticated %}
     <a href="{{ site_root }}cms/">CMS</a>
+    <a href="{% url 'cms:logout' %}">Salir</a>
+    {% else %}
+    <a href="{% url 'cms:login' %}">Entrar</a>
+    {% endif %}
     {% endif %}
     <a href="{{ site_root }}airam/graph.json">AIRAM</a>
   </nav>

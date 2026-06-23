@@ -1,8 +1,9 @@
 {% extends "core/base.html" %}
 {% block title %}CMS — Login{% endblock %}
-{% block content %}<main class="page"><h1>CMS</h1>
+{% block content %}<main class="page"><h1>Entrar para editar</h1>
 <form method="post">{% csrf_token %}
-  <p><label>Usuario <input name="username" required></label></p>
+  {% if request.GET.next %}<input type="hidden" name="next" value="{{ request.GET.next }}">{% endif %}
+  <p><label>Usuario <input name="username" required autofocus></label></p>
   <p><label>Contraseña <input type="password" name="password" required></label></p>
-  <button type="submit">Entrar</button>
+  <button type="submit" class="wiki-edit-btn">Entrar</button>
 </form></main>{% endblock %}

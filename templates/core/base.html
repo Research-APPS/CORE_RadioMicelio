@@ -14,6 +14,13 @@
 <body>
   <div class="shell">
     {% include "core/_nav.html" %}
+    {% if messages %}
+    <div class="flash-messages" role="status">
+      {% for message in messages %}
+      <p class="flash-message flash-message--{{ message.tags }}">{{ message }}</p>
+      {% endfor %}
+    </div>
+    {% endif %}
     {% block content %}{% endblock %}
   </div>
 </body>

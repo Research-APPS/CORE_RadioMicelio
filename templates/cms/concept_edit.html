@@ -1,10 +1,15 @@
 {% extends "core/base.html" %}
 {% block title %}Editar {{ concept.label }}{% endblock %}
 {% block content %}<main class="page"><h1>{{ concept.label }}</h1>
-<p><a href="/biblioteca/temas/{{ concept.uuid }}/">Ver ficha pública</a></p>
-<h2>Definición</h2><form method="post">{% csrf_token %}<input type="hidden" name="action" value="definition">
-<textarea name="text" rows="3" required></textarea><button type="submit">Añadir</button></form>
-<ul>{% for d in definitions %}<li>{{ d.text }} <small>({{ d.kind }})</small></li>{% endfor %}</ul>
+<p>
+  <a href="{% url 'biblioteca:topic' concept.uuid %}">Ver ficha pública</a> ·
+  <a href="{% url 'biblioteca:topic_edit' concept.uuid %}">Editor wiki</a>
+</p>
+<h2>Definición</h2>
+<form method="post">{% csrf_token %}<input type="hidden" name="action" value="definition">
+<textarea name="text" rows="8" class="wiki-edit-textarea" style="width:100%">{{ body_text }}</textarea>
+<button type="submit">Guardar definición</button></form>
+<ul>{% for d in definitions %}<li>{{ d.text }} <small>({{ d.kind }}{% if not d.is_active %}, inactiva{% endif %})</small></li>{% endfor %}</ul>
 <h2>Propiedad</h2><form method="post">{% csrf_token %}<input type="hidden" name="action" value="property">
 <input name="key" placeholder="clave" required> <input name="value" placeholder="valor" required>
 <button type="submit">Guardar</button></form>

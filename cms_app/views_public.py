@@ -1,12 +1,28 @@
 from django.conf import settings
-from django.shortcuts import get_object_or_404, render
+from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import get_object_or_404, redirect, render
+from django.urls import reverse
 
 from core_micelio.context_processors import site_root_path
-from ontologizar_app.models import Concept, Dictionary, Subject, Taxonomy, TaxonomyNode
+from ontologizar_app.models import Concept, Dictionary, Subject, SubjectMaterial, Taxonomy, TaxonomyNode
 from ontologizar_app.services.jsonld import topic_page_jsonld
 from ontologizar_app.services.subject_body import render_subject_body
 from ontologizar_app.services.topic_body import render_topic_body
-from research_app.models import LearningMarker, ScientificResult
+from ontologizar_app.services.wiki_content import (
+    get_concept_wiki_body,
+    save_concept_wiki_body,
+    save_subject_description,
+    save_subject_material,
+)
+from ontologizar_app.services.concept_indicators import (
+    compute_concept_indicators,
+    dictionary_concept_rows,
+    topic_indicator_anchors,
+)
+from research_app.models import LearningMarker
+
+CMS_LOGIN = "/cms/login/"
 
 
 def biblioteca_index(request):
@@ -21,6 +37,7 @@ def subject_detail(request, slug):
     return render(request, "cms/public/subject.html", {
         "subject": subject,
         "body_html": render_subject_body(subject, site_root=site_root_path(settings.SITE_URL)),
+        "edit_url": reverse("biblioteca:subject_edit", kwargs={"slug": subject.slug}),
     })
 
 
@@ -28,7 +45,7 @@ def dictionary_detail(request, subject_slug, dict_slug):
     dictionary = get_object_or_404(Dictionary, subject__slug=subject_slug, slug=dict_slug, is_active=True)
     return render(request, "cms/public/dictionary.html", {
         "dictionary": dictionary,
-        "concepts": dictionary.concepts.all(),
+        "concept_rows": dictionary_concept_rows(dictionary),
     })
 
 
@@ -45,7 +62,15 @@ def taxonomy_detail(request, slug):
 
 
 def topic_detail(request, uuid):
-    concept = get_object_or_404(Concept, uuid=uuid)
+    concept = get_object_or_404(
+        Concept.objects.prefetch_related(
+            "definitions",
+            "properties",
+            "outgoing_relations__target__dictionary",
+            "incoming_relations__source__dictionary",
+        ),
+        uuid=uuid,
+    )
     markers = LearningMarker.objects.filter(concept_uuid=concept.uuid).select_related("project")
     root = site_root_path(settings.SITE_URL)
     return render(request, "cms/public/topic.html", {
@@ -54,4 +79,57 @@ def topic_detail(request, uuid):
         "taxonomies": concept.taxonomies(),
         "markers": markers,
         "jsonld": topic_page_jsonld(concept, request),
+        "indicators": compute_concept_indicators(concept),
+        "indicator_anchors": topic_indicator_anchors(concept),
+        "edit_url": reverse("biblioteca:topic_edit", kwargs={"uuid": concept.uuid}),
+        "advanced_edit_url": reverse("cms:concept_edit", kwargs={"uuid": concept.uuid}),
+    })
+
+
+@login_required(login_url=CMS_LOGIN)
+def topic_edit(request, uuid):
+    concept = get_object_or_404(Concept, uuid=uuid)
+    if request.method == "POST":
+        save_concept_wiki_body(concept, request.POST.get("body", ""))
+        messages.success(request, "Tema guardado.")
+        return redirect("biblioteca:topic", uuid=concept.uuid)
+    return render(request, "cms/public/topic_edit.html", {
+        "concept": concept,
+        "body_text": get_concept_wiki_body(concept),
+        "public_url": reverse("biblioteca:topic", kwargs={"uuid": concept.uuid}),
+        "advanced_edit_url": reverse("cms:concept_edit", kwargs={"uuid": concept.uuid}),
+    })
+
+
+@login_required(login_url=CMS_LOGIN)
+def subject_edit(request, slug):
+    subject = get_object_or_404(Subject, slug=slug, is_active=True)
+    if request.method == "POST":
+        save_subject_description(subject, request.POST.get("description", ""))
+        messages.success(request, "Asignatura guardada.")
+        return redirect("biblioteca:subject", slug=subject.slug)
+    return render(request, "cms/public/subject_edit.html", {
+        "subject": subject,
+        "materials": subject.materials.all(),
+        "public_url": reverse("biblioteca:subject", kwargs={"slug": subject.slug}),
+    })
+
+
+@login_required(login_url=CMS_LOGIN)
+def material_edit(request, slug, mat_slug):
+    subject = get_object_or_404(Subject, slug=slug, is_active=True)
+    material = get_object_or_404(SubjectMaterial, subject=subject, slug=mat_slug)
+    if request.method == "POST":
+        save_subject_material(
+            material,
+            title=request.POST.get("title", ""),
+            summary=request.POST.get("summary", ""),
+            body=request.POST.get("body", ""),
+        )
+        messages.success(request, "Sección guardada.")
+        return redirect("biblioteca:subject", slug=subject.slug)
+    return render(request, "cms/public/material_edit.html", {
+        "subject": subject,
+        "material": material,
+        "public_url": reverse("biblioteca:subject", kwargs={"slug": subject.slug}),
     })

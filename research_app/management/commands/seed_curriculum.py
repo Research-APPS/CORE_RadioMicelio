@@ -45,6 +45,67 @@ ONTOHONGO_DEFINITIONS = {
     "Bosque": "Ecosistema forestal donde proliferan hongos saprófitos y micorrízicos.",
 }
 
+# Ontología híbrida #ontoEmo — inspirada en MFOEM/Emotion Ontology y ONYX (anotación)
+ONTOEMO_TREE = [
+    ("Emoción", [
+        ("Tipos básicos", ["Alegría", "Tristeza", "Miedo", "Ira", "Asco", "Sorpresa"]),
+        ("Estados de ánimo", ["Melancolía", "Euforia", "Calma", "Ansiedad"]),
+        ("Sentimientos", ["Nostalgia", "Empatía", "Vergüenza"]),
+    ]),
+    ("Dimensiones (EmotionML / ONYX)", ["Valencia", "Activación", "Intensidad", "Dominancia"]),
+    ("Contexto expresivo", [
+        "Causa / estímulo",
+        "Personaje afectado",
+        "Expresión corporal",
+        "Escena narrativa",
+    ]),
+]
+
+ONTOEMO_DEFINITIONS = {
+    "Emoción": "Experiencia subjetiva breve ante un estímulo significativo; distinta del estado de ánimo y del sentimiento.",
+    "Alegría": "Emoción de valencia positiva asociada a recompensa y apertura social.",
+    "Tristeza": "Emoción de valencia negativa ligada a pérdida o fracaso.",
+    "Melancolía": "Estado de ánimo de valencia negativa baja, con activación reducida y componente reflexivo.",
+    "Valencia": "Dimensión que sitúa la experiencia entre agradable y desagradable.",
+    "Activación": "Dimensión de energía o calma del estado afectivo.",
+    "Intensidad": "Grado de fuerza con que se vive una emoción (útil para anotar escenas con ONYX).",
+    "Escena narrativa": "Unidad de análisis: un poema, una escena radiofónica o un fragmento con emoción detectable.",
+}
+
+ONTOEMO_RELATIONS = [
+    ("Alegría", "Valencia", "related"),
+    ("Tristeza", "Valencia", "related"),
+    ("Melancolía", "Tristeza", "narrower"),
+    ("Melancolía", "Nostalgia", "related"),
+    ("Intensidad", "Activación", "related"),
+    ("Escena narrativa", "Causa / estímulo", "related"),
+]
+
+# Ontología #ontoNeuro — vocabulario inspirado en NeuroLex / NIFSTD
+ONTONEURO_TREE = [
+    ("Sistema nervioso", [
+        "Neurona",
+        "Sinapsis",
+        ("Regiones cerebrales", ["Amígdala", "Hipocampo", "Corteza prefrontal"]),
+        ("Sistemas", ["Sistema límbico", "Tronco encefálico"]),
+        ("Neurotransmisores", ["Dopamina", "Serotonina", "Noradrenalina"]),
+    ]),
+    ("Correlatos de la emoción", [
+        "Procesamiento afectivo",
+        "Memoria emocional",
+        "Respuesta al estrés",
+    ]),
+]
+
+ONTONEURO_DEFINITIONS = {
+    "Neurona": "Célula nerviosa que transmite señales eléctricas y químicas.",
+    "Sinapsis": "Conexión entre neuronas donde se libera un neurotransmisor.",
+    "Sistema límbico": "Conjunto de estructuras implicadas en emoción, motivación y memoria.",
+    "Amígdala": "Región clave en la detección de amenazas y emociones intensas.",
+    "Dopamina": "Neurotransmisor asociado a recompensa, motivación y placer.",
+    "Procesamiento afectivo": "Circuitos que integran estímulo, valoración y respuesta emocional.",
+}
+
 
 SUBJECT_WIKIPEDIA = {
     "ciencias-naturales": "Ciencias_naturales",
@@ -53,6 +114,8 @@ SUBJECT_WIKIPEDIA = {
     "historia": "Historia",
     "geografia": "Geografía",
     "lengua": "Literatura",
+    "emociones": "Emoción",
+    "neurociencia": "Neurociencia",
 }
 
 
@@ -86,28 +149,39 @@ def link_taxonomy(taxonomy, dictionary, tree, parent=None):
             link_taxonomy(taxonomy, dictionary, children, parent=node)
 
 
-def seed_ontohongo(taxonomy, dictionary):
+def seed_ontology(taxonomy, dictionary, tree, definitions=None, relations=None):
     TaxonomyNode.objects.filter(taxonomy=taxonomy).delete()
-    link_taxonomy(taxonomy, dictionary, ONTOHONGO_TREE)
+    link_taxonomy(taxonomy, dictionary, tree)
     concepts = {c.label: c for c in Concept.objects.filter(dictionary=dictionary)}
-    for label, text in ONTOHONGO_DEFINITIONS.items():
+    for label, text in (definitions or {}).items():
         if label in concepts:
             ConceptDefinition.objects.get_or_create(
                 concept=concepts[label], kind="definition",
                 defaults={"text": text, "is_active": True},
             )
+
     def rel(a, b, kind="related"):
         if a in concepts and b in concepts:
             ConceptRelation.objects.get_or_create(source=concepts[a], target=concepts[b], relation_type=kind)
 
-    rel("Hifa", "Micelio", "partOf")
-    rel("Conidióforo", "Conidio", "narrower")
-    rel("Conidióforo", "Espora", "related")
-    rel("Conidio", "Espora", "narrower")
-    rel("Espora", "Dispersión", "related")
-    rel("Dispersión", "Bosque", "related")
-    rel("Micelio", "Bosque", "partOf")
+    for item in relations or []:
+        rel(*item)
     return concepts
+
+
+def seed_ontohongo(taxonomy, dictionary):
+    return seed_ontology(
+        taxonomy, dictionary, ONTOHONGO_TREE, ONTOHONGO_DEFINITIONS,
+        [
+            ("Hifa", "Micelio", "partOf"),
+            ("Conidióforo", "Conidio", "narrower"),
+            ("Conidióforo", "Espora", "related"),
+            ("Conidio", "Espora", "narrower"),
+            ("Espora", "Dispersión", "related"),
+            ("Dispersión", "Bosque", "related"),
+            ("Micelio", "Bosque", "partOf"),
+        ],
+    )
 
 
 class Command(BaseCommand):
@@ -118,10 +192,13 @@ class Command(BaseCommand):
         base = "http://127.0.0.1:8003"
 
         ProyectoInvestigacion.objects.filter(acron__in=OLDS).delete()
+        ConceptRelation.objects.all().delete()
 
         musica, _ = Subject.objects.get_or_create(slug="musica", defaults={"name": "Música"})
         ciencias, _ = Subject.objects.get_or_create(slug="ciencias-naturales", defaults={"name": "Ciencias Naturales"})
         micologia, _ = Subject.objects.get_or_create(slug="micologia", defaults={"name": "Micología"})
+        emociones_subj, _ = Subject.objects.get_or_create(slug="emociones", defaults={"name": "Emociones"})
+        neurociencia, _ = Subject.objects.get_or_create(slug="neurociencia", defaults={"name": "Neurociencia"})
         historia, _ = Subject.objects.get_or_create(slug="historia", defaults={"name": "Historia"})
         geo, _ = Subject.objects.get_or_create(slug="geografia", defaults={"name": "Geografía"})
         lengua, _ = Subject.objects.get_or_create(slug="lengua", defaults={"name": "Lengua y Literatura"})
@@ -145,28 +222,75 @@ class Command(BaseCommand):
                 "summary": "Los hongos en el currículo de Ciencias Naturales",
                 "body": (
                     "Los hongos no son plantas ni animales: pertenecen al reino Fungi. Observan estructuras como "
-                    "[[Hifa|hifas]], [[Micelio|micelios]] y [[Espora|esporas]], y se relacionan con ecosistemas "
-                    "como el [[Bosque]].\n\n"
-                    "En la biblioteca del centro puedes seguir con la asignatura [[asignatura:micologia|Micología]] "
-                    "y la taxonomía transversal [[taxonomia:hongos|Hongos (#ontoHongo)]], donde cada concepto "
-                    "tiene ficha semántica y relaciones navegables."
+                    "hifas, micelios y esporas, y su papel en ecosistemas forestales."
                 ),
             },
         )
-        SubjectMaterial.objects.get_or_create(subject=lengua, slug="poesia-emociones", defaults={"title": "La poesía y las emociones", "summary": "Material CMS"})
+        SubjectMaterial.objects.update_or_create(
+            subject=emociones_subj, slug="intro-emociones",
+            defaults={
+                "title": "Introducción a las emociones",
+                "summary": "Asignatura #ontoEmo",
+                "body": (
+                    "Ontología para clasificar emociones con categorías inspiradas en MFOEM/Emotion Ontology "
+                    "y dimensiones tipo EmotionML/ONYX. "
+                    "Las relaciones entre conceptos se limitan a esta ontología hasta validación científica."
+                ),
+            },
+        )
+        SubjectMaterial.objects.update_or_create(
+            subject=neurociencia, slug="intro-neuro",
+            defaults={
+                "title": "Sistema nervioso y emoción",
+                "summary": "Asignatura #ontoNeuro",
+                "body": (
+                    "Vocabulario inspirado en NeuroLex/NIFSTD: neuronas, regiones cerebrales, neurotransmisores "
+                    "y circuitos afectivos. Ontología independiente: sin enlaces automáticos a otras asignaturas "
+                    "hasta que exista base científica explícita."
+                ),
+            },
+        )
+        SubjectMaterial.objects.get_or_create(subject=lengua, slug="poesia-emociones", defaults={
+            "title": "La poesía y las emociones",
+            "summary": "Material CMS",
+            "body": (
+                "Las escenas poéticas pueden describir emociones con vocabulario preciso: "
+                "valencia, intensidad, melancolía, nostalgia, etc."
+            ),
+        })
 
-        for subj in (musica, ciencias, micologia, historia, geo, lengua):
+        for subj in (musica, ciencias, micologia, emociones_subj, neurociencia, historia, geo, lengua):
             if seed_subject_wiki(subj):
                 self.stdout.write(f"  Wikipedia → {subj.slug}")
 
-        dict_emociones, _ = Dictionary.objects.get_or_create(subject=musica, slug="emociones", defaults={"name": "Emociones en la música"})
+        dict_emociones, _ = Dictionary.objects.get_or_create(
+            subject=emociones_subj, slug="ontoemo",
+            defaults={"name": "Vocabulario emocional", "description": "Base #ontoEmo (MFOEM / ONYX)"},
+        )
+        dict_neuro, _ = Dictionary.objects.get_or_create(
+            subject=neurociencia, slug="ontoneuro",
+            defaults={"name": "Sistema nervioso", "description": "Base #ontoNeuro (NeuroLex)"},
+        )
         dict_micologia, _ = Dictionary.objects.get_or_create(subject=micologia, slug="ontohongo", defaults={"name": "Vocabulario micológico"})
         dict_patrimonio, _ = Dictionary.objects.get_or_create(subject=historia, slug="patrimonio-local", defaults={"name": "Patrimonio local"})
         dict_mapa, _ = Dictionary.objects.get_or_create(subject=geo, slug="mapa-local", defaults={"name": "Mapa del entorno"})
         dict_palabras, _ = Dictionary.objects.get_or_create(subject=lengua, slug="vocabulario-poetico", defaults={"name": "Vocabulario poético"})
 
-        # Taxonomías transversales
-        tax_emociones, _ = Taxonomy.objects.get_or_create(slug="emociones", defaults={"name": "Taxonomía de emociones", "description": "Transversal: Música, Literatura, Teatro"})
+        # Taxonomías por asignatura (sin cruces entre dominios)
+        tax_emociones, _ = Taxonomy.objects.get_or_create(
+            slug="emociones",
+            defaults={
+                "name": "Emociones (#ontoEmo)",
+                "description": "Ontología afectiva. Inspirada en MFOEM y ONYX.",
+            },
+        )
+        tax_neuro, _ = Taxonomy.objects.get_or_create(
+            slug="neurociencia",
+            defaults={
+                "name": "Neurociencia (#ontoNeuro)",
+                "description": "Sistema nervioso y correlatos afectivos. Inspirada en NeuroLex/NIFSTD.",
+            },
+        )
         tax_hongos, _ = Taxonomy.objects.get_or_create(
             slug="hongos",
             defaults={
@@ -174,42 +298,59 @@ class Command(BaseCommand):
                 "description": "Ontología híbrida navegable: anatomía, ciclo vital, ecología, taxonomía y aplicaciones.",
             },
         )
-        tax_ecologia, _ = Taxonomy.objects.get_or_create(slug="ecologia", defaults={"name": "Taxonomía Ecología"})
+        tax_ecologia, _ = Taxonomy.objects.get_or_create(slug="ecologia", defaults={"name": "Ecología"})
         tax_patrimonio, _ = Taxonomy.objects.get_or_create(slug="tradiciones", defaults={"name": "Tradiciones"})
         tax_lugares, _ = Taxonomy.objects.get_or_create(slug="lugares", defaults={"name": "Lugares del municipio"})
         tax_metaforas, _ = Taxonomy.objects.get_or_create(slug="metaforas", defaults={"name": "Metáforas"})
 
-        TaxonomyNode.objects.filter(taxonomy__in=[tax_emociones, tax_ecologia]).delete()
+        Taxonomy.objects.filter(slug="emociones").update(
+            name="Emociones (#ontoEmo)",
+            description="Ontología afectiva. Inspirada en MFOEM y ONYX.",
+        )
 
-        onto = seed_ontohongo(tax_hongos, dict_micologia)
-        micelio = onto["Micelio"]
-        espora = onto["Espora"]
-        bosque = onto["Bosque"]
-        conidioforo = onto["Conidióforo"]
+        TaxonomyNode.objects.filter(taxonomy__in=[tax_ecologia, tax_patrimonio, tax_lugares, tax_metaforas]).delete()
 
-        alegria = concept_in_dict(dict_emociones, "Alegría")
-        tristeza = concept_in_dict(dict_emociones, "Tristeza")
-        emocion_lengua = concept_in_dict(dict_palabras, "Emoción")
+        onto_hongos = seed_ontohongo(tax_hongos, dict_micologia)
+        onto_emo = seed_ontology(tax_emociones, dict_emociones, ONTOEMO_TREE, ONTOEMO_DEFINITIONS, ONTOEMO_RELATIONS)
+        seed_ontology(tax_neuro, dict_neuro, ONTONEURO_TREE, ONTONEURO_DEFINITIONS)
+
+        micelio = onto_hongos["Micelio"]
+        espora = onto_hongos["Espora"]
+        bosque = onto_hongos["Bosque"]
+        conidioforo = onto_hongos["Conidióforo"]
+        alegria = onto_emo["Alegría"]
+        tristeza = onto_emo["Tristeza"]
+        melancolia = onto_emo["Melancolía"]
+        metafora = concept_in_dict(dict_palabras, "Metáfora")
         fiesta = concept_in_dict(dict_patrimonio, "Fiesta del pueblo")
         plaza = concept_in_dict(dict_mapa, "Plaza mayor")
         rio = concept_in_dict(dict_mapa, "Río")
-        metafora = concept_in_dict(dict_palabras, "Metáfora")
-
-        # Enlaces transversales emociones
-        for label, c in [("Alegría", alegria), ("Tristeza", tristeza), ("Emoción", emocion_lengua)]:
-            TaxonomyNode.objects.get_or_create(taxonomy=tax_emociones, label=label, defaults={"concept": c})
-
-        TaxonomyNode.objects.get_or_create(taxonomy=tax_ecologia, label="Micelio", defaults={"concept": micelio})
-        TaxonomyNode.objects.get_or_create(taxonomy=tax_ecologia, label="Bosque", defaults={"concept": bosque})
-        TaxonomyNode.objects.get_or_create(taxonomy=tax_patrimonio, label="Fiesta del pueblo", defaults={"concept": fiesta})
-        TaxonomyNode.objects.get_or_create(taxonomy=tax_lugares, label="Plaza mayor", defaults={"concept": plaza})
-        TaxonomyNode.objects.get_or_create(taxonomy=tax_lugares, label="Río", defaults={"concept": rio})
-        TaxonomyNode.objects.get_or_create(taxonomy=tax_metaforas, label="Metáfora", defaults={"concept": metafora})
 
         ConceptProperty.objects.get_or_create(concept=micelio, key="dominio", defaults={"value": "micología"})
         ConceptProperty.objects.get_or_create(concept=conidioforo, key="hashtag", defaults={"value": "#ontoHongo"})
-        ConceptRelation.objects.get_or_create(source=alegria, target=emocion_lengua, relation_type="related")
-        ConceptRelation.objects.get_or_create(source=micelio, target=alegria, relation_type="related")
+        ConceptProperty.objects.get_or_create(concept=alegria, key="hashtag", defaults={"value": "#ontoEmo"})
+        ConceptProperty.objects.get_or_create(
+            concept=micelio, key="orcid",
+            defaults={"value": "0000-0002-1825-0097"},
+        )
+        ConceptProperty.objects.get_or_create(
+            concept=micelio, key="source_url",
+            defaults={"value": "https://www.mycobank.org/"},
+        )
+        ConceptProperty.objects.get_or_create(
+            concept=micelio, key="institution",
+            defaults={"value": "Real Jardín Botánico (CSIC)"},
+        )
+        ConceptDefinition.objects.get_or_create(
+            concept=espora, kind="example",
+            defaults={"text": "Esporas liberadas por *Trametes versicolor* en un tronco caído.", "is_active": True},
+        )
+        basidio = onto_hongos.get("Basidio")
+        if basidio:
+            ConceptProperty.objects.get_or_create(
+                concept=basidio, key="sameAs",
+                defaults={"value": "http://purl.obolibrary.org/obo/FUNGUS_0000001"},
+            )
 
         p1, _ = ProyectoInvestigacion.objects.get_or_create(acron="PFC-1", defaults={"titulo": "Emociones en un poema", "descripcion": "Cruza Lengua y Música"})
         p2, _ = ProyectoInvestigacion.objects.get_or_create(acron="PFC-2", defaults={"titulo": "El bosque y sus sonidos", "descripcion": "Ciencias y Música"})
@@ -220,7 +361,7 @@ class Command(BaseCommand):
                 ProjectCurriculumDeclaration.objects.get_or_create(project=proj, capability_slug=c)
 
         for proj, concept_obj, status in [
-            (p1, alegria, "used"), (p1, metafora, "cited"), (p1, tristeza, "selected"),
+            (p1, alegria, "used"), (p1, metafora, "cited"), (p1, tristeza, "selected"), (p1, melancolia, "interesting"),
             (p2, micelio, "used"), (p2, conidioforo, "interesting"), (p2, espora, "interesting"), (p2, bosque, "cited"),
             (p3, plaza, "used"), (p3, fiesta, "cited"), (p3, rio, "selected"),
         ]:

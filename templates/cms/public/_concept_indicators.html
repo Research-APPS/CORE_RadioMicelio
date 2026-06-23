@@ -1,0 +1,61 @@
+{% comment %}
+Indicadores editoriales / ontológicos de un concepto.
+Requiere: indicators (ConceptIndicators)
+Opcional: link_anchors + indicator_anchors — en ficha de tema, enlaza a la sección correspondiente.
+{% endcomment %}
+<span class="concept-indicators" aria-label="Estado del concepto">
+  {% if indicators.is_empty %}
+    {% if link_anchors %}
+    <a href="#{{ indicator_anchors.empty }}" class="concept-indicator concept-indicator--empty" title="Sin contenido editorial → ver sección">
+    {% else %}
+    <span class="concept-indicator concept-indicator--empty" title="Sin contenido editorial">
+    {% endif %}
+    <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M3 2h10a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1zm1 2v8h8V4H4zm2 2h4v1H6V6zm0 2h4v1H6V8z" opacity=".45"/></svg>
+    {% if link_anchors %}</a>{% else %}</span>{% endif %}
+  {% endif %}
+  {% if indicators.has_relations %}
+    {% if link_anchors %}
+    <a href="#{{ indicator_anchors.relations }}" class="concept-indicator concept-indicator--relations" title="Relaciones ontológicas → ver sección">
+    {% else %}
+    <span class="concept-indicator concept-indicator--relations" title="Relaciones ontológicas">
+    {% endif %}
+    <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><circle cx="4" cy="8" r="2" fill="currentColor"/><circle cx="12" cy="4" r="2" fill="currentColor"/><circle cx="12" cy="12" r="2" fill="currentColor"/><path stroke="currentColor" stroke-width="1.2" fill="none" d="M6 7.2L10 5M6 8.8l4 2.2"/></svg>
+    {% if link_anchors %}</a>{% else %}</span>{% endif %}
+  {% endif %}
+  {% if indicators.has_properties %}
+    {% if link_anchors %}
+    <a href="#{{ indicator_anchors.properties }}" class="concept-indicator concept-indicator--properties" title="Propiedades ontológicas → ver sección">
+    {% else %}
+    <span class="concept-indicator concept-indicator--properties" title="Propiedades ontológicas">
+    {% endif %}
+    <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M2 4h5v2H4v6H2V4zm7 0h5v8h-2v-6H9V4z"/></svg>
+    {% if link_anchors %}</a>{% else %}</span>{% endif %}
+  {% endif %}
+  {% if indicators.has_examples %}
+    {% if link_anchors %}
+    <a href="#{{ indicator_anchors.examples }}" class="concept-indicator concept-indicator--examples" title="Ejemplos → ver sección">
+    {% else %}
+    <span class="concept-indicator concept-indicator--examples" title="Ejemplos">
+    {% endif %}
+    <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M8 1.5l1.1 3.4h3.5l-2.8 2.1 1.1 3.4L8 8.3l-2.9 2.1 1.1-3.4-2.8-2.1h3.5L8 1.5z"/></svg>
+    {% if link_anchors %}</a>{% else %}</span>{% endif %}
+  {% endif %}
+  {% if indicators.has_cross_ontology_links %}
+    {% if link_anchors %}
+    <a href="#{{ indicator_anchors.cross }}" class="concept-indicator concept-indicator--external" title="Enlaces con otras ontologías → ver sección">
+    {% else %}
+    <span class="concept-indicator concept-indicator--external" title="Enlaces con otras ontologías">
+    {% endif %}
+    <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M9 2h5v5h-2V5.4l-5.3 5.3-1.4-1.4L10.6 4H9V2zM3 4h4v2H5v5H3V4z"/></svg>
+    {% if link_anchors %}</a>{% else %}</span>{% endif %}
+  {% endif %}
+  {% if indicators.has_official_source %}
+    {% if link_anchors %}
+    <a href="#{{ indicator_anchors.sources }}" class="concept-indicator concept-indicator--source" title="Fuente científica → ver sección">
+    {% else %}
+    <span class="concept-indicator concept-indicator--source" title="Fuente científica (ORCID, DOI, institución…)">
+    {% endif %}
+    <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M8 1a3 3 0 0 1 3 3v1h1a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h1V4a3 3 0 0 1 3-3zm0 2a1 1 0 0 0-1 1v1h2V4a1 1 0 0 0-1-1zm-3 4v6h6V7H5z"/></svg>
+    {% if link_anchors %}</a>{% else %}</span>{% endif %}
+  {% endif %}
+</span>

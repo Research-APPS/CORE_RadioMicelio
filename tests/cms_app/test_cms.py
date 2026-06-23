@@ -1,8 +1,9 @@
 from django.contrib.auth import get_user_model
 from django.core.management import call_command
 from django.test import Client, TestCase
+from django.urls import reverse
 
-from ontologizar_app.models import Concept, ConceptProperty, Dictionary, Subject, Taxonomy, TaxonomyNode
+from ontologizar_app.models import Concept, ConceptDefinition, ConceptProperty, Dictionary, Subject, SubjectMaterial, Taxonomy, TaxonomyNode
 from ontologizar_app.services.taxonomy_import import import_taxonomy_from_json
 
 
@@ -50,3 +51,61 @@ class CmsTests(TestCase):
         self.assertContains(r, "Alegría")
         self.assertContains(r, "application/ld+json")
         self.assertContains(r, "additionalProperty")
+
+    def test_topic_edit_requires_login(self):
+        subj = Subject.objects.create(slug="mus", name="Música")
+        dic = Dictionary.objects.create(subject=subj, slug="emo", name="Emo")
+        c = Concept.objects.create(dictionary=dic, label="Alegría")
+        r = self.client.get(reverse("biblioteca:topic_edit", kwargs={"uuid": c.uuid}))
+        self.assertEqual(r.status_code, 302)
+        self.assertIn("/cms/login/", r.url)
+
+    def test_topic_edit_saves_definition(self):
+        call_command("ensure_cms_user")
+        User = get_user_model()
+        self.client.login(username="ivansimo", password="12345678")
+        subj = Subject.objects.create(slug="mus", name="Música")
+        dic = Dictionary.objects.create(subject=subj, slug="emo", name="Emo")
+        c = Concept.objects.create(dictionary=dic, label="Alegría")
+        r = self.client.post(
+            reverse("biblioteca:topic_edit", kwargs={"uuid": c.uuid}),
+            {"body": "Emoción de valencia positiva.\n\nSegundo párrafo."},
+        )
+        self.assertEqual(r.status_code, 302)
+        definition = ConceptDefinition.objects.get(concept=c, kind="definition", is_active=True)
+        self.assertIn("Segundo párrafo", definition.text)
+        public = self.client.get(reverse("biblioteca:topic", kwargs={"uuid": c.uuid}))
+        self.assertContains(public, "Editar")
+        self.assertContains(public, "Segundo párrafo")
+
+    def test_topic_page_shows_login_to_edit_when_anonymous(self):
+        subj = Subject.objects.create(slug="mus", name="Música")
+        dic = Dictionary.objects.create(subject=subj, slug="emo", name="Emo")
+        c = Concept.objects.create(dictionary=dic, label="Alegría")
+        r = self.client.get(reverse("biblioteca:topic", kwargs={"uuid": c.uuid}))
+        self.assertContains(r, "Iniciar sesión para editar")
+
+    def test_subject_edit_saves_description(self):
+        call_command("ensure_cms_user")
+        self.client.login(username="ivansimo", password="12345678")
+        subj = Subject.objects.create(slug="nat", name="Naturaleza", description="Antes")
+        r = self.client.post(
+            reverse("biblioteca:subject_edit", kwargs={"slug": subj.slug}),
+            {"description": "Texto wiki nuevo."},
+        )
+        self.assertEqual(r.status_code, 302)
+        subj.refresh_from_db()
+        self.assertEqual(subj.description, "Texto wiki nuevo.")
+
+    def test_material_edit_saves_body(self):
+        call_command("ensure_cms_user")
+        self.client.login(username="ivansimo", password="12345678")
+        subj = Subject.objects.create(slug="nat", name="Naturaleza")
+        mat = SubjectMaterial.objects.create(subject=subj, slug="u1", title="Unidad", body="Viejo")
+        r = self.client.post(
+            reverse("biblioteca:material_edit", kwargs={"slug": subj.slug, "mat_slug": mat.slug}),
+            {"title": "Unidad", "summary": "", "body": "Contenido actualizado."},
+        )
+        self.assertEqual(r.status_code, 302)
+        mat.refresh_from_db()
+        self.assertEqual(mat.body, "Contenido actualizado.")

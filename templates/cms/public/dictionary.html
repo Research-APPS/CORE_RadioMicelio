@@ -11,9 +11,13 @@
   {% if dictionary.description %}
   <p class="lead">{{ dictionary.description }}</p>
   {% endif %}
-  <ul class="wiki-index">
-    {% for c in concepts %}
-    <li><a href="{% url 'biblioteca:topic' c.uuid %}" class="wiki-link">{{ c.label }}</a></li>
+  {% include "cms/public/_concept_indicator_legend.html" %}
+  <ul class="wiki-index concept-list">
+    {% for row in concept_rows %}
+    <li class="concept-list__item">
+      <a href="{% url 'biblioteca:topic' row.concept.uuid %}" class="wiki-link concept-list__label">{{ row.concept.label }}</a>
+      {% include "cms/public/_concept_indicators.html" with indicators=row.indicators %}
+    </li>
     {% endfor %}
   </ul>
 </main>

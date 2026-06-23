@@ -1,12 +1,30 @@
-{% if node.concept %}
-<a href="{% url 'biblioteca:topic' node.concept.uuid %}" class="wiki-link">{{ node.label }}</a>
-{% else %}
-{{ node.label }}
-{% endif %}
-{% if not node.is_leaf %}
-<ul>
-  {% for child in node.get_children %}
-  <li>{% include "cms/public/_taxonomy_node.html" with node=child %}</li>
-  {% endfor %}
-</ul>
-{% endif %}
+<li class="taxonomy-node{% if node.is_leaf %} taxonomy-node--leaf{% endif %}" data-level="{{ node.level }}">
+  {% if node.is_leaf %}
+  <span class="taxonomy-node__leaf taxonomy-node__label taxonomy-node__label--l{{ node.level }}">
+    {% if node.concept %}
+    <a href="{% url 'biblioteca:topic' node.concept.uuid %}" class="wiki-link">{{ node.label }}</a>
+    {% else %}
+    {{ node.label }}
+    {% endif %}
+  </span>
+  {% else %}
+  <details class="taxonomy-branch"{% if node.level < 2 %} open{% endif %}>
+    <summary class="taxonomy-node__summary taxonomy-node__label--l{{ node.level }}">
+      <span class="taxonomy-node__chevron" aria-hidden="true"></span>
+      <span class="taxonomy-node__text">
+        {% if node.concept %}
+        <a href="{% url 'biblioteca:topic' node.concept.uuid %}" class="wiki-link taxonomy-node__link">{{ node.label }}</a>
+        {% else %}
+        {{ node.label }}
+        {% endif %}
+      </span>
+      <span class="taxonomy-node__count">{{ node.get_descendant_count|add:1 }}</span>
+    </summary>
+    <ul class="taxonomy-tree__children">
+      {% for child in node.get_children %}
+      {% include "cms/public/_taxonomy_node.html" with node=child %}
+      {% endfor %}
+    </ul>
+  </details>
+  {% endif %}
+</li>

@@ -1,6 +1,6 @@
 from django.test import TestCase
 
-from ontologizar_app.models import Concept, Dictionary, Subject, Taxonomy, TaxonomyNode
+from ontologizar_app.models import Concept, Dictionary, Subject
 from ontologizar_app.services.subject_body import render_subject_body
 from ontologizar_app.services.topic_body import render_topic_body
 from ontologizar_app.services.wiki_links import clear_link_index_cache, linkify_plaintext
@@ -26,20 +26,19 @@ class WikiLinksTests(TestCase):
         self.assertIn('href="/biblioteca/asignaturas/micologia/"', html)
         self.assertIn("micología avanzada", html)
 
-    def test_subject_body_links_material_terms(self):
+    def test_subject_body_no_cross_domain_autolinks(self):
         subj = Subject.objects.create(slug="ciencias-naturales", name="Ciencias Naturales")
         mic = Subject.objects.create(slug="micologia", name="Micología")
         dic = Dictionary.objects.create(subject=mic, slug="v", name="V")
         Concept.objects.create(dictionary=dic, label="Micelio")
-        Taxonomy.objects.create(slug="hongos", name="Hongos")
         from ontologizar_app.models import SubjectMaterial
         SubjectMaterial.objects.create(
             subject=subj, slug="u", title="Unidad",
             body="Estudia el Micelio y la asignatura Micología.",
         )
         html = render_subject_body(subj, site_root="/")
-        self.assertIn('class="wiki-link"', html)
-        self.assertIn("/biblioteca/temas/", html)
+        self.assertNotIn("/biblioteca/temas/", html)
+        self.assertNotIn("/biblioteca/asignaturas/micologia/", html)
 
     def test_topic_body_links_relations(self):
         subj = Subject.objects.create(slug="m", name="M")

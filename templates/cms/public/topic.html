@@ -9,7 +9,11 @@
     <a href="{{ site_root }}biblioteca/diccionarios/{{ concept.dictionary.subject.slug }}/{{ concept.dictionary.slug }}/">{{ concept.dictionary.name }}</a> /
     {{ concept.label }}
   </nav>
-  <h1 class="page-title">{{ concept.label }}</h1>
+  <div class="topic-header">
+    <h1 class="page-title">{{ concept.label }}</h1>
+    {% include "cms/public/_concept_indicators.html" with link_anchors=True indicator_anchors=indicator_anchors %}
+  </div>
+  {% include "cms/public/_wiki_edit_bar.html" %}
   <div class="wiki-body-wrap">{{ body_html }}</div>
   {% if taxonomies %}
   <section class="wiki-aside">
