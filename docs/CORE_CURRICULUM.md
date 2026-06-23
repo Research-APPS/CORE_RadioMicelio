@@ -20,7 +20,7 @@ Resultado    = entrega final del proyecto
 
 ## Seed de ejemplo
 
-**Asignaturas:** Música, Ciencias Naturales, Historia, Geografía, Lengua y Literatura
+**Asignaturas:** Música, Ciencias Naturales, Micología (#ontoHongo), Historia, Geografía, Lengua y Literatura
 
 **Proyectos PFC:**
 - Emociones en un poema (Lengua + Música)

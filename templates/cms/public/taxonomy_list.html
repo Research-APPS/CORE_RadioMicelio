@@ -1,4 +1,13 @@
 {% extends "core/base.html" %}
 {% block title %}Taxonomías{% endblock %}
-{% block content %}<main class="page"><h1>Taxonomías transversales</h1>
-<ul>{% for t in taxonomies %}<li><a href="{% url 'biblioteca:taxonomy' t.slug %}">{{ t.name }}</a></li>{% endfor %}</ul></main>{% endblock %}
+{% block content %}
+<main class="page wiki-page">
+  <nav class="breadcrumb"><a href="{% url 'biblioteca:index' %}">Biblioteca</a> / Taxonomías</nav>
+  <h1 class="page-title">Taxonomías transversales</h1>
+  <ul class="wiki-index">
+    {% for t in taxonomies %}
+    <li><a href="{% url 'biblioteca:taxonomy' t.slug %}" class="wiki-link">{{ t.name }}</a></li>
+    {% endfor %}
+  </ul>
+</main>
+{% endblock %}

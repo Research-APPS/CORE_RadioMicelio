@@ -11,6 +11,7 @@ class Subject(models.Model):
     slug = models.SlugField(max_length=80, unique=True)
     name = models.CharField(max_length=200)
     description = models.TextField(blank=True)
+    source_url = models.URLField(blank=True, help_text="Fuente externa (p. ej. Wikipedia)")
     is_active = models.BooleanField(default=True)
     created_at = models.DateTimeField(default=timezone.now)
 
@@ -27,6 +28,7 @@ class SubjectMaterial(models.Model):
     slug = models.SlugField(max_length=80)
     title = models.CharField(max_length=300)
     summary = models.TextField(blank=True)
+    body = models.TextField(blank=True, help_text="Texto wiki del material")
     cms_url = models.URLField(blank=True)
 
     class Meta:

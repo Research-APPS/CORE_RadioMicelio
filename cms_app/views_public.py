@@ -1,7 +1,10 @@
+from django.conf import settings
 from django.shortcuts import get_object_or_404, render
 
+from core_micelio.context_processors import site_root_path
 from ontologizar_app.models import Concept, Dictionary, Subject, Taxonomy, TaxonomyNode
 from ontologizar_app.services.jsonld import topic_page_jsonld
+from ontologizar_app.services.subject_body import render_subject_body
 from ontologizar_app.services.topic_body import render_topic_body
 from research_app.models import LearningMarker, ScientificResult
 
@@ -17,8 +20,7 @@ def subject_detail(request, slug):
     subject = get_object_or_404(Subject, slug=slug, is_active=True)
     return render(request, "cms/public/subject.html", {
         "subject": subject,
-        "materials": subject.materials.all(),
-        "dictionaries": subject.dictionaries.filter(is_active=True),
+        "body_html": render_subject_body(subject, site_root=site_root_path(settings.SITE_URL)),
     })
 
 
@@ -45,9 +47,10 @@ def taxonomy_detail(request, slug):
 def topic_detail(request, uuid):
     concept = get_object_or_404(Concept, uuid=uuid)
     markers = LearningMarker.objects.filter(concept_uuid=concept.uuid).select_related("project")
+    root = site_root_path(settings.SITE_URL)
     return render(request, "cms/public/topic.html", {
         "concept": concept,
-        "body_html": render_topic_body(concept),
+        "body_html": render_topic_body(concept, site_root=root),
         "taxonomies": concept.taxonomies(),
         "markers": markers,
         "jsonld": topic_page_jsonld(concept, request),

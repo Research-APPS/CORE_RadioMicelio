@@ -1,7 +1,11 @@
 {% extends "core/base.html" %}
 {% block title %}{{ subject.name }}{% endblock %}
-{% block content %}<main class="page"><nav><a href="{% url 'biblioteca:index' %}">Biblioteca</a> / {{ subject.name }}</nav>
-<h1>{{ subject.name }}</h1>
-<h2>Materiales</h2><ul>{% for m in materials %}<li>{{ m.title }} — {{ m.summary }}</li>{% endfor %}</ul>
-<h2>Diccionarios</h2><ul>{% for d in dictionaries %}<li><a href="{% url 'biblioteca:dictionary' subject.slug d.slug %}">{{ d.name }}</a></li>{% endfor %}</ul>
-</main>{% endblock %}
+{% block content %}
+<main class="page wiki-page">
+  <nav class="breadcrumb">
+    <a href="{% url 'biblioteca:index' %}">Biblioteca</a> / {{ subject.name }}
+  </nav>
+  <h1 class="page-title">{{ subject.name }}</h1>
+  <div class="wiki-body-wrap">{{ body_html }}</div>
+</main>
+{% endblock %}

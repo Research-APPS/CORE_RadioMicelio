@@ -1,6 +1,29 @@
 {% extends "core/base.html" %}
 {% block title %}Biblioteca{% endblock %}
-{% block content %}<main class="page"><h1>Biblioteca semántica</h1>
-<h2>Asignaturas</h2><div class="card-grid">{% for s in subjects %}<a class="card" href="{% url 'biblioteca:subject' s.slug %}">{{ s.name }}</a>{% endfor %}</div>
-<h2>Taxonomías transversales</h2><ul>{% for t in taxonomies %}<li><a href="{% url 'biblioteca:taxonomy' t.slug %}">{{ t.name }}</a></li>{% endfor %}</ul>
-<p><a href="{% url 'biblioteca:taxonomy_list' %}">Ver todas las taxonomías</a></p></main>{% endblock %}
+{% block content %}
+<main class="page">
+  <h1 class="page-title">Biblioteca semántica</h1>
+  <p class="lead">Asignaturas, diccionarios y taxonomías transversales del centro.</p>
+
+  <section class="section">
+    <p class="section-label">Asignaturas</p>
+    <div class="grid-2">
+      {% for s in subjects %}
+      <a class="cap-item" href="{% url 'biblioteca:subject' s.slug %}">
+        <strong>{{ s.name }}</strong>
+      </a>
+      {% endfor %}
+    </div>
+  </section>
+
+  <section class="section">
+    <p class="section-label">Taxonomías transversales</p>
+    <ul class="plain">
+      {% for t in taxonomies %}
+      <li><a href="{% url 'biblioteca:taxonomy' t.slug %}">{{ t.name }}</a></li>
+      {% endfor %}
+    </ul>
+    <p style="margin-top:1rem"><a class="btn-link" href="{% url 'biblioteca:taxonomy_list' %}">Ver todas las taxonomías</a></p>
+  </section>
+</main>
+{% endblock %}

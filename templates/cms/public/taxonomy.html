@@ -1,5 +1,19 @@
 {% extends "core/base.html" %}
 {% block title %}{{ taxonomy.name }}{% endblock %}
-{% block content %}<main class="page"><h1>{{ taxonomy.name }}</h1>
-<ul>{% for n in roots %}<li>{{ n.label }}{% if n.concept %} — <a href="{% url 'biblioteca:topic' n.concept.uuid %}">{{ n.concept.label }}</a>{% endif %}
-{% if not n.is_leaf %}<ul>{% for c in n.get_children %}<li>{{ c.label }}{% if c.concept %} — <a href="{% url 'biblioteca:topic' c.concept.uuid %}">{{ c.concept.label }}</a>{% endif %}</li>{% endfor %}</ul>{% endif %}</li>{% endfor %}</ul></main>{% endblock %}
+{% block content %}
+<main class="page wiki-page">
+  <nav class="breadcrumb">
+    <a href="{% url 'biblioteca:index' %}">Biblioteca</a> /
+    <a href="{% url 'biblioteca:taxonomy_list' %}">Taxonomías</a> / {{ taxonomy.name }}
+  </nav>
+  <h1 class="page-title">{{ taxonomy.name }}</h1>
+  {% if taxonomy.description %}
+  <p class="lead">{{ taxonomy.description }}</p>
+  {% endif %}
+  <ul class="wiki-tree">
+    {% for n in roots %}
+    <li>{% include "cms/public/_taxonomy_node.html" with node=n %}</li>
+    {% endfor %}
+  </ul>
+</main>
+{% endblock %}

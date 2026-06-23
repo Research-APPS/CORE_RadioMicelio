@@ -1,9 +1,40 @@
 {% extends "core/base.html" %}
 {% block title %}{{ concept.label }}{% endblock %}
 {% block extra_head %}<script type="application/ld+json">{{ jsonld|safe }}</script>{% endblock %}
-{% block content %}<main class="page topic-page"><nav><a href="{{ site_root }}biblioteca/">Biblioteca</a> / {{ concept.dictionary.subject.name }} / {{ concept.label }}</nav>
-<h1>{{ concept.label }}</h1>
-<div class="topic-body">{{ body_html }}</div>
-{% if taxonomies %}<section><h2>Clasificaciones</h2><ul>{% for t in taxonomies %}<li><a href="{{ site_root }}biblioteca/taxonomias/{{ t.slug }}/">{{ t.name }}</a></li>{% endfor %}</ul></section>{% endif %}
-{% if markers %}<section><h2>Citado en cuadernos</h2><ul>{% for m in markers %}<li>{% if static_export %}{{ m.project.titulo }}{% else %}<a href="{{ m.project.get_absolute_url }}">{{ m.project.titulo }}</a>{% endif %} ({{ m.status }})</li>{% endfor %}</ul></section>{% endif %}
-</main>{% endblock %}
+{% block content %}
+<main class="page topic-page wiki-page">
+  <nav class="breadcrumb">
+    <a href="{{ site_root }}biblioteca/">Biblioteca</a> /
+    <a href="{{ site_root }}biblioteca/asignaturas/{{ concept.dictionary.subject.slug }}/">{{ concept.dictionary.subject.name }}</a> /
+    <a href="{{ site_root }}biblioteca/diccionarios/{{ concept.dictionary.subject.slug }}/{{ concept.dictionary.slug }}/">{{ concept.dictionary.name }}</a> /
+    {{ concept.label }}
+  </nav>
+  <h1 class="page-title">{{ concept.label }}</h1>
+  <div class="wiki-body-wrap">{{ body_html }}</div>
+  {% if taxonomies %}
+  <section class="wiki-aside">
+    <h2>Clasificaciones</h2>
+    <ul>
+      {% for t in taxonomies %}
+      <li><a href="{{ site_root }}biblioteca/taxonomias/{{ t.slug }}/" class="wiki-link">{{ t.name }}</a></li>
+      {% endfor %}
+    </ul>
+  </section>
+  {% endif %}
+  {% if markers %}
+  <section class="wiki-aside">
+    <h2>Citado en cuadernos</h2>
+    <ul>
+      {% for m in markers %}
+      <li>
+        {% if static_export %}{{ m.project.titulo }}{% else %}
+        <a href="{{ m.project.get_absolute_url }}" class="wiki-link">{{ m.project.titulo }}</a>
+        {% endif %}
+        ({{ m.status }})
+      </li>
+      {% endfor %}
+    </ul>
+  </section>
+  {% endif %}
+</main>
+{% endblock %}
