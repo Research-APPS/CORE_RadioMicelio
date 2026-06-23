@@ -3,7 +3,7 @@ from __future__ import annotations
 import json
 import shutil
 from pathlib import Path
-from urllib.parse import urlparse
+from urllib.parse import urlparse, urlunparse
 
 from django.conf import settings
 from django.test import RequestFactory
@@ -15,12 +15,23 @@ from core_micelio.context_processors import script_prefix, site_root_path
 from ontologizar_app.models import Concept, Dictionary, Subject, Taxonomy
 
 
+def _normalized_site_url(site_url: str) -> str:
+    parsed = urlparse(site_url)
+    if not parsed.hostname:
+        return site_url
+    host = parsed.hostname.lower()
+    port = f":{parsed.port}" if parsed.port else ""
+    return urlunparse(parsed._replace(netloc=f"{host}{port}"))
+
+
 def _make_request(path: str):
-    parsed = urlparse(settings.SITE_URL)
+    parsed = urlparse(_normalized_site_url(settings.SITE_URL))
+    hostname = parsed.hostname or "localhost"
     port = parsed.port or (443 if parsed.scheme == "https" else 80)
+    netloc = parsed.netloc.lower()
     request = RequestFactory().get(path)
-    request.META["HTTP_HOST"] = parsed.netloc
-    request.META["SERVER_NAME"] = parsed.hostname or "localhost"
+    request.META["HTTP_HOST"] = netloc
+    request.META["SERVER_NAME"] = hostname
     request.META["SERVER_PORT"] = str(port)
     request.META["wsgi.url_scheme"] = parsed.scheme or "http"
     request.static_export = True
@@ -55,8 +66,16 @@ def export_static_site(out_dir: Path) -> dict:
         shutil.rmtree(out_dir)
     out_dir.mkdir(parents=True)
 
+    prev_site_url = settings.SITE_URL
+    prev_allowed_hosts = list(settings.ALLOWED_HOSTS)
+    site_url = _normalized_site_url(settings.SITE_URL)
+    settings.SITE_URL = site_url
+    host = urlparse(site_url).hostname
+    if host and host not in settings.ALLOWED_HOSTS:
+        settings.ALLOWED_HOSTS = [*settings.ALLOWED_HOSTS, host]
+
     prev_static_url = settings.STATIC_URL
-    prefix = script_prefix(settings.SITE_URL)
+    prefix = script_prefix(site_url)
     set_script_prefix(prefix)
     settings.STATIC_URL = f"{prefix}/assets/" if prefix else settings.STATIC_EXPORT_ASSETS_PREFIX
 
@@ -64,7 +83,7 @@ def export_static_site(out_dir: Path) -> dict:
         _copy_assets(out_dir)
         counts = {"pages": 0, "concepts": 0}
 
-        biblioteca_url = f"{site_root_path(settings.SITE_URL)}biblioteca/"
+        biblioteca_url = f"{site_root_path(site_url)}biblioteca/"
         root_index = f"""<!DOCTYPE html>
 <html lang="es">
 <head>
@@ -125,3 +144,5 @@ def export_static_site(out_dir: Path) -> dict:
     finally:
         clear_script_prefix()
         settings.STATIC_URL = prev_static_url
+        settings.SITE_URL = prev_site_url
+        settings.ALLOWED_HOSTS = prev_allowed_hosts

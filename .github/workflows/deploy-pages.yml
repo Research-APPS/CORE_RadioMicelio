@@ -27,7 +27,8 @@ jobs:
           if [ -n "${{ vars.SITE_URL }}" ]; then
             echo "SITE_URL=${{ vars.SITE_URL }}" >> "$GITHUB_ENV"
           else
-            echo "SITE_URL=https://${{ github.event.repository.owner.login }}.github.io/${{ github.event.repository.name }}" >> "$GITHUB_ENV"
+            OWNER=$(echo "${{ github.event.repository.owner.login }}" | tr '[:upper:]' '[:lower:]')
+            echo "SITE_URL=https://${OWNER}.github.io/${{ github.event.repository.name }}" >> "$GITHUB_ENV"
           fi
       - name: Install dependencies
         run: pip install -r requirements.txt
