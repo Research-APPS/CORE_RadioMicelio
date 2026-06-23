@@ -83,27 +83,33 @@ En esta preview la navegación solo muestra **Biblioteca** y **AIRAM** (sin CMS 
 ### Configuración inicial (una sola vez)
 
 1. Sube el repositorio a GitHub (rama `main`).
-2. Repo → **Settings → Pages → Build and deployment** → Source: **GitHub Actions** (no «Deploy from a branch»).
-3. Repo → **Settings → Secrets and variables → Actions → Variables** (opcional):
-   - `SITE_URL` — URL pública con la que se genera el JSON-LD. Si no la defines, el workflow usa automáticamente `https://<org>.github.io/<repo>` (p. ej. `https://research-apps.github.io/CORE_RadioMicelio`).
-   - `STATIC_SITE_CNAME` — solo si usas dominio propio (ej. `radiomicelio.org`). Crea el archivo `CNAME` en `dist/`.
-4. **Actions** → workflow **Deploy static wiki** → **Run workflow** (o haz push a `main`).
+2. **Actions → Deploy static wiki → Run workflow** (o push a `main`). El workflow genera la wiki y la sube a la rama `gh-pages`.
+3. Repo → **Settings → Pages → Build and deployment** → elige **una** de estas opciones:
 
-Cuando el workflow termine, la URL aparece en **Settings → Pages** y en el job de deploy (entorno `github-pages`).
+| Opción | Configuración |
+|--------|----------------|
+| **Recomendada** | Source: **Deploy from a branch** → Branch: **`gh-pages`** → Folder: **`/ (root)`** |
+| Alternativa | Source: **GitHub Actions** (usa el artefacto del mismo workflow) |
+
+4. (Opcional) **Settings → Variables → Actions**:
+   - `SITE_URL` — p. ej. `https://research-apps.github.io/CORE_RadioMicelio`
+   - `STATIC_SITE_CNAME` — solo con dominio propio
+
+Cuando el workflow termine en verde, prueba:
+- https://research-apps.github.io/CORE_RadioMicelio/biblioteca/
+- https://research-apps.github.io/CORE_RadioMicelio/airam/graph.json
 
 ### Si la raíz muestra el README
 
-Eso significa que Pages está sirviendo el repositorio como documentación Jekyll, **no** el `dist/` generado por Django.
+Pages está sirviendo la rama **`main`** como documentación Jekyll, **no** la wiki generada.
 
-Comprueba:
+**Arreglo:** Settings → Pages → Branch **`gh-pages`** / **`(root)`** (no `main`).
 
-1. **Settings → Pages → Source** = **GitHub Actions** (no `main` / `/root`).
-2. El workflow **Deploy static wiki** ha terminado en verde.
-3. Prueba directamente:
-   - `https://research-apps.github.io/CORE_RadioMicelio/biblioteca/`
-   - `https://research-apps.github.io/CORE_RadioMicelio/airam/graph.json`
+Señales de que sigue mal:
+- La raíz muestra el texto del README.
+- `/biblioteca/` devuelve **404**.
 
-La raíz (`/CORE_RadioMicelio/`) debe redirigir a `/CORE_RadioMicelio/biblioteca/` con un `index.html` estático, no mostrar el texto del README.
+Con `gh-pages` bien configurado, la raíz redirige a `/biblioteca/` y verás la biblioteca semántica.
 
 ## Actualizar Pages (flujo habitual)
 
