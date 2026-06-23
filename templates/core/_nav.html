@@ -1,12 +1,12 @@
 <header class="site-header">
-  <a class="brand" href="/biblioteca/">{{ institute }}</a>
+  <a class="brand" href="{{ site_root }}biblioteca/">{{ institute }}</a>
   <nav class="site-nav" aria-label="Principal">
-    <a href="/biblioteca/">Biblioteca</a>
+    <a href="{{ site_root }}biblioteca/">Biblioteca</a>
     {% if not static_export %}
-    <a href="/research/">Cuadernos</a>
-    <a href="/resultados/">Publicaciones</a>
-    <a href="/cms/">CMS</a>
+    <a href="{{ site_root }}research/">Cuadernos</a>
+    <a href="{{ site_root }}resultados/">Publicaciones</a>
+    <a href="{{ site_root }}cms/">CMS</a>
     {% endif %}
-    <a href="/airam/graph.json">AIRAM</a>
+    <a href="{{ site_root }}airam/graph.json">AIRAM</a>
   </nav>
 </header>

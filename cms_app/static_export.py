@@ -7,9 +7,11 @@ from urllib.parse import urlparse
 
 from django.conf import settings
 from django.test import RequestFactory
+from django.urls import clear_script_prefix, set_script_prefix
 
 from airam_app.graph import build_graph
 from cms_app import views_public
+from core_micelio.context_processors import script_prefix, site_root_path
 from ontologizar_app.models import Concept, Dictionary, Subject, Taxonomy
 
 
@@ -54,24 +56,29 @@ def export_static_site(out_dir: Path) -> dict:
     out_dir.mkdir(parents=True)
 
     prev_static_url = settings.STATIC_URL
-    settings.STATIC_URL = settings.STATIC_EXPORT_ASSETS_PREFIX
+    prefix = script_prefix(settings.SITE_URL)
+    set_script_prefix(prefix)
+    settings.STATIC_URL = f"{prefix}/assets/" if prefix else settings.STATIC_EXPORT_ASSETS_PREFIX
 
     try:
         _copy_assets(out_dir)
         counts = {"pages": 0, "concepts": 0}
 
-        root_index = """<!DOCTYPE html>
+        biblioteca_url = f"{site_root_path(settings.SITE_URL)}biblioteca/"
+        root_index = f"""<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="utf-8">
-  <meta http-equiv="refresh" content="0; url=/biblioteca/">
-  <link rel="canonical" href="/biblioteca/">
+  <meta http-equiv="refresh" content="0; url={biblioteca_url}">
+  <link rel="canonical" href="{biblioteca_url}">
   <title>Biblioteca</title>
 </head>
-<body><p><a href="/biblioteca/">Ir a la biblioteca</a></p></body>
+<body><p><a href="{biblioteca_url}">Ir a la biblioteca</a></p></body>
 </html>"""
         _write_html(out_dir, "index.html", root_index)
         counts["pages"] += 1
+
+        (out_dir / ".nojekyll").touch()
 
         req = _make_request("/biblioteca/")
         _write_html(out_dir, "biblioteca/index.html", _render(views_public.biblioteca_index, req))
@@ -116,4 +123,5 @@ def export_static_site(out_dir: Path) -> dict:
 
         return counts
     finally:
+        clear_script_prefix()
         settings.STATIC_URL = prev_static_url
