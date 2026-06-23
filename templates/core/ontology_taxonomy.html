@@ -1,0 +1,21 @@
+{% extends "core/base.html" %}
+{% block title %}{{ taxonomy.name }} — Ontologizar{% endblock %}
+{% block content %}
+  <p class="breadcrumb">
+    <a href="/capacidades/ontologizar/">Ontologizar</a> / {{ taxonomy.name }}
+  </p>
+  <h1 class="page-title">{{ taxonomy.name }}</h1>
+  {% if taxonomy.description %}<p class="lead">{{ taxonomy.description }}</p>{% endif %}
+  <p><a class="btn-link" href="/knowledge/api/taxonomies/{{ taxonomy.slug }}/jsonld/">Descargar JSON-LD</a></p>
+
+  <section class="section">
+    <p class="section-label">Términos</p>
+    <ul class="plain card" style="padding:0 1rem">
+      {% for node in nodes %}
+      <li>{{ node.label }}</li>
+      {% endfor %}
+    </ul>
+  </section>
+
+  <aside class="technical">Capacidad: Ontologizar · Implementador: {{ implementation.label }}</aside>
+{% endblock %}

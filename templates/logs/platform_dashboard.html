@@ -1,0 +1,30 @@
+{% extends "core/base.html" %}
+{% block title %}{{ platform.label }} — Medir{% endblock %}
+{% block content %}
+  <p class="breadcrumb"><a href="/capacidades/medir/">Medir</a> / {{ platform.label }}</p>
+  <h1 class="page-title">{{ platform.label }}</h1>
+  <p class="lead">{{ platform.description }}</p>
+
+  <div class="grid-2" style="margin-bottom:2rem">
+    <div class="card"><h3>Adopción</h3><p>{{ summary.unique_users }} usuarios · {{ summary.total_events }} eventos</p></div>
+    <div class="card"><h3>Recurrencia</h3><p>{{ summary.recurrence.rate_percent }}% usuarios recurrentes</p></div>
+    <div class="card"><h3>Pareto</h3><p>Top 10 secciones = {{ summary.pareto.share_percent }}% del tráfico</p></div>
+  </div>
+
+  <p class="section-label">Uso por sección</p>
+  <table class="data">
+    <thead><tr><th>Sección</th><th>Eventos</th><th>Usuarios</th></tr></thead>
+    <tbody>
+      {% for row in summary.usage.by_section %}
+      <tr><td>{{ row.name }}</td><td>{{ row.count }}</td><td>{{ row.unique_users }}</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <p class="section-label" style="margin-top:2rem">Evolución mensual</p>
+  <ul class="plain card" style="padding:0 1rem">
+    {% for m in summary.evolution.by_month %}
+    <li>{{ m.month }} — {{ m.count }} eventos ({{ m.unique_users }} usuarios)</li>
+    {% endfor %}
+  </ul>
+{% endblock %}

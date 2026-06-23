@@ -1,0 +1,77 @@
+{% extends "core/base.html" %}
+{% block title %}{{ capability.label }} — {{ institute }}{% endblock %}
+{% block content %}
+  <p class="breadcrumb"><a href="/#capacidades">Competencias</a> / {{ capability.label }}</p>
+  <h1 class="page-title">{{ capability.label }}</h1>
+
+  <section class="section">
+    <p class="section-label">Qué es</p>
+    <div class="card">
+      <p>{{ capability.definition }}</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <p class="section-label">Aprendizaje esperado</p>
+    <div class="card">
+      <p>{{ capability.learning_outcome }}</p>
+      <p style="margin-top:0.75rem;color:var(--muted);font-size:0.9rem">
+        <em>En el colegio:</em> {{ capability.school_analogy }}
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <p class="section-label">Tipos de resultado</p>
+    <p style="color:var(--muted)">{{ capability.result_types|join:" · " }}</p>
+  </section>
+
+  {% if not capability.mvp_active %}
+    <div class="card"><p><strong>Próximamente.</strong> Esta competencia está definida en el currículo pero aún no tiene herramientas activas en {{ institute }}.</p></div>
+  {% elif not implemented %}
+    <div class="card"><p>La competencia está prevista pero el módulo necesario no está activo en este despliegue.</p></div>
+  {% elif capability.public_slug == "medir" %}
+    <p class="section-label">Herramientas</p>
+    <ul class="cap-list">
+      {% for p in platforms %}
+      <li>
+        <a class="cap-item" href="/logs/{{ p.slug }}/">
+          <strong>{{ p.label }}</strong>
+          <span class="tagline">{{ p.description }}</span>
+        </a>
+      </li>
+      {% endfor %}
+    </ul>
+  {% elif capability.public_slug == "ontologizar" %}
+    <p class="section-label">Taxonomías de la biblioteca</p>
+    {% if results %}
+    <ul class="plain card" style="padding:0 1rem">
+      {% for r in results %}
+      <li><a href="{{ r.url }}">{{ r.title }}</a> · <a href="{{ r.jsonld_url }}">JSON-LD</a></li>
+      {% endfor %}
+    </ul>
+    {% else %}<div class="card"><p>No hay taxonomías publicadas.</p></div>{% endif %}
+  {% elif capability.public_slug == "catalogar" %}
+    <p class="section-label">Diccionarios inventariados</p>
+    {% if results %}
+    <ul class="plain card" style="padding:0 1rem">
+      {% for r in results %}
+      <li><strong>{{ r.meta }}</strong> — {{ r.title }}</li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+  {% elif capability.public_slug == "geolocalizar" %}
+    <div class="card"><p>Los proyectos PFC que usan Geografía pueden generar mapas y coordenadas. Consulta la asignatura <strong>Geografía</strong> en la biblioteca.</p></div>
+  {% elif capability.public_slug == "publicar" %}
+    <p class="section-label">Artefactos publicables</p>
+    <ul class="plain card" style="padding:0 1rem">
+      {% for r in results %}
+      <li>{{ r.kind }}: <a href="{{ r.url }}">{{ r.title }}</a></li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+
+  {% if implementation %}
+  <aside class="technical">Implementación activa: {{ implementation.label }} · {{ implementation.status }}</aside>
+  {% endif %}
+{% endblock %}

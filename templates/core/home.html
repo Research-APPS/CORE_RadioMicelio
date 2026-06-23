@@ -1,0 +1,44 @@
+{% extends "core/base.html" %}
+{% block title %}CORE — {{ institute }}{% endblock %}
+{% block content %}
+  <h1 class="page-title">CORE</h1>
+  <p class="lead">
+    Sistema operativo de investigación del {{ institute }}: asignaturas, competencias digitales
+    y proyectos de fin de curso.
+  </p>
+
+  <section class="section">
+    <p class="section-label">Proyectos</p>
+    <div class="card">
+      <h3>Proyectos de fin de curso</h3>
+      <p>Cuadernos que marcan conceptos de la biblioteca y producen resultados.
+      {% if project_count %}<strong>{{ project_count }}</strong> activos.{% endif %}</p>
+      <p style="margin-top:0.85rem"><a class="btn-link" href="/research/">Entrar</a></p>
+    </div>
+  </section>
+
+  <section class="section" id="capacidades">
+    <p class="section-label">Competencias digitales</p>
+    <ul class="cap-list">
+      {% for cap in capabilities %}
+      <li>
+        <a class="cap-item{% if cap.coming_soon %} disabled{% endif %}" href="{{ cap.url }}">
+          <strong>{{ cap.label }}</strong>
+          <span class="tagline">{{ cap.tagline }}{% if cap.coming_soon %} · próximamente{% endif %}</span>
+        </a>
+      </li>
+      {% endfor %}
+    </ul>
+  </section>
+
+  <section class="section">
+    <p class="section-label">Resultados</p>
+    <div class="card">
+      <h3>Artefactos publicados</h3>
+      <p>Informes, taxonomías y entregas generadas por los proyectos.</p>
+      <p style="margin-top:0.85rem"><a class="btn-link" href="/resultados/">Ver resultados</a></p>
+    </div>
+  </section>
+
+  <p class="footnote">Cada competencia tiene una página con su definición. Las marcadas «próximamente» aún no tienen herramientas activas.</p>
+{% endblock %}

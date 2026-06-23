@@ -1,0 +1,17 @@
+{% extends "core/base.html" %}
+{% block title %}Medir — CORE{% endblock %}
+{% block content %}
+  <p class="breadcrumb"><a href="/capacidades/medir/">Medir</a></p>
+  <h1 class="page-title">Plataformas</h1>
+  <p class="lead">Informes de adopción, uso y evolución.</p>
+  <ul class="cap-list">
+  {% for p in platforms %}
+    <li>
+      <a class="cap-item" href="{% url 'logs:platform_dashboard' platform_slug=p.slug %}">
+        <strong>{{ p.label }}</strong>
+        <span class="tagline">{{ p.description }}</span>
+      </a>
+    </li>
+  {% endfor %}
+  </ul>
+{% endblock %}

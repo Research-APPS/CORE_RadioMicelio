@@ -1,0 +1,13 @@
+{% extends "core/base.html" %}
+{% block title %}Editor — {{ taxonomy.name }}{% endblock %}
+{% block extra_head %}<link rel="stylesheet" href="/static/cms/css/taxonomy_editor.css">{% endblock %}
+{% block content %}<main class="page"><h1>Editor: {{ taxonomy.name }}</h1>
+<form method="post">{% csrf_token %}
+<p><label>Diccionario canónico
+<select name="dictionary_id" required>{% for d in dictionaries %}<option value="{{ d.id }}" {% if dictionary and dictionary.id == d.id %}selected{% endif %}>{{ d.subject.name }} / {{ d.name }}</option>{% endfor %}</select></label></p>
+<div class="editor-preview-grid">
+<textarea id="texto-taxonomia" name="texto_taxonomia" placeholder="Escribe con indentación..."></textarea>
+<div><div id="preview-arbol" class="arbol-container"></div><div id="preview-total" class="preview-total"></div></div>
+</div>
+<button type="submit">Importar taxonomía</button></form></main>
+<script src="/static/cms/js/taxonomy_editor.js"></script>{% endblock %}

@@ -1,0 +1,4 @@
+{% extends "core/base.html" %}
+{% block title %}{{ dictionary.name }}{% endblock %}
+{% block content %}<main class="page"><h1>{{ dictionary.name }}</h1>
+<ul>{% for c in concepts %}<li><a href="{% url 'biblioteca:topic' c.uuid %}">{{ c.label }}</a></li>{% endfor %}</ul></main>{% endblock %}

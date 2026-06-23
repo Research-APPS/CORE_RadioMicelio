@@ -1,0 +1,6 @@
+{% extends "core/base.html" %}
+{% block title %}Biblioteca{% endblock %}
+{% block content %}<main class="page"><h1>Biblioteca semántica</h1>
+<h2>Asignaturas</h2><div class="card-grid">{% for s in subjects %}<a class="card" href="{% url 'biblioteca:subject' s.slug %}">{{ s.name }}</a>{% endfor %}</div>
+<h2>Taxonomías transversales</h2><ul>{% for t in taxonomies %}<li><a href="{% url 'biblioteca:taxonomy' t.slug %}">{{ t.name }}</a></li>{% endfor %}</ul>
+<p><a href="{% url 'biblioteca:taxonomy_list' %}">Ver todas las taxonomías</a></p></main>{% endblock %}

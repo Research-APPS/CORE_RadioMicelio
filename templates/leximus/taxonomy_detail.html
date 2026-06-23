@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="es">
+<head><meta charset="utf-8"><title>{{ taxonomy.name }} — Leximus</title></head>
+<body>
+  <h1>{{ taxonomy.name }}</h1>
+  <p>{{ taxonomy.description }}</p>
+  <p><a href="{% url 'leximus:taxonomy_jsonld' slug=taxonomy.slug %}">JSON-LD</a></p>
+  <ul>
+  {% for node in nodes %}
+    <li>{{ node.label }}</li>
+  {% endfor %}
+  </ul>
+</body>
+</html>

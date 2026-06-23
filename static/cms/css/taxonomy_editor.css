@@ -1,0 +1,1 @@
+.editor-preview-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}#texto-taxonomia{font-family:monospace;min-height:320px;width:100%}.arbol-container{max-height:400px;overflow:auto;background:#f8f9fa;padding:1rem;border:1px solid #ddd}.tree-list{list-style:none;padding-left:0}.tree-children{padding-left:1.2rem}

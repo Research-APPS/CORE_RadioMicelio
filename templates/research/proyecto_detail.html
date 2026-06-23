@@ -1,0 +1,44 @@
+{% extends "core/base.html" %}
+{% block title %}{{ proyecto.titulo }} — {{ institute }}{% endblock %}
+{% block content %}
+  <p class="breadcrumb"><a href="/research/">Cuadernos</a> / {{ proyecto.acron|default:proyecto.titulo }}</p>
+  <h1 class="page-title">{{ proyecto.titulo }}</h1>
+  {% if proyecto.descripcion %}<p class="lead">{{ proyecto.descripcion }}</p>{% endif %}
+  <p style="font-size:0.875rem">
+    <a href="{% url 'research:digital_profile_json' uuid=proyecto.uuid %}">digital-profile.json</a>
+    · <a href="{% url 'research:digital_profile_json' uuid=proyecto.uuid %}?format=jsonld">JSON-LD</a>
+  </p>
+
+  {% if profile and profile.markers %}
+  <section class="section">
+    <p class="section-label">Marcadores (citas a la biblioteca)</p>
+    <ul class="plain card" style="padding:0 1rem">
+      {% for m in profile.markers %}
+      <li>
+        <strong>{{ m.concept_label }}</strong>
+        <span style="color:var(--muted);font-size:0.85rem"> — {{ m.subject }} / {{ m.status }}</span>
+        {% if m.jsonld_url %} · <a href="{{ m.jsonld_url }}">JSON-LD</a>{% endif %}
+      </li>
+      {% endfor %}
+    </ul>
+  </section>
+  {% endif %}
+
+  <section class="section">
+    <p class="section-label">Investigación</p>
+    {% if profile and profile.curriculum.activities %}
+    <div class="grid-2">
+      {% for act in profile.curriculum.activities %}
+      <article class="cap-card">
+        <span class="status">Activa</span>
+        <h3>{{ act.title }}</h3>
+        <p>Competencia: {{ act.capability }}</p>
+        {% if act.results %}<p>Resultados: {{ act.results|join:", " }}</p>{% endif %}
+      </article>
+      {% endfor %}
+    </div>
+    {% else %}
+    <div class="card"><p>Sin actividades registradas.</p></div>
+    {% endif %}
+  </section>
+{% endblock %}

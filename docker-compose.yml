@@ -1,0 +1,36 @@
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: core
+      POSTGRES_PASSWORD: core
+      POSTGRES_DB: core_default
+    ports:
+      - "5433:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  web:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      DEBUG: "0"
+      SECRET_KEY: change-me-in-docker
+      ALLOWED_HOSTS: localhost,127.0.0.1
+      CORE_INSTITUTE_NAME: ICCMU
+      CORE_ENABLED_MODULES: research,logs,leximus
+      CORE_URL_RESEARCH: http://localhost:8000/research
+      CORE_URL_LOGS: http://localhost:8000/logs
+      CORE_URL_LEXIMUS: http://localhost:8000/leximus
+      POSTGRES_HOST: db
+      POSTGRES_USER: core
+      POSTGRES_PASSWORD: core
+      POSTGRES_DB_DEFAULT: core_default
+      POSTGRES_DB_RESEARCH: core_research
+      POSTGRES_DB_LEXIMUS: core_leximus
+    depends_on:
+      - db
+
+volumes:
+  pgdata:

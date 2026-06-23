@@ -1,0 +1,8 @@
+{% extends "core/base.html" %}
+{% block title %}CMS — Login{% endblock %}
+{% block content %}<main class="page"><h1>CMS</h1>
+<form method="post">{% csrf_token %}
+  <p><label>Usuario <input name="username" required></label></p>
+  <p><label>Contraseña <input type="password" name="password" required></label></p>
+  <button type="submit">Entrar</button>
+</form></main>{% endblock %}

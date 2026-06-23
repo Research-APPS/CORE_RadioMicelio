@@ -1,0 +1,9 @@
+{% extends "core/base.html" %}
+{% block title %}{{ concept.label }}{% endblock %}
+{% block extra_head %}<script type="application/ld+json">{{ jsonld|safe }}</script>{% endblock %}
+{% block content %}<main class="page topic-page"><nav><a href="/biblioteca/">Biblioteca</a> / {{ concept.dictionary.subject.name }} / {{ concept.label }}</nav>
+<h1>{{ concept.label }}</h1>
+<div class="topic-body">{{ body_html }}</div>
+{% if taxonomies %}<section><h2>Clasificaciones</h2><ul>{% for t in taxonomies %}<li><a href="/biblioteca/taxonomias/{{ t.slug }}/">{{ t.name }}</a></li>{% endfor %}</ul></section>{% endif %}
+{% if markers %}<section><h2>Citado en cuadernos</h2><ul>{% for m in markers %}<li>{% if static_export %}{{ m.project.titulo }}{% else %}<a href="{{ m.project.get_absolute_url }}">{{ m.project.titulo }}</a>{% endif %} ({{ m.status }})</li>{% endfor %}</ul></section>{% endif %}
+</main>{% endblock %}

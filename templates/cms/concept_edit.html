@@ -1,0 +1,16 @@
+{% extends "core/base.html" %}
+{% block title %}Editar {{ concept.label }}{% endblock %}
+{% block content %}<main class="page"><h1>{{ concept.label }}</h1>
+<p><a href="/biblioteca/temas/{{ concept.uuid }}/">Ver ficha pública</a></p>
+<h2>Definición</h2><form method="post">{% csrf_token %}<input type="hidden" name="action" value="definition">
+<textarea name="text" rows="3" required></textarea><button type="submit">Añadir</button></form>
+<ul>{% for d in definitions %}<li>{{ d.text }} <small>({{ d.kind }})</small></li>{% endfor %}</ul>
+<h2>Propiedad</h2><form method="post">{% csrf_token %}<input type="hidden" name="action" value="property">
+<input name="key" placeholder="clave" required> <input name="value" placeholder="valor" required>
+<button type="submit">Guardar</button></form>
+<h2>Relación</h2><form method="post">{% csrf_token %}<input type="hidden" name="action" value="relation">
+<input name="target_uuid" placeholder="UUID concepto destino" required>
+<select name="relation_type"><option value="related">related</option><option value="broader">broader</option><option value="partOf">partOf</option></select>
+<button type="submit">Añadir</button></form>
+<h2>Clasificaciones</h2><ul>{% for t in taxonomies %}<li>{{ t.name }}</li>{% endfor %}</ul>
+</main>{% endblock %}

@@ -1,0 +1,24 @@
+{% extends "core/base.html" %}
+{% block title %}Resultados — CORE{% endblock %}
+{% block content %}
+  <h1 class="page-title">Resultados</h1>
+  <p class="lead">Artefactos científicos publicados o en curso de publicación FAIR.</p>
+
+  {% if results %}
+  <table class="data">
+    <thead><tr><th>Título</th><th>Capacidad</th><th>Tipo</th><th></th></tr></thead>
+    <tbody>
+      {% for r in results %}
+      <tr>
+        <td><a href="{{ r.url }}">{{ r.title }}</a></td>
+        <td>{{ r.capability }}</td>
+        <td>{{ r.type }}</td>
+        <td><a href="{{ r.publish_url }}">API</a></td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+  <div class="card"><p>No hay resultados publicados todavía.</p></div>
+  {% endif %}
+{% endblock %}

@@ -1,0 +1,7 @@
+{% extends "core/base.html" %}
+{% block title %}Nueva taxonomía{% endblock %}
+{% block content %}<main class="page"><h1>Nueva taxonomía transversal</h1>
+<form method="post">{% csrf_token %}
+<p><label>Nombre <input name="name" required></label></p>
+<p><label>Slug <input name="slug" required></label></p>
+<button type="submit">Crear</button></form></main>{% endblock %}

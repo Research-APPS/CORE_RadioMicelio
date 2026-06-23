@@ -1,0 +1,18 @@
+{% extends "core/base.html" %}
+{% block title %}Proyectos de fin de curso — {{ institute }}{% endblock %}
+{% block content %}
+  <h1 class="page-title">Proyectos de fin de curso</h1>
+  <p class="lead">Cuadernos de investigación que cruzan varias asignaturas de la biblioteca.</p>
+  <ul class="project-list">
+  {% for p in proyectos %}
+    <li>
+      <a href="{{ p.get_absolute_url }}">
+        <span class="acron">{{ p.titulo }}</span>
+        {% if p.acron %}<span class="titulo"> — {{ p.acron }}</span>{% endif %}
+      </a>
+    </li>
+  {% empty %}
+    <li class="card"><p>No hay proyectos publicados.</p></li>
+  {% endfor %}
+  </ul>
+{% endblock %}
