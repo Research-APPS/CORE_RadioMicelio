@@ -20,6 +20,8 @@ from ontologizar_app.services.concept_indicators import (
     dictionary_concept_rows,
     topic_indicator_anchors,
 )
+from ontologizar_app.services.knowledge_depth import build_taxonomy_tree_roots
+from ontologizar_app.services.taxonomy_nodes import add_taxonomy_node
 from research_app.models import LearningMarker
 
 CMS_LOGIN = "/cms/login/"
@@ -57,8 +59,34 @@ def taxonomy_list(request):
 
 def taxonomy_detail(request, slug):
     taxonomy = get_object_or_404(Taxonomy, slug=slug, is_active=True)
-    roots = TaxonomyNode.objects.filter(taxonomy=taxonomy, parent=None)
-    return render(request, "cms/public/taxonomy.html", {"taxonomy": taxonomy, "roots": roots})
+    roots = build_taxonomy_tree_roots(taxonomy)
+    return render(request, "cms/public/taxonomy.html", {
+        "taxonomy": taxonomy,
+        "roots": roots,
+        "cms_editor_url": reverse("cms:taxonomy_editor", kwargs={"uuid": taxonomy.uuid}),
+    })
+
+
+@login_required(login_url=CMS_LOGIN)
+def taxonomy_add_node(request, slug):
+    taxonomy = get_object_or_404(Taxonomy, slug=slug, is_active=True)
+    if request.method != "POST":
+        return redirect("biblioteca:taxonomy", slug=slug)
+
+    label = request.POST.get("label", "").strip()
+    parent_uuid = request.POST.get("parent_uuid", "").strip()
+    parent = None
+    if parent_uuid:
+        parent = get_object_or_404(TaxonomyNode, uuid=parent_uuid, taxonomy=taxonomy)
+
+    try:
+        add_taxonomy_node(taxonomy, label, parent=parent)
+    except ValueError as exc:
+        messages.error(request, str(exc))
+    else:
+        messages.success(request, f"Clase «{label}» añadida.")
+
+    return redirect("biblioteca:taxonomy", slug=slug)
 
 
 def topic_detail(request, uuid):

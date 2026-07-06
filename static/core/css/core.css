@@ -325,6 +325,118 @@ a:hover { text-decoration: underline; }
   background: #f5f9fc;
 }
 
+.taxonomy-tree-btn--primary {
+  border-color: var(--accent);
+  background: #eef5fb;
+  font-weight: 600;
+}
+
+.taxonomy-knowledge-legend {
+  font-size: 0.85rem;
+  color: var(--muted);
+  margin: 0 0 0.75rem;
+}
+
+.taxonomy-knowledge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  flex-shrink: 0;
+  font-size: 0.7rem;
+  color: var(--muted);
+}
+
+.taxonomy-knowledge__label {
+  font-weight: 600;
+  color: var(--accent);
+  min-width: 2rem;
+}
+
+.taxonomy-knowledge__meter {
+  display: inline-flex;
+  gap: 2px;
+}
+
+.taxonomy-knowledge__dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #d8e2ec;
+}
+
+.taxonomy-knowledge__dot--on {
+  background: var(--accent);
+}
+
+.taxonomy-add-btn {
+  flex-shrink: 0;
+  width: 1.4rem;
+  height: 1.4rem;
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  background: #fff;
+  color: var(--accent);
+  font-size: 1rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.taxonomy-add-btn:hover {
+  background: #eef5fb;
+  border-color: var(--accent);
+}
+
+.taxonomy-add-form {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 1rem 0;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: #f8fbfd;
+}
+
+.taxonomy-add-form--hidden {
+  display: none;
+}
+
+.taxonomy-add-form__label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  width: 100%;
+}
+
+.taxonomy-add-form__input {
+  flex: 1;
+  min-width: 12rem;
+  padding: 0.4rem 0.6rem;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+}
+
+.taxonomy-add-form__submit,
+.taxonomy-add-form__cancel {
+  font-size: 0.8rem;
+  padding: 0.35rem 0.75rem;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.taxonomy-add-form__submit {
+  border: 1px solid var(--accent);
+  background: var(--accent);
+  color: #fff;
+}
+
+.taxonomy-add-form__cancel {
+  border: 1px solid var(--border);
+  background: #fff;
+  color: var(--muted);
+}
+
 .taxonomy-tree {
   margin-top: 0.25rem;
 }

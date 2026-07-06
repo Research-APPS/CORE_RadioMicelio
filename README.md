@@ -2,14 +2,14 @@
 
 **Biblioteca semántica + cuadernos de investigación.**
 
-- **Biblioteca** (`/biblioteca/`) — conocimiento estable: diccionarios, taxonomías transversales, conceptos
+- **Biblioteca** (`/biblioteca/`) — asignaturas, diccionarios, taxonomías (#ontoHongo, #ontoEmo…), temas
 - **Cuadernos** (`/research/`) — proyectos con marcadores, actividades y resultados (solo Django local)
-- **AIRAM** — grafo semántico en `/airam/graph.json`
-- **CMS** (`/cms/`) — editor local (no se publica en Pages)
+- **AIRAM** — grafo semántico en `/airam/graph.json`; **temario por taxonomía** solo en Django local (ver abajo)
+- **CMS** (`/cms/`) — editor avanzado (relaciones, propiedades; no se publica en Pages)
 
 ```text
-Django local  = taller privado (editar)
-GitHub Pages  = biblioteca pública estática (mostrar)
+Django local  = taller privado (editar, sesiones, cuadernos)
+GitHub Pages  = biblioteca pública estática (solo lectura)
 ```
 
 ## Trabajar en local (Django)
@@ -27,38 +27,54 @@ python manage.py runserver 8003
 | URL | Qué es |
 |---|---|
 | http://127.0.0.1:8003/biblioteca/ | Biblioteca dinámica |
-| http://127.0.0.1:8003/cms/login/ | CMS (ivansimo / 12345678) |
+| http://127.0.0.1:8003/biblioteca/temas/\<uuid\>/editar/ | Editor wiki del tema (requiere login) |
+| http://127.0.0.1:8003/biblioteca/asignaturas/\<slug\>/editar/ | Editor de asignatura y secciones |
+| http://127.0.0.1:8003/cms/login/ | Login CMS (ivansimo / 12345678) |
+| http://127.0.0.1:8003/biblioteca/taxonomias/hongos/ | Taxonomía con AIRAM temario (icono ✦) |
 | http://127.0.0.1:8003/research/ | Cuadernos de investigación |
+| http://127.0.0.1:8003/airam/sessions/ | API sesiones AIRAM (POST, solo Django) |
 
 `runserver` **no es** GitHub Pages. Es la app Django completa (CMS, cuadernos, biblioteca editable).
+
+En cada página de biblioteca (tema, asignatura, diccionario) verás la barra **Editar** si has iniciado sesión. También puedes usar el CMS avanzado en `/cms/`.
 
 Variables útiles en `.env`:
 
 ```bash
 CORE_INSTITUTE_NAME=CORE Radio Micelio
-SITE_URL=http://127.0.0.1:8003 
+SITE_URL=http://127.0.0.1:8003   # debe coincidir con el puerto de runserver
 STATIC_SITE_CNAME=   # ej. radiomicelio.org para GitHub Pages
 ```
 
-## GitHub Pages — qué es y qué se publica
+## Django vs GitHub Pages
 
-GitHub Pages sirve **solo HTML estático** generado por Django. No ejecuta Python en producción.
+GitHub Pages sirve **solo HTML estático** generado por Django (`export_static_site`). No ejecuta Python en producción.
 
-| | `runserver :8003` | GitHub Pages |
+| Función | Django (`runserver`) | GitHub Pages |
 |---|---|---|
-| Motor | Django | HTML estático |
-| CMS / cuadernos | Sí | No |
-| Biblioteca | Dinámica | Estática |
-| AIRAM | `/airam/graph.json` | `/airam/graph.json` |
+| Motor | Django en vivo | HTML pregenerado |
+| Leer biblioteca (asignaturas, temas, taxonomías) | Sí | Sí |
+| Iconos de estado en temas y diccionarios | Sí | Sí (pre-renderizados) |
+| Taxonomías desplegables | Sí | Sí |
+| Editar desde `/biblioteca/.../editar/` | Sí (login) | No |
+| CMS (`/cms/`) | Sí | No |
+| Cuadernos (`/research/`) | Sí | No |
+| Enlaces a cuadernos en fichas de tema | Sí | No (solo texto) |
+| AIRAM `graph.json` | Sí | Sí |
+| AIRAM temario por taxonomía (sesiones, icono ✦) | Sí | No |
 
-**Se publica:**
+AIRAM temario por taxonomía funciona únicamente en Django local: añade sesiones pedagógicas sobre nodos de taxonomía, con progreso temporal (navegador + sesión Django) y guardado explícito opcional vía bookmark. En GitHub Pages solo se publica `/airam/graph.json`.
+
+Las ontologías están **aisladas por asignatura**: los enlaces wiki no cruzan dominios (micología ↔ emociones) hasta validación científica explícita.
+
+**Se publica en Pages:**
 
 - `index.html` (redirige a `/biblioteca/`)
 - `/biblioteca/**` (asignaturas, diccionarios, taxonomías, temas)
 - `/airam/graph.json`
-- `/assets/` (CSS)
+- `/assets/` (CSS, JS de biblioteca)
 
-**No se publica:** `/cms/`, `/admin/`, `/research/`, `/logs/`.
+**No se publica:** `/cms/`, `/admin/`, `/research/`, `/logs/`, `/ontologizar/` (API), `/airam/sessions/` (temario).
 
 La carpeta `dist/` está en `.gitignore`. GitHub la **genera** en CI; no hace falta commitearla.
 
@@ -114,8 +130,8 @@ Con `gh-pages` bien configurado, la raíz redirige a `/biblioteca/` y verás la 
 ## Actualizar Pages (flujo habitual)
 
 ```text
-1. Editas en Django local (CMS, conceptos, seed…)
-2. Pruebas con runserver :8003
+1. Editas en Django local (biblioteca /editar/, CMS o seed…)
+2. Pruebas con runserver :8003 (SITE_URL alineado con el puerto)
 3. (Opcional) Preview estático:
    python manage.py export_static_site --output dist
    python -m http.server 8080 --directory dist
@@ -138,9 +154,9 @@ python manage.py export_static_site --output dist
 ## Resumen
 
 ```text
-Django :8003     → taller (editar)
-localhost :8080  → vista previa de Pages
-GitHub Pages     → biblioteca pública real
+Django :8003     → taller (leer + editar + cuadernos)
+localhost :8080  → vista previa exacta de Pages
+GitHub Pages     → biblioteca pública (solo lectura)
 ```
 
 Ver también [docs/CORE_CURRICULUM.md](docs/CORE_CURRICULUM.md).

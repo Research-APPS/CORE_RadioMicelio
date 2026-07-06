@@ -1,10 +1,24 @@
-<li class="taxonomy-node{% if node.is_leaf %} taxonomy-node--leaf{% endif %}" data-level="{{ node.level }}">
-  {% if node.is_leaf %}
+<li class="taxonomy-node{% if not node.taxonomy_children %} taxonomy-node--leaf{% endif %}" data-level="{{ node.level }}">
+  {% if not node.taxonomy_children %}
   <span class="taxonomy-node__leaf taxonomy-node__label taxonomy-node__label--l{{ node.level }}">
     {% if node.concept %}
     <a href="{% url 'biblioteca:topic' node.concept.uuid %}" class="wiki-link">{{ node.label }}</a>
     {% else %}
     {{ node.label }}
+    {% endif %}
+    {% include "cms/public/_taxonomy_knowledge.html" with depth=node.knowledge_depth %}
+    {% if not static_export %}
+    <button type="button" class="taxonomy-airam-queue-btn"
+            title="Añadir al temario combinado"
+            data-taxonomy="{{ taxonomy.slug }}"
+            data-node-uuid="{{ node.uuid }}"
+            data-label="{{ node.label }}"
+            aria-label="Añadir al temario combinado">⊕</button>
+    <button type="button" class="taxonomy-airam-btn"
+            title="AIRAM: estudiar desde aquí"
+            data-taxonomy="{{ taxonomy.slug }}"
+            data-node-uuid="{{ node.uuid }}"
+            data-label="{{ node.label }}">✦</button>
     {% endif %}
   </span>
   {% else %}
@@ -18,11 +32,30 @@
         {{ node.label }}
         {% endif %}
       </span>
+      {% include "cms/public/_taxonomy_knowledge.html" with depth=node.knowledge_depth %}
+      {% if not static_export %}
+      <button type="button" class="taxonomy-airam-queue-btn"
+              title="Añadir al temario combinado"
+              data-taxonomy="{{ taxonomy.slug }}"
+              data-node-uuid="{{ node.uuid }}"
+              data-label="{{ node.label }}"
+              aria-label="Añadir al temario combinado">⊕</button>
+      <button type="button" class="taxonomy-airam-btn"
+              title="AIRAM: estudiar desde aquí"
+              data-taxonomy="{{ taxonomy.slug }}"
+              data-node-uuid="{{ node.uuid }}"
+              data-label="{{ node.label }}">✦</button>
+      <button type="button" class="taxonomy-add-btn"
+              title="Añadir clase dentro de {{ node.label }}"
+              data-parent-uuid="{{ node.uuid }}"
+              data-parent-label="{{ node.label }}"
+              aria-label="Añadir clase">+</button>
+      {% endif %}
       <span class="taxonomy-node__count">{{ node.get_descendant_count|add:1 }}</span>
     </summary>
     <ul class="taxonomy-tree__children">
-      {% for child in node.get_children %}
-      {% include "cms/public/_taxonomy_node.html" with node=child %}
+      {% for child in node.taxonomy_children %}
+      {% include "cms/public/_taxonomy_node.html" with node=child taxonomy=taxonomy %}
       {% endfor %}
     </ul>
   </details>

@@ -1,0 +1,52 @@
+{% if not static_export %}
+<aside id="airam-temario-panel" class="airam-panel" hidden aria-label="AIRAM temario">
+  <header class="airam-panel__header">
+    <h2 class="airam-panel__title">AIRAM</h2>
+    <button type="button" class="airam-panel__close" data-airam-action="close" aria-label="Cerrar">×</button>
+  </header>
+  <div class="airam-panel__meta">
+    <div class="airam-panel__builder" data-airam-builder>
+      <p class="airam-panel__builder-title">Temario combinado</p>
+      <ul class="airam-panel__queue" data-airam-queue></ul>
+      <div class="airam-panel__builder-actions">
+        <button type="button" class="airam-panel__btn airam-panel__btn--sm"
+                data-airam-action="start-combined" disabled>Empezar combinado</button>
+        <button type="button" class="airam-panel__btn airam-panel__btn--ghost airam-panel__btn--sm"
+                data-airam-action="clear-queue">Vaciar</button>
+        <button type="button" class="airam-panel__btn airam-panel__btn--ghost airam-panel__btn--sm"
+                data-airam-action="export-queue-rdf" disabled>Exportar RDF</button>
+      </div>
+    </div>
+    <p class="airam-panel__session-title" data-airam-session-title></p>
+    <ul class="airam-panel__classes" data-airam-classes hidden></ul>
+    <label class="airam-panel__granularity-label">
+      Detalle
+      <select data-airam-granularity>
+        <option value="breve">Breve</option>
+        <option value="normal" selected>Normal</option>
+        <option value="profundo">Profundo</option>
+        <option value="temario">Temario</option>
+      </select>
+    </label>
+  </div>
+  <div class="airam-panel__body" data-airam-body></div>
+  <div class="airam-panel__actions">
+    <button type="button" class="airam-panel__btn" data-airam-action="continue">Seguir temario</button>
+    <button type="button" class="airam-panel__btn airam-panel__btn--ghost" data-airam-action="bookmark">Guardar temario</button>
+    <button type="button" class="airam-panel__btn airam-panel__btn--ghost" data-airam-action="export-rdf">Exportar RDF</button>
+  </div>
+  <p class="airam-panel__footer">
+    Tu progreso se conserva temporalmente. Pulsa «Guardar temario» si quieres conservar esta sesión.
+  </p>
+</aside>
+<div id="airam-resume-dialog" class="airam-dialog" hidden role="dialog" aria-modal="true">
+  <div class="airam-dialog__box">
+    <p data-airam-resume-text></p>
+    <div class="airam-dialog__actions">
+      <button type="button" class="airam-panel__btn" data-airam-resume="resume">Reanudar</button>
+      <button type="button" class="airam-panel__btn airam-panel__btn--ghost" data-airam-resume="new">Empezar uno nuevo</button>
+      <button type="button" class="airam-panel__btn airam-panel__btn--ghost" data-airam-resume="cancel">Cancelar</button>
+    </div>
+  </div>
+</div>
+{% endif %}

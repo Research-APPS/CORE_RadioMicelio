@@ -25,3 +25,8 @@ class TaxonomyPageTests(TestCase):
         self.assertContains(r, 'data-level="1"')
         self.assertContains(r, "Expandir todo")
         self.assertContains(r, "taxonomy_tree.js")
+        self.assertContains(r, "taxonomy-airam-btn")
+        self.assertContains(r, "taxonomy-knowledge")
+        self.assertContains(r, "Nv.")
+        self.assertContains(r, "airam_temario.js")
+        self.assertContains(r, "Tu progreso se conserva temporalmente")

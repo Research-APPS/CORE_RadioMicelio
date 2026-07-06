@@ -1,5 +1,5 @@
 class OntologizarRouter:
-    route_app_labels = {"ontologizar_app"}
+    route_app_labels = {"ontologizar_app", "airam_app"}
     db_alias = "ontologizar_db"
 
     def db_for_read(self, model, **hints):

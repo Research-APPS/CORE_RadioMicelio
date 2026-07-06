@@ -44,6 +44,22 @@ class StaticExportTests(TestCase):
         import shutil
         shutil.rmtree(out)
 
+    def test_export_no_airam_temario_on_taxonomy(self):
+        from ontologizar_app.models import Taxonomy, TaxonomyNode
+        Subject.objects.create(slug="s", name="S")
+        tax = Taxonomy.objects.create(slug="t-export", name="T")
+        TaxonomyNode.objects.create(taxonomy=tax, label="N")
+        out = Path("dist-test-airam-static")
+        if out.exists():
+            import shutil
+            shutil.rmtree(out)
+        self._export(out)
+        html = (out / "biblioteca" / "taxonomias" / "t-export" / "index.html").read_text(encoding="utf-8")
+        self.assertNotIn("taxonomy-airam-btn", html)
+        self.assertNotIn("airam_temario.js", html)
+        import shutil
+        shutil.rmtree(out)
+
     def test_export_normalizes_mixed_case_site_url(self):
         out = Path("dist-test-export-case")
         site = "https://Research-APPS.github.io/CORE_RadioMicelio"

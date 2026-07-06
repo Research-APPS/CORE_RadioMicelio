@@ -1,0 +1,10 @@
+{% if depth %}
+<span class="taxonomy-knowledge" title="{{ depth.title }}" aria-label="{{ depth.title }}">
+  <span class="taxonomy-knowledge__label">Nv.{{ depth.level }}</span>
+  <span class="taxonomy-knowledge__meter" aria-hidden="true">
+    {% for i in "01234" %}
+    <span class="taxonomy-knowledge__dot{% if forloop.counter0 <= depth.level %} taxonomy-knowledge__dot--on{% endif %}"></span>
+    {% endfor %}
+  </span>
+</span>
+{% endif %}

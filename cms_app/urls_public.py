@@ -7,6 +7,7 @@ urlpatterns = [
     path("diccionarios/<slug:subject_slug>/<slug:dict_slug>/", views_public.dictionary_detail, name="dictionary"),
     path("taxonomias/", views_public.taxonomy_list, name="taxonomy_list"),
     path("taxonomias/<slug:slug>/", views_public.taxonomy_detail, name="taxonomy"),
+    path("taxonomias/<slug:slug>/añadir-clase/", views_public.taxonomy_add_node, name="taxonomy_add_node"),
     path("temas/<uuid:uuid>/", views_public.topic_detail, name="topic"),
     path("temas/<uuid:uuid>/editar/", views_public.topic_edit, name="topic_edit"),
     path("asignaturas/<slug:slug>/editar/", views_public.subject_edit, name="subject_edit"),
