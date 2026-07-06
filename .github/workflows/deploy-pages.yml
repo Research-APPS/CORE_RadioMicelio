@@ -5,10 +5,10 @@ on:
     branches: [main]
   workflow_dispatch:
 
+# Publicación vía rama gh-pages (peaceiris). No usar deploy-pages@v4 salvo que
+# Settings → Pages → Source sea "GitHub Actions" (ver README).
 permissions:
   contents: write
-  pages: write
-  id-token: write
 
 concurrency:
   group: pages
@@ -52,11 +52,7 @@ jobs:
           test -f dist/biblioteca/index.html
           test -f dist/airam/graph.json
           test -f dist/.nojekyll
-      - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v4
-        with:
-          path: dist
-      - name: Publicar rama gh-pages (fallback)
+      - name: Publish gh-pages branch
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
@@ -66,13 +62,3 @@ jobs:
           user_name: github-actions[bot]
           user_email: github-actions[bot]@users.noreply.github.com
           commit_message: "Deploy static wiki"
-
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - id: deployment
-        uses: actions/deploy-pages@v4

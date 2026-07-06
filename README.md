@@ -100,12 +100,12 @@ En esta preview la navegación solo muestra **Biblioteca** y **AIRAM** (sin CMS 
 
 1. Sube el repositorio a GitHub (rama `main`).
 2. **Actions → Deploy static wiki → Run workflow** (o push a `main`). El workflow genera la wiki y la sube a la rama `gh-pages`.
-3. Repo → **Settings → Pages → Build and deployment** → elige **una** de estas opciones:
+3. Repo → **Settings → Pages → Build and deployment**:
+   - Source: **Deploy from a branch**
+   - Branch: **`gh-pages`**
+   - Folder: **`/ (root)`**
 
-| Opción | Configuración |
-|--------|----------------|
-| **Recomendada** | Source: **Deploy from a branch** → Branch: **`gh-pages`** → Folder: **`/ (root)`** |
-| Alternativa | Source: **GitHub Actions** (usa el artefacto del mismo workflow) |
+   El workflow publica solo en la rama `gh-pages`. Si además tienes Source = **GitHub Actions**, el job `deploy-pages` puede fallar con *Deployment failed, try again later* aunque `gh-pages` esté bien — usa una sola fuente (recomendado: rama `gh-pages`).
 
 4. (Opcional) **Settings → Variables → Actions**:
    - `SITE_URL` — p. ej. `https://research-apps.github.io/CORE_RadioMicelio`
