@@ -60,6 +60,29 @@ class StaticExportTests(TestCase):
         import shutil
         shutil.rmtree(out)
 
+    def test_export_quimica_valencia_topic(self):
+        from django.core.management import call_command
+
+        call_command("seed_curriculum")
+        from ontologizar_app.models import Concept
+
+        valencia = Concept.objects.get(label="Valencia química")
+        out = Path("dist-test-export-quimica")
+        if out.exists():
+            import shutil
+            shutil.rmtree(out)
+        self._export(out)
+        subject_page = (out / "biblioteca" / "asignaturas" / "quimica" / "index.html").read_text(encoding="utf-8")
+        topic_page = (out / "biblioteca" / "temas" / str(valencia.uuid) / "index.html").read_text(encoding="utf-8")
+        self.assertIn("Química", subject_page)
+        self.assertIn("Fuentes y referencias", topic_page)
+        self.assertIn("referencia IUPAC", topic_page)
+        self.assertIn("base de datos", topic_page)
+        self.assertIn('"citation"', topic_page)
+        self.assertIn("10.1351/goldbook.V06588", topic_page)
+        import shutil
+        shutil.rmtree(out)
+
     def test_export_normalizes_mixed_case_site_url(self):
         out = Path("dist-test-export-case")
         site = "https://Research-APPS.github.io/CORE_RadioMicelio"

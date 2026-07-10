@@ -4,6 +4,7 @@ import re
 from dataclasses import dataclass
 
 from ontologizar_app.models import Concept, Dictionary
+from ontologizar_app.services.citations import concept_has_terminological_reference, concept_provenance_level
 
 # Metadatos de procedencia / fuente científica (ORCID, DOI, institución…)
 PROVENANCE_PROPERTY_KEYS = frozenset({
@@ -196,3 +197,21 @@ def dictionary_concept_rows(dictionary: Dictionary) -> list[dict]:
             "indicators": compute_concept_indicators(concept),
         })
     return rows
+
+
+__all__ = [
+    "ANCHOR_CONTENT",
+    "ANCHOR_CROSS",
+    "ANCHOR_EMPTY",
+    "ANCHOR_EXAMPLES",
+    "ANCHOR_PROPERTIES",
+    "ANCHOR_RELATIONS",
+    "ANCHOR_SOURCES",
+    "ConceptIndicators",
+    "TopicIndicatorAnchors",
+    "compute_concept_indicators",
+    "concept_has_terminological_reference",
+    "concept_provenance_level",
+    "dictionary_concept_rows",
+    "topic_indicator_anchors",
+]

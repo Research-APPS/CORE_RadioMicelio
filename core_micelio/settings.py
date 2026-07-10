@@ -1,8 +1,13 @@
 import os
+import sys
 from pathlib import Path
 from dotenv import load_dotenv
 load_dotenv()
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+# Paquete NLP hermano (mismo cableado que RM_APP/maps_app/settings.py), usado por
+# corpus_app.management.commands.sugerir_menciones/sugerir_temporalidad.
+sys.path.insert(0, str(BASE_DIR.parent / "AIRAM"))
 SECRET_KEY = os.environ.get("SECRET_KEY", "django-insecure-dev-only")
 DEBUG = os.environ.get("DEBUG", "1") == "1"
 ALLOWED_HOSTS = [h.strip() for h in os.environ.get("ALLOWED_HOSTS", "127.0.0.1,localhost").split(",") if h.strip()]
@@ -17,7 +22,7 @@ INSTALLED_APPS = [
     "django.contrib.admin", "django.contrib.auth", "django.contrib.contenttypes",
     "django.contrib.sessions", "django.contrib.messages", "django.contrib.staticfiles",
     "rest_framework", "mptt",
-    "ontologizar_app", "research_app", "logs_app", "cms_app", "airam_app",
+    "ontologizar_app", "research_app", "logs_app", "cms_app", "airam_app", "corpus_app",
 ]
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",

@@ -66,7 +66,10 @@ ONTOEMO_DEFINITIONS = {
     "Alegría": "Emoción de valencia positiva asociada a recompensa y apertura social.",
     "Tristeza": "Emoción de valencia negativa ligada a pérdida o fracaso.",
     "Melancolía": "Estado de ánimo de valencia negativa baja, con activación reducida y componente reflexivo.",
-    "Valencia": "Dimensión que sitúa la experiencia entre agradable y desagradable.",
+    "Valencia": (
+        "Dimensión que sitúa la experiencia afectiva entre agradable y desagradable "
+        "(valencia hedónica en psicología y neurociencia)."
+    ),
     "Activación": "Dimensión de energía o calma del estado afectivo.",
     "Intensidad": "Grado de fuerza con que se vive una emoción (útil para anotar escenas con ONYX).",
     "Escena narrativa": "Unidad de análisis: un poema, una escena radiofónica o un fragmento con emoción detectable.",
@@ -97,6 +100,52 @@ ONTONEURO_TREE = [
     ]),
 ]
 
+ONTOQUIM_TREE = [
+    ("Química", [
+        ("Estructura atómica", [
+            "Electrones de valencia",
+            ("Valencia química", ["Regla del octeto", "Estado de oxidación"]),
+            "Enlace químico",
+        ]),
+    ]),
+]
+
+ONTOQUIM_DEFINITIONS = {
+    "Química": "Ciencia que estudia la materia, su composición, estructura y transformaciones.",
+    "Estructura atómica": "Organización de protones, neutrones y electrones en el átomo.",
+    "Electrones de valencia": "Electrones del último nivel energético; determinan la capacidad de enlace.",
+    "Valencia química": (
+        "Capacidad de un átomo para formar enlaces químicos con otros átomos. "
+        "Históricamente se asoció al número de enlaces que podía establecer; "
+        "en la formulación moderna se relaciona con la configuración electrónica "
+        "y con el estado de oxidación en compuestos."
+    ),
+    "Regla del octeto": "Tendencia de los átomos ligeros a completar ocho electrones de valencia en enlaces.",
+    "Estado de oxidación": "Carga formal que tendría un átomo si todos sus enlaces fueran iónicos.",
+    "Enlace químico": "Interacción que mantiene unidos a los átomos en una molécula o red cristalina.",
+}
+
+ONTOQUIM_NOTE_VALENCIA = (
+    "La regla del octeto explica muchos compuestos de H, O, N y C, pero admite excepciones "
+    "(p. ej. compuestos de boro o fósforo hipervalente). "
+    "Distinguir valencia clásica del estado de oxidación evita confusiones en nomenclatura."
+)
+
+ONTOQUIM_REFERENCES_VALENCIA = [
+    "IUPAC Gold Book — valence | https://goldbook.iupac.org/terms/view/V06588 | referencia_terminologica | IUPAC | terminological_reference",
+    "IUPAC Gold Book — oxidation number | https://goldbook.iupac.org/terms/view/O04365 | referencia_terminologica | IUPAC | terminological_reference",
+    "NIST Chemistry WebBook | https://webbook.nist.gov/chemistry/ | dataset | NIST | dataset",
+]
+
+ONTOQUIM_RELATIONS = [
+    ("Valencia química", "Electrones de valencia", "related"),
+    ("Valencia química", "Regla del octeto", "related"),
+    ("Valencia química", "Estado de oxidación", "related"),
+    ("Valencia química", "Enlace químico", "related"),
+    ("Regla del octeto", "Valencia química", "narrower"),
+    ("Estado de oxidación", "Valencia química", "narrower"),
+]
+
 ONTONEURO_DEFINITIONS = {
     "Neurona": "Célula nerviosa que transmite señales eléctricas y químicas.",
     "Sinapsis": "Conexión entre neuronas donde se libera un neurotransmisor.",
@@ -116,6 +165,7 @@ SUBJECT_WIKIPEDIA = {
     "lengua": "Literatura",
     "emociones": "Emoción",
     "neurociencia": "Neurociencia",
+    "quimica": "Química",
 }
 
 
@@ -169,6 +219,36 @@ def seed_ontology(taxonomy, dictionary, tree, definitions=None, relations=None):
     return concepts
 
 
+def seed_ontoquim(taxonomy, dictionary):
+    concepts = seed_ontology(
+        taxonomy, dictionary, ONTOQUIM_TREE, ONTOQUIM_DEFINITIONS, ONTOQUIM_RELATIONS,
+    )
+    valencia = concepts.get("Valencia química")
+    if valencia:
+        ConceptDefinition.objects.get_or_create(
+            concept=valencia, kind="note",
+            defaults={"text": ONTOQUIM_NOTE_VALENCIA, "is_active": True},
+        )
+        ConceptDefinition.objects.filter(concept=valencia, kind="reference").delete()
+        for ref_line in ONTOQUIM_REFERENCES_VALENCIA:
+            ConceptDefinition.objects.create(
+                concept=valencia, kind="reference", text=ref_line, is_active=True,
+            )
+        ConceptProperty.objects.get_or_create(
+            concept=valencia, key="doi",
+            defaults={"value": "10.1351/goldbook.V06588"},
+        )
+        ConceptProperty.objects.get_or_create(
+            concept=valencia, key="source_url",
+            defaults={"value": "https://goldbook.iupac.org/terms/view/V06588"},
+        )
+        ConceptProperty.objects.get_or_create(
+            concept=valencia, key="provider",
+            defaults={"value": "IUPAC"},
+        )
+    return concepts
+
+
 def seed_ontohongo(taxonomy, dictionary):
     return seed_ontology(
         taxonomy, dictionary, ONTOHONGO_TREE, ONTOHONGO_DEFINITIONS,
@@ -199,6 +279,7 @@ class Command(BaseCommand):
         micologia, _ = Subject.objects.get_or_create(slug="micologia", defaults={"name": "Micología"})
         emociones_subj, _ = Subject.objects.get_or_create(slug="emociones", defaults={"name": "Emociones"})
         neurociencia, _ = Subject.objects.get_or_create(slug="neurociencia", defaults={"name": "Neurociencia"})
+        quimica, _ = Subject.objects.get_or_create(slug="quimica", defaults={"name": "Química"})
         historia, _ = Subject.objects.get_or_create(slug="historia", defaults={"name": "Historia"})
         geo, _ = Subject.objects.get_or_create(slug="geografia", defaults={"name": "Geografía"})
         lengua, _ = Subject.objects.get_or_create(slug="lengua", defaults={"name": "Lengua y Literatura"})
@@ -250,6 +331,18 @@ class Command(BaseCommand):
                 ),
             },
         )
+        SubjectMaterial.objects.update_or_create(
+            subject=quimica, slug="intro-quimica",
+            defaults={
+                "title": "Introducción a la química",
+                "summary": "Asignatura #ontoQuim",
+                "body": (
+                    "La química estudia la materia y sus transformaciones. "
+                    "En CORE Radio Micelio esta asignatura introduce el vocabulario #ontoQuim "
+                    "con procedencia científica formal (IUPAC, NIST) y definiciones editoriales propias."
+                ),
+            },
+        )
         SubjectMaterial.objects.get_or_create(subject=lengua, slug="poesia-emociones", defaults={
             "title": "La poesía y las emociones",
             "summary": "Material CMS",
@@ -259,7 +352,7 @@ class Command(BaseCommand):
             ),
         })
 
-        for subj in (musica, ciencias, micologia, emociones_subj, neurociencia, historia, geo, lengua):
+        for subj in (musica, ciencias, micologia, emociones_subj, neurociencia, quimica, historia, geo, lengua):
             if seed_subject_wiki(subj):
                 self.stdout.write(f"  Wikipedia → {subj.slug}")
 
@@ -272,6 +365,10 @@ class Command(BaseCommand):
             defaults={"name": "Sistema nervioso", "description": "Base #ontoNeuro (NeuroLex)"},
         )
         dict_micologia, _ = Dictionary.objects.get_or_create(subject=micologia, slug="ontohongo", defaults={"name": "Vocabulario micológico"})
+        dict_quimica, _ = Dictionary.objects.get_or_create(
+            subject=quimica, slug="ontoquim",
+            defaults={"name": "Vocabulario químico", "description": "Base #ontoQuim (IUPAC)"},
+        )
         dict_patrimonio, _ = Dictionary.objects.get_or_create(subject=historia, slug="patrimonio-local", defaults={"name": "Patrimonio local"})
         dict_mapa, _ = Dictionary.objects.get_or_create(subject=geo, slug="mapa-local", defaults={"name": "Mapa del entorno"})
         dict_palabras, _ = Dictionary.objects.get_or_create(subject=lengua, slug="vocabulario-poetico", defaults={"name": "Vocabulario poético"})
@@ -298,6 +395,13 @@ class Command(BaseCommand):
                 "description": "Ontología híbrida navegable: anatomía, ciclo vital, ecología, taxonomía y aplicaciones.",
             },
         )
+        tax_quimica, _ = Taxonomy.objects.get_or_create(
+            slug="quimica",
+            defaults={
+                "name": "Química (#ontoQuim)",
+                "description": "Vocabulario químico con referencias IUPAC y datos NIST.",
+            },
+        )
         tax_ecologia, _ = Taxonomy.objects.get_or_create(slug="ecologia", defaults={"name": "Ecología"})
         tax_patrimonio, _ = Taxonomy.objects.get_or_create(slug="tradiciones", defaults={"name": "Tradiciones"})
         tax_lugares, _ = Taxonomy.objects.get_or_create(slug="lugares", defaults={"name": "Lugares del municipio"})
@@ -313,6 +417,19 @@ class Command(BaseCommand):
         onto_hongos = seed_ontohongo(tax_hongos, dict_micologia)
         onto_emo = seed_ontology(tax_emociones, dict_emociones, ONTOEMO_TREE, ONTOEMO_DEFINITIONS, ONTOEMO_RELATIONS)
         seed_ontology(tax_neuro, dict_neuro, ONTONEURO_TREE, ONTONEURO_DEFINITIONS)
+        onto_quim = seed_ontoquim(tax_quimica, dict_quimica)
+
+        valencia_emo = onto_emo.get("Valencia")
+        valencia_quim = onto_quim.get("Valencia química")
+        if valencia_emo:
+            homonym_note = (
+                "Ver también [[asignatura:quimica|Química]]: "
+                "[[Valencia química]]."
+            )
+            ConceptDefinition.objects.filter(concept=valencia_emo, kind="note").delete()
+            ConceptDefinition.objects.create(
+                concept=valencia_emo, kind="note", text=homonym_note, is_active=True,
+            )
 
         micelio = onto_hongos["Micelio"]
         espora = onto_hongos["Espora"]

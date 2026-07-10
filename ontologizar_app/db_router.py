@@ -1,5 +1,9 @@
 class OntologizarRouter:
-    route_app_labels = {"ontologizar_app", "airam_app"}
+    # corpus_app se añade aquí (no solo ontologizar_app/airam_app) porque tiene
+    # ForeignKey reales hacia ontologizar_app.Concept (Mencion.concept,
+    # RelacionSugerida.*_entidad) — sin estar en el mismo grupo de enrutamiento,
+    # allow_relation() bloquearía esas FKs entre bases de datos distintas.
+    route_app_labels = {"ontologizar_app", "airam_app", "corpus_app"}
     db_alias = "ontologizar_db"
 
     def db_for_read(self, model, **hints):

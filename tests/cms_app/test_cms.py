@@ -78,6 +78,27 @@ class CmsTests(TestCase):
         self.assertContains(public, "Editar")
         self.assertContains(public, "Segundo párrafo")
 
+    def test_topic_edit_saves_references(self):
+        call_command("ensure_cms_user")
+        self.client.login(username="ivansimo", password="12345678")
+        subj = Subject.objects.create(slug="quimica", name="Química")
+        dic = Dictionary.objects.create(subject=subj, slug="ontoquim", name="Vocabulario químico")
+        c = Concept.objects.create(dictionary=dic, label="Valencia química")
+        ref_line = (
+            "IUPAC Gold Book — valence | https://goldbook.iupac.org/terms/view/V06588 "
+            "| referencia_terminologica | IUPAC | terminological_reference"
+        )
+        r = self.client.post(
+            reverse("biblioteca:topic_edit", kwargs={"uuid": c.uuid}),
+            {"body": "Definición editorial.", "references": ref_line},
+        )
+        self.assertEqual(r.status_code, 302)
+        self.assertEqual(ConceptDefinition.objects.filter(concept=c, kind="reference").count(), 1)
+        public = self.client.get(reverse("biblioteca:topic", kwargs={"uuid": c.uuid}))
+        self.assertContains(public, "Fuentes y referencias")
+        self.assertContains(public, "referencia IUPAC")
+        self.assertContains(public, "goldbook.iupac.org")
+
     def test_topic_page_shows_login_to_edit_when_anonymous(self):
         subj = Subject.objects.create(slug="mus", name="Música")
         dic = Dictionary.objects.create(subject=subj, slug="emo", name="Emo")

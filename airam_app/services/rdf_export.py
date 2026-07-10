@@ -8,6 +8,7 @@ from django.conf import settings
 from airam_app.models import AiramSession
 from airam_app.services.temario import node_breadcrumb, subtree_nodes
 from ontologizar_app.models import Concept, Taxonomy, TaxonomyNode
+from ontologizar_app.services.citations import citations_to_jsonld, concept_citations
 from ontologizar_app.services.concept_indicators import _is_ontology_property
 
 
@@ -23,6 +24,7 @@ class TopicRdf:
     relations_out: list[dict[str, str]]
     relations_in: list[dict[str, str]]
     position: int
+    citations: list[dict] = field(default_factory=list)
 
 
 @dataclass
@@ -90,6 +92,8 @@ def _concept_topic(concept: Concept, node: TaxonomyNode, position: int) -> Topic
         if r.source.dictionary_id == dict_id
     ]
 
+    citations = citations_to_jsonld(concept_citations(concept))
+
     return TopicRdf(
         concept_uuid=str(concept.uuid),
         label=concept.label,
@@ -101,6 +105,7 @@ def _concept_topic(concept: Concept, node: TaxonomyNode, position: int) -> Topic
         relations_out=relations_out,
         relations_in=relations_in,
         position=position,
+        citations=citations,
     )
 
 
@@ -212,6 +217,8 @@ def _topic_jsonld(topic: TopicRdf, base: str) -> dict:
             {"@type": "schema:PropertyValue", "schema:name": p["key"], "schema:value": p["value"]}
             for p in topic.properties
         ]
+    if topic.citations:
+        data["schema:citation"] = topic.citations
     relations = []
     for rel in topic.relations_out:
         relations.append({

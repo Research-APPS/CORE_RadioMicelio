@@ -10,7 +10,9 @@ from ontologizar_app.services.jsonld import topic_page_jsonld
 from ontologizar_app.services.subject_body import render_subject_body
 from ontologizar_app.services.topic_body import render_topic_body
 from ontologizar_app.services.wiki_content import (
+    get_concept_references,
     get_concept_wiki_body,
+    save_concept_references,
     save_concept_wiki_body,
     save_subject_description,
     save_subject_material,
@@ -119,11 +121,13 @@ def topic_edit(request, uuid):
     concept = get_object_or_404(Concept, uuid=uuid)
     if request.method == "POST":
         save_concept_wiki_body(concept, request.POST.get("body", ""))
+        save_concept_references(concept, request.POST.get("references", ""))
         messages.success(request, "Tema guardado.")
         return redirect("biblioteca:topic", uuid=concept.uuid)
     return render(request, "cms/public/topic_edit.html", {
         "concept": concept,
         "body_text": get_concept_wiki_body(concept),
+        "references_text": get_concept_references(concept),
         "public_url": reverse("biblioteca:topic", kwargs={"uuid": concept.uuid}),
         "advanced_edit_url": reverse("cms:concept_edit", kwargs={"uuid": concept.uuid}),
     })

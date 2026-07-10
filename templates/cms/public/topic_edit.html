@@ -14,6 +14,9 @@
     <label class="wiki-edit-label" for="body">Texto del tema</label>
     <p class="wiki-edit-hint">Escribe en texto plano. Párrafos separados con línea en blanco. Enlaces: <code>[[otro concepto]]</code> o <code>[[asignatura:slug|texto]]</code> (solo dentro de esta asignatura).</p>
     <textarea id="body" name="body" class="wiki-edit-textarea" rows="18" autofocus>{{ body_text }}</textarea>
+    <label class="wiki-edit-label" for="references">Fuentes y referencias</label>
+    <p class="wiki-edit-hint">Una fuente por línea: <code>Nombre | URL | tipo [| autoridad | nivel]</code>. Tipos: <code>referencia_terminologica</code>, <code>dataset</code>, <code>recurso_didactico</code>, <code>publicacion_cientifica</code>, <code>norma_tecnica</code>, <code>archivo_historico</code>.</p>
+    <textarea id="references" name="references" class="wiki-edit-textarea" rows="8">{{ references_text }}</textarea>
     <div class="wiki-edit-actions">
       <button type="submit" class="wiki-edit-btn">Guardar</button>
       <a href="{{ public_url }}" class="wiki-edit-btn wiki-edit-btn--ghost">Cancelar</a>

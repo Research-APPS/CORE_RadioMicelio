@@ -16,6 +16,11 @@ from ontologizar_app.services.concept_indicators import (
     _property_implies_cross_ontology,
     _property_implies_official_source,
 )
+from ontologizar_app.services.citations import (
+    EDITORIAL_DISCLAIMER,
+    citation_badge,
+    concept_citations,
+)
 from ontologizar_app.services.wiki_links import linkify_plaintext
 
 _SECTION_SVG = {
@@ -49,6 +54,17 @@ def _render_property_item(prop, *, site_root: str, dictionary_id: int, extra_cla
     )
 
 
+def _render_citation_item(citation) -> str:
+    badge = citation_badge(citation)
+    return (
+        f'<li class="topic-citation-item">'
+        f'<a href="{escape(citation.url)}" rel="noopener noreferrer" target="_blank">'
+        f"{escape(citation.label)}</a> "
+        f'<span class="citation-badge citation-badge--{escape(citation.kind.value)}">'
+        f"{escape(badge)}</span></li>"
+    )
+
+
 def _render_relation_item(rel, *, site_root: str, is_incoming: bool, cross: bool) -> str:
     concept = rel.source if is_incoming else rel.target
     cross_cls = " topic-item--cross" if cross else ""
@@ -78,8 +94,9 @@ def render_topic_body(concept: Concept, *, site_root: str = "/") -> str:
 
     definitions = [d for d in concept.definitions.filter(is_active=True)]
     definition = next((d for d in definitions if d.kind == "definition" and d.text.strip()), None)
+    notes = [d for d in definitions if d.kind == "note" and d.text.strip()]
     examples = [d for d in definitions if d.kind == "example" and d.text.strip()]
-    references = [d for d in definitions if d.kind == "reference" and d.text.strip()]
+    citations = concept_citations(concept)
 
     props = list(concept.properties.all())
     ontology_props = [p for p in props if _is_ontology_property(p.key) and p.value.strip()]
@@ -91,7 +108,7 @@ def render_topic_body(concept: Concept, *, site_root: str = "/") -> str:
     cross_out = [r for r in outgoing if r.target.dictionary_id != dict_id]
     cross_in = [r for r in incoming if r.source.dictionary_id != dict_id]
 
-    has_editorial = bool(definition or examples or references)
+    has_editorial = bool(definition or notes or examples or citations)
     has_relations = bool(outgoing or incoming)
     has_any = has_editorial or ontology_props or source_props or cross_props or has_relations
 
@@ -101,6 +118,16 @@ def render_topic_body(concept: Concept, *, site_root: str = "/") -> str:
             f'<h3 class="topic-section-title">Definición</h3>'
             f'<p class="topic-definition">{linkify_plaintext(definition.text, site_root=site_root, dictionary_id=dict_id)}</p>'
             f"</section>"
+        )
+
+    if notes:
+        note_items = "".join(
+            f"<li>{linkify_plaintext(note.text, site_root=site_root, dictionary_id=dict_id)}</li>"
+            for note in notes
+        )
+        parts.append(
+            f'{_section_open("topic-notes")}'
+            f'<h3 class="topic-section-title">Notas</h3><ul>{note_items}</ul></section>'
         )
 
     if examples:
@@ -113,18 +140,21 @@ def render_topic_body(concept: Concept, *, site_root: str = "/") -> str:
             f'<h3 class="topic-section-title">Ejemplos</h3><ul>{items}</ul></section>'
         )
 
-    if source_props or references:
-        items = "".join(
-            f"<li>{linkify_plaintext(ref.text, site_root=site_root, dictionary_id=dict_id)}</li>"
-            for ref in references
-        )
+    if source_props or citations:
+        items = "".join(_render_citation_item(c) for c in citations)
         items += "".join(
             _render_property_item(p, site_root=site_root, dictionary_id=dict_id, extra_class="topic-source-item")
             for p in source_props
         )
+        disclaimer = ""
+        if citations:
+            disclaimer = (
+                f'<p class="topic-editorial-disclaimer">{escape(EDITORIAL_DISCLAIMER)}</p>'
+            )
         parts.append(
             f'{_section_open(ANCHOR_SOURCES, badge_kind="source", badge_title="Fuente científica")}'
-            f'<h3 class="topic-section-title">Fuentes y procedencia</h3><ul>{items}</ul></section>'
+            f'<h3 class="topic-section-title">Fuentes y referencias</h3>'
+            f"<ul>{items}</ul>{disclaimer}</section>"
         )
 
     if cross_props or cross_out or cross_in:

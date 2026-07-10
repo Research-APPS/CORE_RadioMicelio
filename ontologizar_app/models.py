@@ -4,6 +4,40 @@ from django.db import models
 from django.utils import timezone
 from mptt.models import MPTTModel, TreeForeignKey
 
+from airam_app.services.semantic_relations import RELATION_TYPES
+
+# Etiquetas legibles para el <select> del CMS — RELATION_TYPES (en
+# airam_app/services/semantic_relations.py) sigue siendo la única fuente de
+# verdad de qué tipos existen; esto solo decide cómo se muestran.
+_RELATION_LABELS = {
+    "related": "Relacionado",
+    "broader": "Más amplio",
+    "narrower": "Más estrecho",
+    "part_of": "Parte de",
+    "has_part": "Tiene como parte a",
+    "produces": "Produce",
+    "enables": "Permite",
+    "participates_in": "Participa en",
+    "works_via": "Funciona mediante",
+    "evolves_from": "Evoluciona de",
+    "evolves_to": "Evoluciona hacia",
+    "historically_after": "Viene después de",
+    "historically_before": "Viene antes de",
+    "appears_in": "Aparece en",
+    "invented_by": "Inventado por",
+    "used_in": "Se usa en",
+    "transmits_to": "Transmite a",
+    "may_fail_as": "Puede fallar como",
+    "requires_maintenance": "Requiere mantenimiento",
+    "may_lead_to": "Puede llevar a",
+    "monta_a": "Monta a",
+    "escudero_de": "Escudero de",
+    "ama_a": "Ama a",
+    "ocurre_en": "Ocurre en",
+    "advierte_a": "Advierte a",
+    "ataca_a": "Ataca a",
+}
+
 
 class Subject(models.Model):
     """Asignatura — metáfora escolar dentro de la biblioteca."""
@@ -140,11 +174,14 @@ class ConceptProperty(models.Model):
 
 
 class ConceptRelation(models.Model):
-    RELATION_CHOICES = [("broader", "Más amplio"), ("narrower", "Más estrecho"), ("related", "Relacionado"), ("partOf", "Parte de")]
+    # snake_case canónico — ver airam_app/services/semantic_relations.py (RELATION_TYPES es la
+    # única fuente de verdad). "partOf" (legacy camelCase) ya no es una opción nueva válida;
+    # se sigue aceptando en datos existentes y se normaliza a "part_of" vía normalize_relation_type().
+    RELATION_CHOICES = [(t, _RELATION_LABELS[t]) for t in RELATION_TYPES]
     uuid = models.UUIDField(default=uuid.uuid4, unique=True, editable=False)
     source = models.ForeignKey(Concept, on_delete=models.CASCADE, related_name="outgoing_relations")
     target = models.ForeignKey(Concept, on_delete=models.CASCADE, related_name="incoming_relations")
-    relation_type = models.CharField(max_length=20, choices=RELATION_CHOICES, default="related")
+    relation_type = models.CharField(max_length=32, choices=RELATION_CHOICES, default="related")
 
     class Meta:
         unique_together = [("source", "target", "relation_type")]
