@@ -23,12 +23,33 @@ def _concept_date_modified(concept: Concept) -> str:
     return timezone.now().date().isoformat()
 
 
+def _concept_editorial_definition(concept: Concept) -> str | None:
+    priority = (
+        "definition", "definition_primary", "definition_institutional",
+        "definition_scholarly",
+    )
+    for kind in priority:
+        d = concept.definitions.filter(is_active=True, kind=kind).first()
+        if d and d.text.strip():
+            return d.text.strip()
+    return None
+
+
+def _concept_alternate_names(concept: Concept) -> list[str]:
+    names: list[str] = []
+    for key in ("preferred_label_en", "preferred_label_de"):
+        prop = concept.properties.filter(key=key).first()
+        if prop and prop.value.strip():
+            names.append(prop.value.strip())
+    return names
+
+
 def concept_to_jsonld(concept: Concept) -> dict:
     props = [
         {"@type": "PropertyValue", "name": p.key, "value": p.value}
         for p in concept.properties.all()
     ]
-    definition = concept.definitions.filter(is_active=True, kind="definition").first()
+    definition_text = _concept_editorial_definition(concept)
     citations = concept_citations(concept)
     data = {
         "@context": "https://schema.org/",
@@ -44,8 +65,11 @@ def concept_to_jsonld(concept: Concept) -> dict:
         "publisher": CORE_ORGANIZATION,
         "dateModified": _concept_date_modified(concept),
     }
-    if definition:
-        data["description"] = definition.text
+    if definition_text:
+        data["description"] = definition_text
+    alternate = _concept_alternate_names(concept)
+    if alternate:
+        data["alternateName"] = alternate
     if props:
         data["additionalProperty"] = props
     if citations:

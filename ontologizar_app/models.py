@@ -36,6 +36,25 @@ _RELATION_LABELS = {
     "ocurre_en": "Ocurre en",
     "advierte_a": "Advierte a",
     "ataca_a": "Ataca a",
+    # #ontoNarrativa — relaciones documentales universales
+    "contiene": "Contiene",
+    "padre_de": "Padre de",
+    "hijo_de": "Hijo de",
+    "enemigo_de": "Enemigo de",
+    "amigo_de": "Amigo de",
+    "sirve_a": "Sirve a",
+    "traiciona_a": "Traiciona a",
+    "posee": "Posee",
+    "viaja_a": "Viaja a",
+    "criado_por": "Criado por",
+    "enamorado_de": "Enamorado de",
+    # Procedencia y marcos interpretativos
+    "defined_in": "Definido en",
+    "interpreted_as": "Interpretado como",
+    "develops": "Desarrolla",
+    "reinterprets": "Reinterpreta",
+    "criticizes": "Critica",
+    "distinct_from": "Distinto de",
 }
 
 
@@ -148,11 +167,19 @@ class TaxonomyNode(MPTTModel):
 
 
 class ConceptDefinition(models.Model):
-    KIND_CHOICES = [("definition", "Definición"), ("example", "Ejemplo"), ("note", "Nota"), ("reference", "Referencia")]
+    KIND_CHOICES = [
+        ("definition", "Definición"),
+        ("definition_primary", "Definición (fuente primaria)"),
+        ("definition_institutional", "Definición (fuente institucional)"),
+        ("definition_scholarly", "Definición (estudio académico)"),
+        ("example", "Ejemplo"),
+        ("note", "Nota"),
+        ("reference", "Referencia"),
+    ]
     uuid = models.UUIDField(default=uuid.uuid4, unique=True, editable=False)
     concept = models.ForeignKey(Concept, on_delete=models.CASCADE, related_name="definitions")
     text = models.TextField()
-    kind = models.CharField(max_length=20, choices=KIND_CHOICES, default="definition")
+    kind = models.CharField(max_length=32, choices=KIND_CHOICES, default="definition")
     is_active = models.BooleanField(default=True)
     created_at = models.DateTimeField(default=timezone.now)
 
@@ -185,3 +212,46 @@ class ConceptRelation(models.Model):
 
     class Meta:
         unique_together = [("source", "target", "relation_type")]
+
+
+class AttributedRelation(models.Model):
+    """Metadatos de procedencia para una ConceptRelation (hecho documental o interpretación)."""
+
+    AUTHORITY_LAYER_CHOICES = [
+        ("factual", "Documental"),
+        ("interpretive", "Interpretativa"),
+    ]
+    CONFIDENCE_CHOICES = [
+        ("documented", "Documentada"),
+        ("inferred", "Inferida"),
+        ("speculative", "Especulativa"),
+    ]
+
+    uuid = models.UUIDField(default=uuid.uuid4, unique=True, editable=False)
+    relation = models.OneToOneField(
+        ConceptRelation, on_delete=models.CASCADE, related_name="attribution",
+    )
+    authority_layer = models.CharField(
+        max_length=20, choices=AUTHORITY_LAYER_CHOICES, default="factual",
+    )
+    framework = models.CharField(
+        max_length=80, blank=True,
+        help_text="Slug de perspectiva interpretativa (ej. lectura_politica); vacío en hechos documentales.",
+    )
+    asserted_by = models.CharField(max_length=300, blank=True)
+    asserted_by_concept = models.ForeignKey(
+        Concept, on_delete=models.SET_NULL, null=True, blank=True,
+        related_name="attributions_as_author",
+    )
+    source_work = models.CharField(max_length=500, blank=True)
+    locator = models.CharField(max_length=200, blank=True)
+    confidence = models.CharField(
+        max_length=20, choices=CONFIDENCE_CHOICES, default="documented",
+    )
+    scope = models.CharField(max_length=80, blank=True)
+
+    class Meta:
+        ordering = ["-relation_id"]
+
+    def __str__(self):
+        return f"{self.relation} ({self.authority_layer})"

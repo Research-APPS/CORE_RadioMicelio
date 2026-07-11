@@ -93,7 +93,16 @@ def render_topic_body(concept: Concept, *, site_root: str = "/") -> str:
     )
 
     definitions = [d for d in concept.definitions.filter(is_active=True)]
-    definition = next((d for d in definitions if d.kind == "definition" and d.text.strip()), None)
+    definition = next(
+        (
+            d for d in definitions
+            if d.kind in (
+                "definition", "definition_primary", "definition_institutional",
+                "definition_scholarly",
+            ) and d.text.strip()
+        ),
+        None,
+    )
     notes = [d for d in definitions if d.kind == "note" and d.text.strip()]
     examples = [d for d in definitions if d.kind == "example" and d.text.strip()]
     citations = concept_citations(concept)

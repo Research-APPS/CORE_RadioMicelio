@@ -12,9 +12,12 @@ EDITORIAL_DISCLAIMER = (
 
 AUTHORITY_LEVEL_PRIORITY = {
     "terminological_reference": 100,
+    "primary": 95,
     "technical_standard": 90,
     "scientific_publication": 80,
+    "institutional": 75,
     "dataset": 70,
+    "interpretive": 60,
     "educational": 50,
     "historical_archive": 40,
 }
@@ -27,6 +30,10 @@ class SourceKind(str, Enum):
     PUBLICACION_CIENTIFICA = "publicacion_cientifica"
     NORMA_TECNICA = "norma_tecnica"
     ARCHIVO_HISTORICO = "archivo_historico"
+    FUENTE_PRIMARIA = "fuente_primaria"
+    FUENTE_INSTITUCIONAL = "fuente_institucional"
+    OBRA_LITERARIA = "obra_literaria"
+    ESTUDIO_ACADEMICO = "estudio_academico"
 
     @classmethod
     def from_value(cls, raw: str) -> SourceKind | None:
@@ -50,6 +57,7 @@ class Citation:
     kind: SourceKind
     authority: str = ""
     authority_level: str = ""
+    locator: str = ""
 
     @property
     def sort_key(self) -> tuple[int, str]:
@@ -72,19 +80,21 @@ def parse_reference_line(text: str) -> Citation | None:
         return None
     authority = parts[3] if len(parts) > 3 else ""
     authority_level = parts[4] if len(parts) > 4 else ""
+    locator = parts[5] if len(parts) > 5 else ""
     return Citation(
         label=label,
         url=url,
         kind=kind,
         authority=authority,
         authority_level=authority_level,
+        locator=locator,
     )
 
 
 def format_reference_line(citation: Citation) -> str:
     parts = [citation.label, citation.url, citation.kind.value]
-    if citation.authority or citation.authority_level:
-        parts.extend([citation.authority, citation.authority_level])
+    if citation.authority or citation.authority_level or citation.locator:
+        parts.extend([citation.authority, citation.authority_level, citation.locator])
     return " | ".join(parts)
 
 
@@ -101,6 +111,10 @@ def citation_badge(citation: Citation) -> str:
         SourceKind.PUBLICACION_CIENTIFICA: "publicación científica",
         SourceKind.NORMA_TECNICA: "norma técnica",
         SourceKind.ARCHIVO_HISTORICO: "archivo histórico",
+        SourceKind.FUENTE_PRIMARIA: "fuente primaria",
+        SourceKind.FUENTE_INSTITUCIONAL: "fuente institucional",
+        SourceKind.OBRA_LITERARIA: "obra literaria",
+        SourceKind.ESTUDIO_ACADEMICO: "estudio académico",
     }
     return badges.get(citation.kind, citation.kind.value.replace("_", " "))
 
@@ -123,6 +137,14 @@ def concept_has_terminological_reference(concept: Concept) -> bool:
     )
 
 
+def concept_has_primary_source(concept: Concept) -> bool:
+    return any(
+        c.kind == SourceKind.FUENTE_PRIMARIA
+        or c.authority_level == "primary"
+        for c in concept_citations(concept)
+    )
+
+
 def concept_provenance_level(concept: Concept) -> str | None:
     levels = [c.authority_level for c in concept_citations(concept) if c.authority_level]
     if not levels:
@@ -140,6 +162,10 @@ def citations_to_jsonld(citations: list[Citation]) -> list[dict]:
         }
         if citation.kind == SourceKind.DATASET:
             entry["additionalType"] = "https://schema.org/Dataset"
+        if citation.locator:
+            entry["text"] = citation.locator
+        if citation.authority:
+            entry["author"] = {"@type": "Organization", "name": citation.authority}
         if "goldbook" in citation.url and "V06588" in citation.url:
             entry["identifier"] = "10.1351/goldbook.V06588"
         items.append(entry)

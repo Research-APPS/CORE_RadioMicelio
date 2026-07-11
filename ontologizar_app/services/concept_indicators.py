@@ -4,7 +4,11 @@ import re
 from dataclasses import dataclass
 
 from ontologizar_app.models import Concept, Dictionary
-from ontologizar_app.services.citations import concept_has_terminological_reference, concept_provenance_level
+from ontologizar_app.services.citations import (
+    concept_has_primary_source,
+    concept_has_terminological_reference,
+    concept_provenance_level,
+)
 
 # Metadatos de procedencia / fuente científica (ORCID, DOI, institución…)
 PROVENANCE_PROPERTY_KEYS = frozenset({
@@ -33,6 +37,9 @@ ANCHOR_PROPERTIES = "topic-properties"
 ANCHOR_CROSS = "topic-cross-ontology"
 ANCHOR_SOURCES = "topic-sources"
 
+NARRATIVE_ENTITY_TYPES = frozenset({"narrative_entity", "narrative_function", "work", "author"})
+META_VOCABULARY_KEYS = frozenset({"concept_type", "medium", "framework", "authority_layer", "scholarly_consensus"})
+
 
 @dataclass(frozen=True)
 class ConceptIndicators:
@@ -42,6 +49,10 @@ class ConceptIndicators:
     has_examples: bool
     has_cross_ontology_links: bool
     has_official_source: bool
+    is_narrative_meta: bool = False
+    is_narrative_instance: bool = False
+    has_primary_source: bool = False
+    has_incomplete_interpretation: bool = False
 
     @property
     def is_empty(self) -> bool:
@@ -133,6 +144,24 @@ def compute_concept_indicators(concept: Concept) -> ConceptIndicators:
     editorial_text = " ".join(d.text for d in definitions if d.text.strip())
     has_cross_from_wiki = _wiki_links_other_dictionaries(concept, editorial_text)
 
+    concept_type = next(
+        (p.value.strip() for p in props if _norm_key(p.key) == "concept_type" and p.value.strip()),
+        "",
+    )
+    is_narrative_meta = concept_type in NARRATIVE_ENTITY_TYPES and concept.dictionary.slug == "ontonarrativa"
+    is_narrative_instance = bool(concept_type) and concept.dictionary.slug != "ontonarrativa"
+
+    from ontologizar_app.services.attributed_relations import interpretation_is_complete
+    from ontologizar_app.models import AttributedRelation
+
+    rel_ids = [r.id for r in outgoing] + [r.id for r in incoming]
+    has_incomplete_interpretation = any(
+        not interpretation_is_complete(a)
+        for a in AttributedRelation.objects.filter(
+            relation_id__in=rel_ids, authority_layer="interpretive",
+        )
+    ) if rel_ids else False
+
     return ConceptIndicators(
         has_content=has_content,
         has_relations=has_relations,
@@ -140,6 +169,10 @@ def compute_concept_indicators(concept: Concept) -> ConceptIndicators:
         has_examples=has_examples,
         has_cross_ontology_links=has_cross_from_rel or has_cross_from_props or has_cross_from_wiki,
         has_official_source=has_official_from_def or has_official_from_props,
+        is_narrative_meta=is_narrative_meta,
+        is_narrative_instance=is_narrative_instance,
+        has_primary_source=concept_has_primary_source(concept),
+        has_incomplete_interpretation=has_incomplete_interpretation,
     )
 
 

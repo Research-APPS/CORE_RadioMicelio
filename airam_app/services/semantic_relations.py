@@ -47,6 +47,25 @@ RELATION_TYPES = [
     "ocurre_en",
     "advierte_a",
     "ataca_a",
+    # #ontoNarrativa — relaciones documentales universales
+    "contiene",
+    "padre_de",
+    "hijo_de",
+    "enemigo_de",
+    "amigo_de",
+    "sirve_a",
+    "traiciona_a",
+    "posee",
+    "viaja_a",
+    "criado_por",
+    "enamorado_de",
+    # Procedencia y marcos interpretativos
+    "defined_in",
+    "interpreted_as",
+    "develops",
+    "reinterprets",
+    "criticizes",
+    "distinct_from",
 ]
 
 # Alias de entrada histórica -> forma canónica.
@@ -79,6 +98,8 @@ EXPLORATION_LENSES = {
     "aplicaciones":   {"icon": "🏭", "label": "Aplicaciones"},
     "ciencia":        {"icon": "🔬", "label": "Ciencia"},
     "evolucion":      {"icon": "➡️", "label": "Evolución"},
+    "narrativa":      {"icon": "📖", "label": "Narrativa"},
+    "interpretacion": {"icon": "🔍", "label": "Interpretación"},
 }
 
 _DEFAULT_LENS = "temario"
@@ -352,6 +373,178 @@ RELATION_REGISTRY = {
         "inverse": {
             "question": "¿Quién ataca a {target}?",
             "sentence": "{target} es atacado/a por {source}.",
+        },
+    },
+    # --- #ontoNarrativa — documental ---
+    "contiene": {
+        "icon": "📚",
+        "question": "¿Qué contiene {source}?",
+        "sentence": "{source} contiene a {target}.",
+        "lens": "narrativa",
+        "inverse": {
+            "question": "¿En qué obra aparece {target}?",
+            "sentence": "{target} forma parte de {source}.",
+        },
+    },
+    "padre_de": {
+        "icon": "👨‍👦",
+        "question": "¿De quién es padre {source}?",
+        "sentence": "{source} es padre de {target}.",
+        "lens": "narrativa",
+        "inverse": {
+            "question": "¿Quién es padre de {target}?",
+            "sentence": "{target} es hijo/a de {source}.",
+        },
+    },
+    "hijo_de": {
+        "icon": "👨‍👦",
+        "question": "¿Quién es padre de {source}?",
+        "sentence": "{source} es hijo/a de {target}.",
+        "lens": "narrativa",
+        "inverse": {
+            "question": "¿De quién es padre {target}?",
+            "sentence": "{target} es padre de {source}.",
+        },
+    },
+    "enemigo_de": {
+        "icon": "⚔️",
+        "question": "¿De quién es enemigo {source}?",
+        "sentence": "{source} es enemigo de {target}.",
+        "lens": "narrativa",
+        "inverse": {
+            "question": "¿Quién es enemigo de {target}?",
+            "sentence": "{target} tiene como enemigo a {source}.",
+        },
+    },
+    "amigo_de": {
+        "icon": "🤝",
+        "question": "¿De quién es amigo {source}?",
+        "sentence": "{source} es amigo de {target}.",
+        "lens": "narrativa",
+        "inverse": {
+            "question": "¿Quién es amigo de {target}?",
+            "sentence": "{target} tiene como amigo a {source}.",
+        },
+    },
+    "sirve_a": {
+        "icon": "🛎️",
+        "question": "¿A quién sirve {source}?",
+        "sentence": "{source} sirve a {target}.",
+        "lens": "narrativa",
+        "inverse": {
+            "question": "¿Quién sirve a {target}?",
+            "sentence": "{target} tiene como sirviente a {source}.",
+        },
+    },
+    "traiciona_a": {
+        "icon": "🗡️",
+        "question": "¿A quién traiciona {source}?",
+        "sentence": "{source} traiciona a {target}.",
+        "lens": "narrativa",
+        "inverse": {
+            "question": "¿Quién traiciona a {target}?",
+            "sentence": "{target} es traicionado/a por {source}.",
+        },
+    },
+    "posee": {
+        "icon": "🏷️",
+        "question": "¿Qué posee {source}?",
+        "sentence": "{source} posee {target}.",
+        "lens": "narrativa",
+        "inverse": {
+            "question": "¿Quién posee {target}?",
+            "sentence": "{target} es propiedad de {source}.",
+        },
+    },
+    "viaja_a": {
+        "icon": "🧭",
+        "question": "¿A dónde viaja {source}?",
+        "sentence": "{source} viaja a {target}.",
+        "lens": "narrativa",
+        "inverse": {
+            "question": "¿Quién viaja a {target}?",
+            "sentence": "{target} es destino de {source}.",
+        },
+    },
+    "criado_por": {
+        "icon": "🏠",
+        "question": "¿Quién crió a {source}?",
+        "sentence": "{source} fue criado/a por {target}.",
+        "lens": "narrativa",
+        "inverse": {
+            "question": "¿A quién crió {target}?",
+            "sentence": "{target} crió a {source}.",
+        },
+    },
+    "enamorado_de": {
+        "icon": "💕",
+        "question": "¿De quién está enamorado {source}?",
+        "sentence": "{source} está enamorado/a de {target}.",
+        "lens": "narrativa",
+        "inverse": {
+            "question": "¿Quién está enamorado de {target}?",
+            "sentence": "{target} es objeto de amor de {source}.",
+        },
+    },
+    # --- Procedencia / interpretación ---
+    "defined_in": {
+        "icon": "📜",
+        "question": "¿En qué obra o fuente se define {source}?",
+        "sentence": "{source} se define en {target}.",
+        "lens": "interpretacion",
+        "inverse": {
+            "question": "¿Qué conceptos define {target}?",
+            "sentence": "{target} define a {source}.",
+        },
+    },
+    "interpreted_as": {
+        "icon": "🔍",
+        "question": "¿Cómo se interpreta {source}?",
+        "sentence": "{source} puede interpretarse como {target}.",
+        "lens": "interpretacion",
+        "inverse": {
+            "question": "¿Qué entidades se interpretan como {target}?",
+            "sentence": "{target} es una lectura posible de {source}.",
+        },
+    },
+    "develops": {
+        "icon": "📈",
+        "question": "¿Qué desarrolla {source}?",
+        "sentence": "{source} desarrolla el concepto de {target}.",
+        "lens": "interpretacion",
+        "inverse": {
+            "question": "¿Quién desarrolla {target}?",
+            "sentence": "{target} es desarrollado por {source}.",
+        },
+    },
+    "reinterprets": {
+        "icon": "🔄",
+        "question": "¿Qué reinterpreta {source}?",
+        "sentence": "{source} reinterpreta {target}.",
+        "lens": "interpretacion",
+        "inverse": {
+            "question": "¿Quién reinterpreta {target}?",
+            "sentence": "{target} es reinterpretado por {source}.",
+        },
+    },
+    "criticizes": {
+        "icon": "⚖️",
+        "question": "¿Qué critica {source}?",
+        "sentence": "{source} critica {target}.",
+        "lens": "interpretacion",
+        "inverse": {
+            "question": "¿Quién critica {target}?",
+            "sentence": "{target} es criticado por {source}.",
+        },
+    },
+    "distinct_from": {
+        "icon": "≠",
+        "question": "¿De qué se distingue {source}?",
+        "sentence": "{source} se distingue de {target}.",
+        "lens": "interpretacion",
+        "inverse": {
+            "question": "¿De qué se distingue {target}?",
+            "sentence": "{target} se distingue de {source}.",
         },
     },
 }

@@ -81,3 +81,13 @@ class CitationsTests(TestCase):
         self.assertEqual(citations[0].authority, "IUPAC")
         self.assertTrue(concept_has_terminological_reference(concept))
         self.assertEqual(concept_provenance_level(concept), "terminological_reference")
+
+    def test_parse_estudio_academico(self):
+        citation = parse_reference_line(
+            "Estudio demo | https://example.org/estudio | estudio_academico | "
+            "Universidad X | interpretive | p. 42"
+        )
+        self.assertIsNotNone(citation)
+        assert citation is not None
+        self.assertEqual(citation.kind, SourceKind.ESTUDIO_ACADEMICO)
+        self.assertEqual(citation.locator, "p. 42")

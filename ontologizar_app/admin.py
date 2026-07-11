@@ -1,7 +1,7 @@
 from django.contrib import admin
 from mptt.admin import MPTTModelAdmin
 from ontologizar_app.models import (
-    Concept, ConceptDefinition, ConceptProperty, ConceptRelation,
+    AttributedRelation, Concept, ConceptDefinition, ConceptProperty, ConceptRelation,
     Dictionary, Subject, SubjectMaterial, Taxonomy, TaxonomyNode,
 )
 
@@ -24,3 +24,10 @@ admin.site.register(TaxonomyNode, MPTTModelAdmin)
 admin.site.register(ConceptDefinition)
 admin.site.register(ConceptProperty)
 admin.site.register(ConceptRelation)
+
+
+@admin.register(AttributedRelation)
+class AttributedRelationAdmin(admin.ModelAdmin):
+    list_display = ("relation", "authority_layer", "framework", "asserted_by", "confidence")
+    list_filter = ("authority_layer", "framework", "confidence")
+    search_fields = ("asserted_by", "source_work", "framework")

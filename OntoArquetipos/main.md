@@ -1,573 +1,121 @@
-
-
-
-
-Te propongo este documento como contexto de diseño para que Claude implemente el dominio en **CORE_RadioMicelio**, alineado con AIRAM, CHORDIA, Ontologías y la biblioteca pública.
-
-:::writing{variant="document" id="58142"}
-# #ontoArquetipos — Integración transmedia en CORE_RadioMicelio
+# Infraestructura ontológica para estudiar narrativas
 
 ## Objetivo
 
-Incorporar un nuevo dominio ontológico denominado **#ontoArquetipos** dentro de CORE_RadioMicelio y AIRAM.
+CORE_RadioMicelio documenta **narrativas** — no es una ontología de arquetipos ni un repositorio del universo creativo de Radio Micelio.
 
-El objetivo no es clasificar personajes mediante etiquetas rígidas, sino permitir el estudio y la navegación entre:
+El MVP es **#ontoNarrativa**: vocabulario universal de entidades, relaciones y eventos narrativos, visible en `/biblioteca` como asignatura **Narrativa**.
 
-- Mitología
-- Arquetipos
-- Dramaturgia
-- Símbolos
-- Funciones expresivas
-- Recursos musicales
-
-para construir una infraestructura útil para:
-
-- Humanidades Digitales
-- Dramaturgia
-- Música
-- Narrativa transmedia
-- Docencia
-- GEO/LLM
+Visión a largo plazo: infraestructura tipo Wikidata para narrativas y modelos interpretativos, reutilizando AIRAM (`Subject`, `Dictionary`, `Concept`, `ConceptRelation`, JSON-LD, verbalizadores).
 
 ---
 
-# Principios de diseño
+## Principios
 
-## No modelar personajes, modelar patrones
-
-La pregunta principal no es:
-
-> ¿Es Sísmico un Segismundo?
-
-Sino:
-
-> ¿Qué patrones arquetípicos presentes en Segismundo pueden reutilizarse para construir a Sísmico?
-
-Los personajes son combinaciones de patrones.
-
-Ejemplo:
-
-Segismundo
-
-- Héroe
-- Prisionero
-- Hijo rechazado
-- Rey legítimo
-- Sombra potencial
-- Renacido
-- Buscador de identidad
-
-Sísmico
-
-- Trickster
-- Marginado
-- Viajero
-- Héroe involuntario
-- Rebelde
-- Renacido
-
-La ontología debe permitir visualizar coincidencias, diferencias y genealogías narrativas.
-
----
-
-# Jerarquía conceptual
-
-Se propone la siguiente estructura:
+### Tres capas
 
 ```text
-#ontoMitologiaGriega
-        ↓ expresses
-
-#ontoArquetipos
-        ↓ appears_in
-
-#ontoDramaturgia
-        ↓ evokes
-
-#ontoMusica
+Capa 0 — Documental     Obra, Personaje, Evento, Lugar, Objeto, relaciones fácticas
+Capa 1 — Perspectivas   Marcos analíticos (forma abierta; no predecida)
+Capa 2 — Interpretativa AttributedRelation con fuente, framework, asserted_by
 ```
 
----
+### Neutralidad de medio
 
-## Nivel 1 — Mitología
+Sirve para novela, teatro, mitología, cine, cómic, videojuego, relato oral. El **medio** es propiedad de la obra (`medium=novela|teatro|cine|…`), no un tipo de entidad.
 
-Entidades concretas.
+### Simplicidad documental
 
-Ejemplos:
+No crear tipos nuevos si basta una propiedad o relación. Toda entidad nueva debe justificar navegación que las estructuras existentes no permiten.
 
-- Zeus
-- Atenea
-- Hermes
-- Apolo
-- Artemisa
-- Dioniso
-- Hades
-- Perséfone
-- Prometeo
-- Atlas
+### Fuera de alcance (núcleo documental)
 
-No son arquetipos.
-
-Son figuras mitológicas.
+- Personajes propios de Radio Micelio (Sísmico, Vaquero Atómico…)
+- CHORDIA y asociaciones musicales dramatúrgicas
+- Listas populares de «12 arquetipos» como canon
+- Relaciones sin fuente publicada
 
 ---
 
-### Relaciones
+## Biblioteca
 
-```yaml
-Atenea:
+| Elemento | Valor |
+|---|---|
+| Subject | `narrativa` / **Narrativa** |
+| URL | `/biblioteca/asignaturas/narrativa/` |
+| Dictionary | `ontonarrativa` (#ontoNarrativa) |
+| Taxonomy | `narrativa` |
 
-instance_of:
-  - Deidad
-
-expresses:
-  - Mentora
-  - Viejo Sabio
-
-symbols:
-  - búho
-  - olivo
-  - lanza
-
-domains:
-  - estrategia
-  - conocimiento
-```
-
-```yaml
-Hermes:
-
-instance_of:
-  - Deidad
-
-expresses:
-  - Trickster
-  - Mensajero
-
-symbols:
-  - sandalias aladas
-  - caminos
-  - comercio
-```
-
-```yaml
-Dioniso:
-
-instance_of:
-  - Deidad
-
-expresses:
-  - Transformador
-  - Renacimiento
-  - Caos creativo
-
-symbols:
-  - vino
-  - máscara
-  - teatro
-```
-
----
-
-# Nivel 2 — Arquetipos
-
-Inspirados principalmente en:
-
-- Jung
-- Campbell
-- Vogler
-- Tradición dramatúrgica
-
-Ejemplos:
-
-- Héroe
-- Trickster
-- Mentor
-- Sombra
-- Rey
-- Madre
-- Renacido
-- Exiliado
-- Mártir
-- Guardián del Umbral
-- Buscador
-- Shapeshifter
-
----
-
-### Modelo propuesto
-
-```yaml
-name: Trickster
-
-symbols:
-  - camino
-  - máscara
-  - frontera
-
-themes:
-  - cambio
-  - engaño
-  - transformación
-
-functions:
-  - romper reglas
-  - alterar el orden
-  - revelar verdades ocultas
-```
-
----
-
-# Nivel 3 — Dramaturgia
-
-Personajes concretos.
-
-Ejemplos:
-
-- Segismundo
-- Hamlet
-- Don Quijote
-- Vaquero Atómico
-- Sísmico
-- Marza
-
----
-
-### Ejemplo
-
-```yaml
-name: Segismundo
-
-archetypes:
-  - Heroe
-  - Prisionero
-  - Rey
-  - Renacido
-
-dramatic_functions:
-  - Transformacion
-  - Revelacion
-  - Redencion
-
-symbols:
-  - Torre
-  - Cadena
-  - Sueño
-  - Libertad
-
-themes:
-  - Identidad
-  - Destino
-  - Libre albedrio
-```
-
----
-
-### Ejemplo Radio Micelio
-
-```yaml
-name: Sismico
-
-archetypes:
-  - Trickster
-  - Heroe
-  - Renacido
-
-mythological_echoes:
-  - Hermes
-  - Prometeo
-
-symbols:
-  - terremoto
-  - portal
-  - viaje
-
-themes:
-  - libertad
-  - identidad
-  - transformación
-```
-
----
-
-# Nivel 4 — Símbolos
-
-Los símbolos deben ser nodos propios.
-
-Ejemplos:
-
-- Torre
-- Cadena
-- Portal
-- Máscara
-- Desierto
-- Camino
-- Cueva
-- Estrella
-- Laberinto
-
-Permiten conectar:
-
-Mitología ↔ Arquetipos ↔ Personajes ↔ Música
-
----
-
-# Nivel 5 — Música
-
-No se pretende afirmar relaciones universales.
-
-El sistema debe documentar asociaciones culturales y dramatúrgicas frecuentes.
-
----
-
-## Modelo recomendado
-
-```yaml
-resource:
-  id: modal_interchange
-
-musical_domain:
-  harmony
-
-evokes:
-  - sorpresa
-  - ambigüedad
-  - transformación
-
-commonly_associated_with:
-  - Trickster
-  - Shapeshifter
-```
-
-Importante:
-
-NO:
+**Nombre reservado:** puede evolucionar a «Estudios Narrativos» si el alcance académico lo justifica; el slug `narrativa` se mantiene por estabilidad de URLs.
 
 ```text
-Intercambio modal = Trickster
+Narrativa (Subject)
+├── ontonarrativa     ← meta-vocabulario (tipos, funciones) — MVP
+├── quijote           ← corpus piloto (bajo lengua, puente documentado)
+└── estudios          ← interpretaciones (AttributedRelation)
 ```
 
-SÍ:
+### Meta vs instancia
 
-```text
-Intercambio modal
-→ puede utilizarse para apoyar escenas
-→ relacionadas con Trickster
+- `ontonarrativa` contiene **solo tipos** (Personaje, Evento, Obra…) y **funciones narrativas** (Encierro, Traición…)
+- Instancias (Don Quijote, Sancho…) viven en diccionarios por obra (`quijote`, etc.)
+- Puente: `ConceptProperty concept_type`
+
+---
+
+## Infraestructura (Fase 1)
+
+### ConceptDefinition — kinds ampliados
+
+- `definition_primary`, `definition_institutional`, `definition_scholarly`
+
+### Citas — SourceKind ampliados
+
+- `fuente_primaria`, `fuente_institucional`, `obra_literaria`, `estudio_academico`
+- Formato: `label | url | kind | authority | authority_level | locator`
+
+### AttributedRelation
+
+Metadatos de procedencia para `ConceptRelation`:
+
+- `authority_layer`: `factual` | `interpretive`
+- `framework`, `asserted_by`, `source_work`, `locator`, `confidence`, `scope`
+
+### Relaciones #ontoNarrativa
+
+Documentales: `contiene`, `padre_de`, `hijo_de`, `enemigo_de`, `amigo_de`, `sirve_a`, `traiciona_a`, `participa_en`, `ocurre_en`, `posee`, `viaja_a`, `criado_por`, `enamorado_de`
+
+Interpretativas: `interpreted_as`, `defined_in`, `develops`, `reinterprets`, `criticizes`, `distinct_from`
+
+---
+
+## Comandos
+
+```bash
+conda activate RM
+
+# Migraciones (ontologizar_app vive en ontologizar_db, no en default)
+python manage.py migrate --database=ontologizar_db
+
+python manage.py seed_narrativa_ontologia   # asignatura + meta-vocabulario
+python manage.py seed_quijote_ontologia      # esqueleto Quijote (si no existe)
+python manage.py align_quijote_narrativa     # corpus piloto + interpretación demo
 ```
 
 ---
 
-# Relación con CHORDIA
-
-No fusionar sistemas.
-
-Mantener separación:
-
-## CHORDIA
-
-Transformaciones musicales.
-
-Ejemplos:
-
-- Intercambio modal
-- Drop 2
-- Pedal point
-- Reducción
-- Aumento
-- SATB
-- Big Band
-
----
-
-## #ontoArquetipos
-
-Contexto semántico y dramatúrgico.
-
----
-
-### Extensión opcional para recursos
-
-Añadir metadatos:
-
-```yaml
-resource:
-  id: pedal_point
-
-dramatic_uses:
-  - tensión
-  - espera
-  - obsesión
-
-related_archetypes:
-  - Sombra
-  - Guardian del Umbral
-
-related_symbols:
-  - cueva
-  - vigilancia
-  - amenaza
-```
-
----
-
-# Capa intermedia: Función Expresiva
-
-Se propone una ontología específica.
+## Secuencia post-MVP
 
 ```text
-Recurso Musical
-        ↓
-
-Función Expresiva
-        ↓
-
-Arquetipo
+#ontoNarrativa (MVP)
+    ↓
+Más corpus (teatro, cine, mitología…)
+    ↓
+Interpretaciones documentadas (AttributedRelation + framework)
+    ↓
+Marcos analíticos con vocabulario — solo si casos de uso lo exigen
+    ↓
+Estudios transversales como colecciones/proyectos
 ```
 
-Ejemplos:
-
-```text
-Tritono
-↓
-Inestabilidad
-↓
-Sombra
-```
-
-```text
-Pedal Point
-↓
-Persistencia
-↓
-Destino
-```
-
-```text
-Intercambio Modal
-↓
-Transformación
-↓
-Shapeshifter
-```
-
----
-
-# Navegación AIRAM
-
-Ejemplos de recorridos:
-
-## Ruta mitológica
-
-```text
-Hermes
-↓
-Trickster
-↓
-Sísmico
-↓
-Mixolidio
-↓
-Blues Rock
-```
-
----
-
-## Ruta dramatúrgica
-
-```text
-Segismundo
-↓
-Renacido
-↓
-Perséfone
-↓
-Muerte y retorno
-↓
-Recursos musicales asociados
-```
-
----
-
-## Ruta compositiva
-
-```text
-Transformación
-↓
-Shapeshifter
-↓
-Intercambio modal
-↓
-Cambio tímbrico
-```
-
----
-
-# Compatibilidad con Biblioteca AIRAM
-
-Nueva asignatura:
-
-```text
-Humanidades Digitales
-└── Arquetipos
-```
-
-Subdominios:
-
-```text
-#ontoArquetipos
-#ontoMitologiaGriega
-#ontoDramaturgia
-#ontoSimbolos
-#ontoExpresividad
-```
-
-Todos reutilizando:
-
-- Subject
-- Dictionary
-- Taxonomy
-- Article
-- JSON-LD
-- Relaciones AIRAM
-
----
-
-# Relaciones ontológicas mínimas
-
-Añadir verbalizadores para:
-
-```text
-expresses
-echoes
-appears_in
-symbolizes
-evokes
-associated_with
-supports
-dramatically_used_for
-```
-
----
-
-# Objetivo final
-
-Construir una ontología transmedia capaz de conectar:
-
-Mitología
-↓
-Arquetipos
-↓
-Personajes
-↓
-Narrativas
-↓
-Símbolos
-↓
-Funciones expresivas
-↓
-Recursos musicales
-
-permitiendo a AIRAM navegar y explicar las relaciones desde una perspectiva docente, dramatúrgica y musical, sin afirmar equivalencias universales y manteniendo siempre la trazabilidad cultural e histórica de cada asociación.
-:::
-
-Además, para CORE_RadioMicelio yo añadiría una tarea extra: crear una **semilla inicial de 20–30 arquetipos, 20 símbolos, 15 figuras mitológicas griegas y 10 personajes dramatúrgicos canónicos** (Segismundo, Hamlet, Don Quijote, Edipo, Antígona, etc.) para que AIRAM tenga ya una red navegable desde el primer despliegue.
+Jung, Campbell, Propp son **candidatos**, no compromisos de diseño.
