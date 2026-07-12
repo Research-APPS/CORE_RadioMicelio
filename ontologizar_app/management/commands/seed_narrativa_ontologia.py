@@ -1,8 +1,8 @@
 """
 Seed #ontoNarrativa — asignatura Narrativa en /biblioteca.
 
-Crea Subject, Dictionary (ontonarrativa), Taxonomy y vocabulario meta
-(tipos de entidad, funciones narrativas). Idempotente.
+Crea Subject, Dictionary (ontonarrativa) y cuatro taxonomías agrupadas por
+taxonomy_group: estructural, arquetípico, temático y simbólico. Idempotente.
 
 Uso:
   python manage.py seed_narrativa_ontologia
@@ -15,15 +15,78 @@ from ontologizar_app.models import (
     Dictionary, Subject, SubjectMaterial, Taxonomy, TaxonomyNode,
 )
 from ontologizar_app.services.wikipedia import fetch_wikipedia_summary
+from ontologizar_app.services.subject_taxonomy import assign_subject_taxonomy
 
-ONTO_NARRATIVA_TREE = [
+# Taxonomía estructural: tipos de entidad + funciones dramáticas
+ESTRUCTURAL_TREE = [
     ("Tipos de entidad", [
         "Obra", "Personaje", "Evento", "Lugar", "Objeto", "Grupo", "Autor",
     ]),
     ("Funciones narrativas", [
-        "Revelación", "Traición", "Encierro", "Reconocimiento", "Exilio",
+        "Conflicto", "Transformación", "Reconocimiento",
+    ]),
+]
+
+# Taxonomía arquetípica: figuras recurrentes (no listas cerradas de arquetipos)
+ARQUETIPICO_TREE = [
+    ("Figuras narrativas", [
+        "Héroe idealista", "Mentor", "Antagonista", "Trickster",
+        "Doncella", "Guardián", "Sombra",
+    ]),
+]
+
+# Taxonomía temática: motivos narrativos
+TEMATICO_TREE = [
+    ("Motivos", [
+        "Revelación", "Traición", "Encierro", "Exilio",
         "Duelo", "Boda", "Asesinato", "Descubrimiento",
     ]),
+]
+
+# Taxonomía simbólica: tipo meta + ejemplos universales
+SIMBOLICO_TREE = [
+    ("Símbolos", [
+        "Símbolo", "Camino", "Agua", "Fuego",
+    ]),
+]
+
+TAXONOMY_SPECS = [
+    {
+        "slug": "narrativa",
+        "name": "Narrativa — estructural (#ontoNarrativa)",
+        "description": "Tipos de entidad y funciones narrativas universales.",
+        "tree": ESTRUCTURAL_TREE,
+        "taxonomy_group": "estructural",
+        "is_primary": True,
+        "position": 0,
+    },
+    {
+        "slug": "narrativa-arquetipico",
+        "name": "Narrativa — figuras (#ontoNarrativa)",
+        "description": "Figuras narrativas recurrentes entre obras y medios.",
+        "tree": ARQUETIPICO_TREE,
+        "taxonomy_group": "arquetipico",
+        "is_primary": False,
+        "position": 1,
+    },
+    {
+        "slug": "narrativa-tematico",
+        "name": "Narrativa — motivos (#ontoNarrativa)",
+        "description": "Motivos narrativos reutilizables.",
+        "tree": TEMATICO_TREE,
+        "taxonomy_group": "tematico",
+        "is_primary": False,
+        "position": 2,
+    },
+    {
+        "slug": "narrativa-simbolico",
+        "name": "Narrativa — símbolos (#ontoNarrativa)",
+        "description": "Símbolos y elementos simbólicos universales.",
+        "tree": SIMBOLICO_TREE,
+        "taxonomy_group": "simbolico",
+        "is_primary": False,
+        "position": 3,
+    },
 ]
 
 ONTO_NARRATIVA_DEFINITIONS = {
@@ -38,55 +101,59 @@ ONTO_NARRATIVA_DEFINITIONS = {
     "Objeto": "Artefacto relevante para la trama o el simbolismo narrativo.",
     "Grupo": "Colectivo de personajes: ejército, familia, cofradía, banda…",
     "Autor": "Creador documentado de una obra (escritor, guionista, director…).",
-    "Revelación": "Función narrativa: descubrimiento que altera el conocimiento diegético.",
-    "Traición": "Función narrativa: quiebre de lealtad o confianza.",
-    "Encierro": "Función narrativa: privación de libertad o confinamiento.",
+    "Conflicto": "Función narrativa: tensión o oposición que impulsa la trama.",
+    "Transformación": "Función narrativa: cambio significativo en personaje, situación o significado.",
     "Reconocimiento": "Función narrativa: identificación o descubrimiento de identidad.",
-    "Exilio": "Función narrativa: expulsión o alejamiento del lugar de origen.",
-    "Duelo": "Función narrativa: enfrentamiento formal entre antagonistas.",
-    "Boda": "Función narrativa: unión matrimonial o ritual equivalente.",
-    "Asesinato": "Función narrativa: muerte causada intencionalmente.",
-    "Descubrimiento": "Función narrativa: hallazgo que impulsa la trama.",
+    "Héroe idealista": "Figura narrativa: agente que persigue un ideal a pesar del coste personal.",
+    "Mentor": "Figura narrativa: guía o maestro que orienta al protagonista.",
+    "Antagonista": "Figura narrativa: fuerza opuesta que obstaculiza el objetivo central.",
+    "Trickster": "Figura narrativa: agente ambiguo que altera reglas o expectativas.",
+    "Doncella": "Figura narrativa: personaje asociado a pureza, deseo o rescate.",
+    "Guardián": "Figura narrativa: protector de umbral, secreto o territorio.",
+    "Sombra": "Figura narrativa: aspecto reprimido o amenaza vinculada al protagonista.",
+    "Revelación": "Motivo narrativo: descubrimiento que altera el conocimiento diegético.",
+    "Traición": "Motivo narrativo: quiebre de lealtad o confianza.",
+    "Encierro": "Motivo narrativo: privación de libertad o confinamiento.",
+    "Exilio": "Motivo narrativo: expulsión o alejamiento del lugar de origen.",
+    "Duelo": "Motivo narrativo: enfrentamiento formal entre antagonistas.",
+    "Boda": "Motivo narrativo: unión matrimonial o ritual equivalente.",
+    "Asesinato": "Motivo narrativo: muerte causada intencionalmente.",
+    "Descubrimiento": "Motivo narrativo: hallazgo que impulsa la trama.",
+    "Símbolo": "Elemento narrativo que remite a un significado más amplio que su literalidad.",
+    "Camino": "Símbolo narrativo: travesía, destino o proceso de transformación.",
+    "Agua": "Símbolo narrativo: purificación, vida, muerte o paso entre mundos.",
+    "Fuego": "Símbolo narrativo: pasión, destrucción, renovación o revelación.",
 }
 
 ENTITY_TYPES = {
     "Obra", "Personaje", "Evento", "Lugar", "Objeto", "Grupo", "Autor",
 }
-
-FUNCTION_TYPES = {
-    "Revelación", "Traición", "Encierro", "Reconocimiento", "Exilio",
+STRUCTURAL_FUNCTIONS = {"Conflicto", "Transformación", "Reconocimiento"}
+FIGURE_TYPES = {
+    "Héroe idealista", "Mentor", "Antagonista", "Trickster",
+    "Doncella", "Guardián", "Sombra",
+}
+MOTIF_TYPES = {
+    "Revelación", "Traición", "Encierro", "Exilio",
     "Duelo", "Boda", "Asesinato", "Descubrimiento",
 }
+SYMBOL_TYPES = {"Símbolo", "Camino", "Agua", "Fuego"}
+
+ALL_LABELS = ENTITY_TYPES | STRUCTURAL_FUNCTIONS | FIGURE_TYPES | MOTIF_TYPES | SYMBOL_TYPES
+
+GROUP_NODE_LABELS = frozenset({
+    "Tipos de entidad", "Funciones narrativas", "Figuras narrativas",
+    "Motivos", "Símbolos",
+})
 
 ONTO_NARRATIVA_PROPERTIES = {
-    "Obra": [
-        ("concept_type", "narrative_entity"),
-        ("preferred_label_en", "Work"),
-    ],
-    "Personaje": [
-        ("concept_type", "narrative_entity"),
-        ("preferred_label_en", "Character"),
-    ],
-    "Evento": [
-        ("concept_type", "narrative_entity"),
-        ("preferred_label_en", "Event"),
-    ],
-    "Lugar": [
-        ("concept_type", "narrative_entity"),
-        ("preferred_label_en", "Place"),
-    ],
-    "Objeto": [
-        ("concept_type", "narrative_entity"),
-        ("preferred_label_en", "Object"),
-    ],
-    "Grupo": [
-        ("concept_type", "narrative_entity"),
-        ("preferred_label_en", "Group"),
-    ],
-    "Autor": [
-        ("concept_type", "narrative_entity"),
-        ("preferred_label_en", "Author"),
-    ],
+    "Obra": [("concept_type", "narrative_entity"), ("preferred_label_en", "Work")],
+    "Personaje": [("concept_type", "narrative_entity"), ("preferred_label_en", "Character")],
+    "Evento": [("concept_type", "narrative_entity"), ("preferred_label_en", "Event")],
+    "Lugar": [("concept_type", "narrative_entity"), ("preferred_label_en", "Place")],
+    "Objeto": [("concept_type", "narrative_entity"), ("preferred_label_en", "Object")],
+    "Grupo": [("concept_type", "narrative_entity"), ("preferred_label_en", "Group")],
+    "Autor": [("concept_type", "narrative_entity"), ("preferred_label_en", "Author")],
 }
 
 ONTO_NARRATIVA_RELATIONS = [
@@ -96,6 +163,8 @@ ONTO_NARRATIVA_RELATIONS = [
     ("Personaje", "Evento", "participa_en"),
     ("Evento", "Lugar", "ocurre_en"),
     ("Autor", "Obra", "related"),
+    ("Héroe idealista", "Conflicto", "related"),
+    ("Mentor", "Transformación", "related"),
 ]
 
 SUBJECT_WIKIPEDIA = "Narrativa"
@@ -111,7 +180,7 @@ def _link_taxonomy(taxonomy, dictionary, tree, parent=None):
             label, children = item
         else:
             label, children = item, []
-        is_group = label in ("Tipos de entidad", "Funciones narrativas")
+        is_group = label in GROUP_NODE_LABELS
         concept = None if is_group else _concept_in_dict(dictionary, label)
         node, _ = TaxonomyNode.objects.get_or_create(
             taxonomy=taxonomy, label=label, parent=parent,
@@ -131,10 +200,10 @@ def _set_properties(concept, pairs):
         )
 
 
-def _set_function_type(concept):
+def _set_concept_type(concept, value):
     ConceptProperty.objects.update_or_create(
         concept=concept, key="concept_type",
-        defaults={"value": "narrative_function", "value_type": "text"},
+        defaults={"value": value, "value_type": "text"},
     )
 
 
@@ -160,8 +229,8 @@ class Command(BaseCommand):
                 "body": (
                     "Vocabulario universal para documentar narrativas en cualquier medio: "
                     "novela, teatro, mitología, cine, cómic, videojuego o relato oral. "
-                    "Los corpus concretos (obras, personajes, eventos) viven en diccionarios "
-                    "por obra; aquí solo están los tipos y funciones reutilizables."
+                    "Las taxonomías agrupan tipos de entidad, figuras, motivos y símbolos; "
+                    "los corpus concretos (obras, personajes, eventos) viven en diccionarios por obra."
                 ),
             },
         )
@@ -170,24 +239,32 @@ class Command(BaseCommand):
             subject=subject, slug="ontonarrativa",
             defaults={
                 "name": "Vocabulario narrativo",
-                "description": "Base #ontoNarrativa — meta-vocabulario de entidades y funciones",
+                "description": "Base #ontoNarrativa — meta-vocabulario de entidades, figuras, motivos y símbolos",
             },
         )
 
-        taxonomy, created_tax = Taxonomy.objects.get_or_create(
-            slug="narrativa",
-            defaults={
-                "name": "Narrativa (#ontoNarrativa)",
-                "description": "Tipos de entidad y funciones narrativas universales.",
-            },
-        )
+        created_taxonomies = []
+        for spec in TAXONOMY_SPECS:
+            taxonomy, created_tax = Taxonomy.objects.get_or_create(
+                slug=spec["slug"],
+                defaults={"name": spec["name"], "description": spec["description"]},
+            )
+            if not created_tax:
+                taxonomy.name = spec["name"]
+                taxonomy.description = spec["description"]
+                taxonomy.save(update_fields=["name", "description"])
+            TaxonomyNode.objects.filter(taxonomy=taxonomy).delete()
+            _link_taxonomy(taxonomy, dictionary, spec["tree"])
+            assign_subject_taxonomy(
+                subject, taxonomy,
+                role="class",
+                taxonomy_group=spec["taxonomy_group"],
+                is_primary=spec["is_primary"],
+                position=spec["position"],
+            )
+            created_taxonomies.append((spec["slug"], created_tax))
 
-        TaxonomyNode.objects.filter(taxonomy=taxonomy).delete()
-        _link_taxonomy(taxonomy, dictionary, ONTO_NARRATIVA_TREE)
-
-        concepts = {}
-        for label in ENTITY_TYPES | FUNCTION_TYPES:
-            concepts[label] = _concept_in_dict(dictionary, label)
+        concepts = {label: _concept_in_dict(dictionary, label) for label in ALL_LABELS}
 
         for label, text in ONTO_NARRATIVA_DEFINITIONS.items():
             ConceptDefinition.objects.update_or_create(
@@ -198,12 +275,22 @@ class Command(BaseCommand):
         for label, pairs in ONTO_NARRATIVA_PROPERTIES.items():
             _set_properties(concepts[label], pairs)
 
-        for label in FUNCTION_TYPES:
-            _set_function_type(concepts[label])
-            ConceptProperty.objects.update_or_create(
-                concept=concepts[label], key="preferred_label_en",
-                defaults={"value": label, "value_type": "text"},
-            )
+        for label in STRUCTURAL_FUNCTIONS:
+            _set_concept_type(concepts[label], "narrative_function")
+            _set_properties(concepts[label], [("preferred_label_en", label)])
+
+        for label in FIGURE_TYPES:
+            _set_concept_type(concepts[label], "narrative_figure")
+            _set_properties(concepts[label], [("preferred_label_en", label)])
+
+        for label in MOTIF_TYPES:
+            _set_concept_type(concepts[label], "narrative_motif")
+            _set_properties(concepts[label], [("preferred_label_en", label)])
+
+        for label in SYMBOL_TYPES:
+            ctype = "narrative_symbol" if label == "Símbolo" else "narrative_symbol_instance"
+            _set_concept_type(concepts[label], ctype)
+            _set_properties(concepts[label], [("preferred_label_en", label)])
 
         ConceptDefinition.objects.update_or_create(
             concept=concepts["Obra"], kind="note",
@@ -221,9 +308,10 @@ class Command(BaseCommand):
                 source=concepts[src], target=concepts[tgt], relation_type=rel,
             )
 
+        tax_summary = ", ".join(f"{slug} (nuevo={created})" for slug, created in created_taxonomies)
         self.stdout.write(self.style.SUCCESS(
             f"Subject 'narrativa' (nuevo={created_subj}), "
             f"Dictionary 'ontonarrativa' (nuevo={created_dict}), "
-            f"Taxonomy 'narrativa' (nuevo={created_tax}), "
+            f"taxonomías: {tax_summary}, "
             f"{len(concepts)} conceptos meta."
         ))

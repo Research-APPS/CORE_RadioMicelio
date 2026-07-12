@@ -109,6 +109,44 @@ class Dictionary(models.Model):
         return f"{self.subject.slug}/{self.name}"
 
 
+class SubjectTaxonomy(models.Model):
+    """Vincula una asignatura con las taxonomías que utiliza (por rol y grupo taxonómico)."""
+
+    ROLE_CHOICES = [
+        ("class", "Taxonomía de clases"),
+        ("property", "Taxonomía de propiedades"),
+        ("thematic", "Taxonomía temática"),
+    ]
+
+    uuid = models.UUIDField(default=uuid.uuid4, unique=True, editable=False, db_index=True)
+    subject = models.ForeignKey(
+        Subject, on_delete=models.CASCADE, related_name="taxonomy_assignments",
+    )
+    taxonomy = models.ForeignKey(
+        "Taxonomy", on_delete=models.CASCADE, related_name="subject_assignments",
+    )
+    role = models.CharField(max_length=20, choices=ROLE_CHOICES, default="class")
+    taxonomy_group = models.CharField(
+        max_length=80, blank=True,
+        help_text="Grupo taxonómico: agrupación editorial de árboles.",
+    )
+    is_primary = models.BooleanField(default=False)
+    position = models.PositiveIntegerField(default=0)
+
+    class Meta:
+        ordering = ["position", "taxonomy__name"]
+        constraints = [
+            models.UniqueConstraint(
+                fields=["subject", "taxonomy", "role"],
+                name="unique_subject_taxonomy_role",
+            ),
+        ]
+
+    def __str__(self):
+        group = f" [{self.taxonomy_group}]" if self.taxonomy_group else ""
+        return f"{self.subject.slug} — {self.taxonomy.slug} ({self.role}){group}"
+
+
 class Taxonomy(models.Model):
     """Vista de clasificación transversal del centro."""
     uuid = models.UUIDField(default=uuid.uuid4, unique=True, editable=False, db_index=True)
@@ -255,3 +293,11 @@ class AttributedRelation(models.Model):
 
     def __str__(self):
         return f"{self.relation} ({self.authority_layer})"
+
+
+# --- Fase 1.5b (diseño, no implementado) ---
+# OntologyProperty: lema reutilizable de propiedad (ej. "color", "frecuencia_hz") con
+# SubjectTaxonomy role="property" vinculando taxonomías de propiedades a asignaturas.
+# ConceptPropertyAssertion: N:M concepto↔OntologyProperty con valor tipado, distinto de
+# ConceptProperty (clave libre por concepto). Permite árboles de propiedades y clasificación
+# paralela a las taxonomías de clases.

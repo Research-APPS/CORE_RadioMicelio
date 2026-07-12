@@ -1,6 +1,11 @@
 {% extends "core/base.html" %}
 {% block title %}{{ concept.label }}{% endblock %}
-{% block extra_head %}<script type="application/ld+json">{{ jsonld|safe }}</script>{% endblock %}
+{% block extra_head %}
+<script type="application/ld+json">{{ jsonld|safe }}</script>
+{% if not static_export %}
+<script defer data-topic-uuid="{{ concept.uuid }}"></script>
+{% endif %}
+{% endblock %}
 {% block content %}
 <main class="page topic-page wiki-page">
   <nav class="breadcrumb">
@@ -15,16 +20,27 @@
   </div>
   {% include "cms/public/_wiki_edit_bar.html" %}
   <div class="wiki-body-wrap">{{ body_html }}</div>
-  {% if taxonomies %}
-  <section class="wiki-aside">
-    <h2>Clasificaciones</h2>
-    <ul>
-      {% for t in taxonomies %}
-      <li><a href="{{ site_root }}biblioteca/taxonomias/{{ t.slug }}/" class="wiki-link">{{ t.name }}</a></li>
+
+  {% if classifications %}
+  <section class="wiki-aside section" id="topic-classification">
+    <h2>Clasificación</h2>
+    <ul class="plain">
+      {% for c in classifications %}
+      <li>
+        <a href="{{ site_root }}biblioteca/taxonomias/{{ c.taxonomy.slug }}/" class="wiki-link">
+          <strong>{{ c.taxonomy.name }}</strong>
+        </a>
+        {% if c.taxonomy_group_label %}
+        <span class="tagline">· Grupo taxonómico: {{ c.taxonomy_group_label }}</span>
+        {% endif %}
+        <br>
+        <span class="tagline">{{ c.breadcrumb|join:" → " }}</span>
+      </li>
       {% endfor %}
     </ul>
   </section>
   {% endif %}
+
   {% if markers %}
   <section class="wiki-aside">
     <h2>Citado en cuadernos</h2>
@@ -34,7 +50,7 @@
         {% if static_export %}{{ m.project.titulo }}{% else %}
         <a href="{{ m.project.get_absolute_url }}" class="wiki-link">{{ m.project.titulo }}</a>
         {% endif %}
-        ({{ m.status }})
+        <span class="tagline">· {{ m.get_status_display }}</span>
       </li>
       {% endfor %}
     </ul>

@@ -31,15 +31,6 @@ def render_subject_body(subject: Subject, *, site_root: str = "/") -> str:
             sections.append("".join(block))
         parts.append(f'<div class="wiki-sections">{"".join(sections)}</div>')
 
-    dictionaries = list(subject.dictionaries.filter(is_active=True))
-    if dictionaries:
-        links = "".join(
-            f'<li><a href="{site_root}biblioteca/diccionarios/{subject.slug}/{d.slug}/" class="wiki-link">'
-            f"{escape(d.name)}</a> ({d.concepts.count()} temas)</li>"
-            for d in dictionaries
-        )
-        parts.append(f'<section class="wiki-aside"><h2>Diccionarios</h2><ul>{links}</ul></section>')
-
     if subject.source_url:
         parts.append(
             f'<p class="wiki-source">Fuente: <a href="{escape(subject.source_url)}" rel="noopener" class="wiki-link">'

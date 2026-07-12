@@ -8,5 +8,73 @@
   <h1 class="page-title">{{ subject.name }}</h1>
   {% include "cms/public/_wiki_edit_bar.html" %}
   <div class="wiki-body-wrap">{{ body_html }}</div>
+
+  {% if curriculum.dictionaries %}
+  <section class="wiki-aside section">
+    <p class="section-label">Diccionarios</p>
+    <ul class="plain">
+      {% for row in curriculum.dictionaries %}
+      <li>
+        <a class="wiki-link" href="{% url 'biblioteca:dictionary' subject.slug row.dictionary.slug %}">
+          {{ row.dictionary.name }}
+        </a>
+        <span class="tagline">({{ row.concept_count }} temas)</span>
+      </li>
+      {% endfor %}
+    </ul>
+  </section>
+  {% endif %}
+
+  {% for section in taxonomy_sections %}
+  <section class="wiki-aside section">
+    <p class="section-label">{{ section.role_label }}</p>
+    <ul class="plain">
+      {% for row in section.rows %}
+      <li>
+        <a class="wiki-link" href="{% url 'biblioteca:taxonomy' row.taxonomy.slug %}">
+          {{ row.taxonomy.name }}
+        </a>
+        {% if row.taxonomy_group_label %}
+        <span class="tagline">· Grupo taxonómico: {{ row.taxonomy_group_label }}</span>
+        {% endif %}
+        {% if row.is_primary %}<span class="tagline">· principal</span>{% endif %}
+        <span class="tagline">({{ row.concept_count }} en esta asignatura)</span>
+      </li>
+      {% endfor %}
+    </ul>
+  </section>
+  {% endfor %}
+
+  <section class="wiki-aside section">
+    <p class="section-label">Completitud curricular</p>
+    <ul class="plain">
+      <li>{{ curriculum.completeness.dictionary_count }} diccionario(s)</li>
+      <li>{{ curriculum.completeness.class_taxonomy_count }} taxonomía(s) de clases</li>
+      <li>{{ curriculum.completeness.classified_concepts }} / {{ curriculum.completeness.total_concepts }} conceptos clasificados</li>
+    </ul>
+    {% if curriculum.completeness.warnings %}
+    <ul class="plain" style="margin-top:0.75rem;color:var(--muted)">
+      {% for w in curriculum.completeness.warnings %}
+      <li>⚠ {{ w }}</li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+    {% if curriculum.unclassified_concepts %}
+    <details style="margin-top:0.75rem">
+      <summary>Conceptos sin clasificar ({{ curriculum.unclassified_concepts|length }})</summary>
+      <ul class="plain" style="margin-top:0.5rem">
+        {% for concept in curriculum.unclassified_concepts|slice:":20" %}
+        <li>
+          <a class="wiki-link" href="{% url 'biblioteca:topic' concept.uuid %}">{{ concept.label }}</a>
+          <span class="tagline">· {{ concept.dictionary.name }}</span>
+        </li>
+        {% endfor %}
+        {% if curriculum.unclassified_concepts|length > 20 %}
+        <li class="tagline">… y {{ curriculum.unclassified_concepts|length|add:"-20" }} más</li>
+        {% endif %}
+      </ul>
+    </details>
+    {% endif %}
+  </section>
 </main>
 {% endblock %}

@@ -15,6 +15,7 @@ Uso:
 from django.core.management.base import BaseCommand
 
 from ontologizar_app.models import Dictionary, Subject, Taxonomy, TaxonomyNode
+from ontologizar_app.services.subject_taxonomy import assign_subject_taxonomy
 
 NODOS_RAIZ = ["Personajes", "Lugares", "Objetos", "Eventos", "Temas"]
 
@@ -40,6 +41,10 @@ class Command(BaseCommand):
             )
             if created:
                 creados += 1
+
+        assign_subject_taxonomy(
+            subject, taxonomy, role="class", taxonomy_group="corpus", position=1,
+        )
 
         self.stdout.write(self.style.SUCCESS(
             f"Subject 'lengua' (nuevo={created_subject}), "

@@ -6,9 +6,12 @@ from django.http import HttpResponse, JsonResponse
 from django.views.decorators.http import require_http_methods
 
 from airam_app.graph import build_graph
+from airam_app.models import AiramSession
 from airam_app.services.sessions import (
     bookmark_session,
     create_session,
+    create_workspace,
+    get_or_create_workspace,
     get_session_for_request,
     parse_json_body,
     patch_session,
@@ -66,10 +69,60 @@ def session_create(request):
     return JsonResponse(session_to_dict(session), status=201)
 
 
+@require_http_methods(["GET", "POST"])
+def workspace_current(request):
+    if request.method == "GET":
+        from airam_app.services.sessions import _session_key
+        sk = _session_key(request)
+        session = AiramSession.objects.filter(
+            session_kind="workspace", session_key=sk, is_bookmarked=False,
+        ).order_by("-updated_at").prefetch_related("concept_weights").first()
+        if not session:
+            return JsonResponse({"workspace": None})
+        return JsonResponse({"workspace": session_to_dict(session)})
+
+    data = parse_json_body(request)
+    force_new = bool(data.get("force_new"))
+    if force_new:
+        session = create_workspace(request, project_uuid=str(data.get("project_uuid", "")).strip())
+    else:
+        session = get_or_create_workspace(request)
+    return JsonResponse(session_to_dict(session), status=201)
+
+
+@require_http_methods(["GET"])
+def workspace_projects(request):
+    from research_app.models import ProyectoInvestigacion
+    rows = ProyectoInvestigacion.objects.filter(activo=True, publico=True).order_by("titulo")[:30]
+    return JsonResponse({
+        "projects": [
+            {"uuid": str(p.uuid), "title": p.acron or p.titulo}
+            for p in rows
+        ],
+    })
+
+
+@require_http_methods(["GET", "PATCH"])
+def workspace_detail(request, uuid):
+    session = get_session_for_request(request, str(uuid))
+    if not session or not session.is_workspace:
+        return JsonResponse({"error": "Workspace no encontrado"}, status=404)
+    if request.method == "GET":
+        return JsonResponse(session_to_dict(session))
+    payload = parse_json_body(request)
+    if not payload.get("action"):
+        return JsonResponse({"error": "action es obligatorio"}, status=400)
+    try:
+        session = patch_session(session, payload)
+    except ValueError as exc:
+        return JsonResponse({"error": str(exc)}, status=400)
+    return JsonResponse(session_to_dict(session))
+
+
 @require_http_methods(["GET", "PATCH"])
 def session_detail(request, uuid):
     session = get_session_for_request(request, str(uuid))
-    if not session:
+    if not session or session.is_workspace:
         return JsonResponse({"error": "Sesión no encontrada"}, status=404)
     if request.method == "GET":
         return JsonResponse(session_to_dict(session))
@@ -102,6 +155,8 @@ def session_rdf(request, uuid):
         return JsonResponse({"error": "Sesión no encontrada"}, status=404)
 
     fmt = request.GET.get("format", "jsonld").strip().lower()
+    if session.is_workspace or not session.taxonomy_id:
+        return JsonResponse({"error": "RDF no disponible para workspace"}, status=400)
     slug = session.taxonomy.slug
     if fmt == "turtle":
         body = session_to_turtle(session)

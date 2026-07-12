@@ -1,6 +1,6 @@
 from django.conf import settings
 
-from ontologizar_app.models import Concept, ConceptRelation, Dictionary, Subject, SubjectMaterial, Taxonomy, TaxonomyNode
+from ontologizar_app.models import Concept, ConceptRelation, Dictionary, Subject, SubjectMaterial, SubjectTaxonomy, Taxonomy, TaxonomyNode
 from research_app.models import LearningMarker, ProyectoInvestigacion, ScientificActivity, ScientificResult
 
 
@@ -30,6 +30,16 @@ def build_graph() -> dict:
             did = f"diccionario:{subject.slug}:{dic.slug}"
             nodes.append({"id": did, "type": "Dictionary", "label": dic.name})
             edges.append({"from": sid, "to": did, "relation": "has_dictionary"})
+        for assignment in SubjectTaxonomy.objects.filter(
+            subject=subject, taxonomy__is_active=True,
+        ).select_related("taxonomy"):
+            tid = f"taxonomia:{assignment.taxonomy.slug}"
+            edges.append({
+                "from": sid, "to": tid,
+                "relation": "uses_taxonomy",
+                "role": assignment.role,
+                "taxonomy_group": assignment.taxonomy_group or "",
+            })
 
     for tax in Taxonomy.objects.filter(is_active=True):
         tid = f"taxonomia:{tax.slug}"

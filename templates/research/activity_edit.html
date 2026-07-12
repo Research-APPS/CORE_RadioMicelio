@@ -1,0 +1,145 @@
+{% extends "core/base.html" %}
+{% block title %}{% if activity %}Editar{% else %}Nueva{% endif %} actividad — {{ institute }}{% endblock %}
+{% block content %}
+  <p class="breadcrumb">
+    <a href="{% url 'research:activity_list' %}">Actividades</a>
+    {% if activity %} / {{ activity.title }}{% else %} / Nueva{% endif %}
+  </p>
+
+  <h1 class="page-title">{% if activity %}Editar actividad{% else %}Nueva actividad{% endif %}</h1>
+
+  <form method="post" class="card" style="padding:1rem;max-width:48rem">
+    {% csrf_token %}
+    <input type="hidden" name="action" value="save_activity">
+
+    <p>
+      <label>Título<br>
+        <input name="title" value="{{ activity.title|default:'' }}" required style="width:100%" maxlength="300">
+      </label>
+    </p>
+
+    <fieldset style="border:none;padding:0;margin:1rem 0">
+      <legend class="section-label" style="margin-bottom:0.35rem">Cuadernos</legend>
+      <p class="tagline" style="margin-top:0">Una actividad puede vincularse a varios cuadernos de proyecto.</p>
+      <ul class="plain" style="margin-top:0.5rem">
+        {% for p in notebook_options %}
+        <li style="margin:0.35rem 0">
+          <label>
+            <input type="checkbox" name="notebook_uuids" value="{{ p.uuid }}" {% if p.notebook_selected %}checked{% endif %}>
+            {{ p.titulo }}{% if p.acron %} ({{ p.acron }}){% endif %}
+          </label>
+        </li>
+        {% endfor %}
+      </ul>
+    </fieldset>
+
+    <fieldset style="border:none;padding:0;margin:1rem 0">
+      <legend class="section-label" style="margin-bottom:0.35rem">Funcionalidades</legend>
+      <p class="tagline" style="margin-top:0">
+        Encargos al sistema: estructurar conocimiento, publicar resultados o explorar lo ya producido.
+        Cada acción puede tener sus propios <strong>resultados</strong> (JSON-LD, informes, mapas, páginas…).
+        Las mismas capacidades que aparecen en la <a href="/">portada de CORE</a>.
+      </p>
+
+      {% for family in capability_families %}
+      <div style="margin:1rem 0;padding:0.75rem 0 0.25rem;border-top:1px solid var(--border)">
+        <p style="margin:0 0 0.15rem">
+          <strong>{{ family.label }}</strong>
+          <span class="tagline"> — {{ family.tagline }}</span>
+        </p>
+        <ul class="plain" style="margin-top:0.5rem">
+          {% for cap in family.actions %}
+          <li style="margin:0.75rem 0;padding-left:0.25rem;border-left:2px solid var(--border)">
+            <label title="{{ cap.definition }}">
+              <input type="checkbox" name="capability_slugs" value="{{ cap.slug }}" {% if cap.selected %}checked{% endif %}>
+              <strong>{{ cap.label }}</strong>
+              <span class="tagline"> — {{ cap.tagline }}{% if cap.coming_soon %} · próximamente{% elif not cap.enabled %} · módulo no activo{% endif %}</span>
+            </label>
+
+            {% if activity and cap.selected %}
+            <div style="margin:0.5rem 0 0 1.35rem">
+              {% if cap.results %}
+              <ul class="plain" style="margin:0.35rem 0">
+                {% for r in cap.results %}
+                <li style="font-size:0.85rem;padding:0.2rem 0">
+                  <strong>{{ r.title }}</strong>
+                  <span class="tagline"> — {{ r.result_type }}{% if r.publish_url %} · <a href="{{ r.publish_url }}">publicado</a>{% endif %}</span>
+                  <form method="post" style="display:inline;margin-left:0.35rem">
+                    {% csrf_token %}
+                    <input type="hidden" name="action" value="delete_result">
+                    <input type="hidden" name="result_uuid" value="{{ r.uuid }}">
+                    <button type="submit" style="font-size:0.7rem">Eliminar</button>
+                  </form>
+                </li>
+                {% endfor %}
+              </ul>
+              {% else %}
+              <p class="tagline" style="margin:0.25rem 0">Sin resultados para esta acción.</p>
+              {% endif %}
+
+              <form method="post" style="margin-top:0.5rem;padding:0.65rem;background:#fafbfc;border-radius:6px;border:1px solid var(--border)">
+                {% csrf_token %}
+                <input type="hidden" name="action" value="add_result">
+                <input type="hidden" name="capability_slug" value="{{ cap.slug }}">
+                <p class="tagline" style="margin:0 0 0.35rem">Añadir resultado para {{ cap.label }}</p>
+                <p style="margin:0.35rem 0">
+                  <input name="result_title" required placeholder="ficha-hongos.jsonld" style="width:100%">
+                </p>
+                <p style="margin:0.35rem 0">
+                  <select name="result_type" required style="width:100%">
+                    {% for value, label in result_type_choices %}
+                    <option value="{{ value }}">{{ label }}</option>
+                    {% endfor %}
+                  </select>
+                </p>
+                <p style="margin:0.35rem 0">
+                  <input name="publish_url" type="url" placeholder="URL publicada (opcional)" style="width:100%">
+                </p>
+                <button type="submit" style="margin-top:0.25rem">Añadir</button>
+              </form>
+            </div>
+            {% elif activity %}
+            <p class="tagline" style="margin:0.35rem 0 0 1.35rem">Marca y guarda la acción para añadir resultados.</p>
+            {% endif %}
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+      {% endfor %}
+    </fieldset>
+
+    <fieldset style="border:none;padding:0;margin:1rem 0">
+      <legend class="section-label" style="margin-bottom:0.35rem">Competencias de investigación</legend>
+      <p class="tagline" style="margin-top:0">Formas de pensar y analizar: narrar, interpretar, argumentar…</p>
+      <ul class="plain" style="margin-top:0.5rem">
+        {% for cap in capability_groups.interpretive %}
+        <li style="margin:0.4rem 0">
+          <label title="{{ cap.definition|default:'' }}">
+            <input type="checkbox" name="capability_slugs" value="{{ cap.slug }}" {% if cap.selected %}checked{% endif %}>
+            <strong>{{ cap.label }}</strong>
+            <span class="tagline"> — {{ cap.tagline }}{% if cap.coming_soon %} · próximamente{% elif not cap.enabled %} · módulo no activo{% endif %}</span>
+          </label>
+        </li>
+        {% endfor %}
+      </ul>
+    </fieldset>
+
+    <p>
+      <label>Estado<br>
+        <select name="status" style="width:100%">
+          {% for value, label in status_choices %}
+          <option value="{{ value }}" {% if activity.status == value or not activity and value == 'active' %}selected{% endif %}>{{ label }}</option>
+          {% endfor %}
+        </select>
+      </label>
+    </p>
+
+    <p>
+      <label>Descripción<br>
+        <textarea name="description" rows="4" style="width:100%">{{ activity.description|default:'' }}</textarea>
+      </label>
+    </p>
+
+    <button type="submit">{% if activity %}Guardar cambios{% else %}Crear actividad{% endif %}</button>
+  </form>
+{% endblock %}

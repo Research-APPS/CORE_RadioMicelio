@@ -1,0 +1,26 @@
+{% if not static_export %}
+<aside id="airam-workspace-panel" class="airam-workspace" hidden aria-label="Marco de trabajo AIRAM">
+  <header class="airam-workspace__header">
+    <button type="button" class="airam-workspace__toggle" data-workspace-action="toggle" aria-expanded="false">
+      <span class="airam-workspace__toggle-label">Marco de trabajo</span>
+      <span class="airam-workspace__count" data-workspace-count>0</span>
+    </button>
+  </header>
+  <div class="airam-workspace__body" data-workspace-body hidden>
+    <p class="airam-workspace__hint">Conceptos que visitas entre taxonomías, ordenados por peso.</p>
+    <p class="airam-workspace__project" data-workspace-project hidden></p>
+    <ul class="airam-workspace__frame" data-workspace-frame></ul>
+    <label class="airam-workspace__project-label">
+      Cuaderno
+      <select data-workspace-project-select>
+        <option value="">— Sin vincular —</option>
+      </select>
+    </label>
+    <div class="airam-workspace__actions">
+      <button type="button" class="airam-panel__btn airam-panel__btn--sm" data-workspace-action="link-project">Vincular cuaderno</button>
+      <button type="button" class="airam-panel__btn airam-panel__btn--ghost airam-panel__btn--sm" data-workspace-action="promote" disabled>Promover marcadores</button>
+      <button type="button" class="airam-panel__btn airam-panel__btn--ghost airam-panel__btn--sm" data-workspace-action="reset">Nuevo marco</button>
+    </div>
+  </div>
+</aside>
+{% endif %}

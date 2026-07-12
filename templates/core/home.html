@@ -3,8 +3,11 @@
 {% block content %}
   <h1 class="page-title">CORE</h1>
   <p class="lead">
-    Sistema operativo de investigación del {{ institute }}: asignaturas, competencias digitales
-    y proyectos de fin de curso.
+    Plataforma para organizaciones que producen conocimiento, cultura o innovación.
+  </p>
+  <p class="lead" style="margin-top:-0.5rem;font-size:1.05rem;color:var(--muted)">
+    Reúne bibliotecas, vocabularios y funcionalidades reutilizables para convertir materiales
+    de estudio en proyectos, análisis y nuevas formas de narración.
   </p>
 
   <section class="section">
@@ -13,16 +16,42 @@
       <h3>Proyectos de fin de curso</h3>
       <p>Cuadernos que marcan conceptos de la biblioteca y producen resultados.
       {% if project_count %}<strong>{{ project_count }}</strong> activos.{% endif %}</p>
-      <p style="margin-top:0.85rem"><a class="btn-link" href="/research/">Entrar</a></p>
+      <p style="margin-top:0.85rem"><a class="btn-link" href="{% url 'research:proyecto_list' %}">Entrar</a></p>
     </div>
   </section>
 
   <section class="section" id="capacidades">
-    <p class="section-label">Competencias digitales</p>
+    <p class="section-label">Funcionalidades</p>
+    <p class="tagline" style="margin-top:0;margin-bottom:0.75rem">
+      Encargos al sistema: estructurar conocimiento, publicar resultados o explorar lo ya producido.
+    </p>
+    {% for family in capability_families %}
+    <div style="margin:1.25rem 0">
+      <p class="section-label" style="margin-bottom:0.35rem">{{ family.label }}</p>
+      <p class="tagline" style="margin-top:0">{{ family.tagline }}</p>
+      <ul class="cap-list" style="margin-top:0.5rem">
+        {% for cap in family.actions %}
+        <li>
+          <a class="cap-item{% if cap.coming_soon %} disabled{% endif %}" href="{{ cap.url }}" title="{{ cap.definition }}">
+            <strong>{{ cap.label }}</strong>
+            <span class="tagline">{{ cap.tagline }}{% if cap.coming_soon %} · próximamente{% elif not cap.enabled %} · módulo no activo{% endif %}</span>
+          </a>
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+    {% endfor %}
+  </section>
+
+  <section class="section" id="capacidades-interpretivas">
+    <p class="section-label">Competencias de investigación</p>
+    <p class="tagline" style="margin-top:0;margin-bottom:0.75rem">
+      Formas de pensar y analizar: narrar, interpretar, argumentar…
+    </p>
     <ul class="cap-list">
-      {% for cap in capabilities %}
+      {% for cap in interpretive_capabilities %}
       <li>
-        <a class="cap-item{% if cap.coming_soon %} disabled{% endif %}" href="{{ cap.url }}">
+        <a class="cap-item{% if cap.coming_soon %} disabled{% endif %}" href="{{ cap.url }}" title="{{ cap.definition }}">
           <strong>{{ cap.label }}</strong>
           <span class="tagline">{{ cap.tagline }}{% if cap.coming_soon %} · próximamente{% endif %}</span>
         </a>
@@ -36,9 +65,9 @@
     <div class="card">
       <h3>Artefactos publicados</h3>
       <p>Informes, taxonomías y entregas generadas por los proyectos.</p>
-      <p style="margin-top:0.85rem"><a class="btn-link" href="/resultados/">Ver resultados</a></p>
+      <p style="margin-top:0.85rem"><a class="btn-link" href="{% url 'results_index' %}">Ver resultados</a></p>
     </div>
   </section>
 
-  <p class="footnote">Cada competencia tiene una página con su definición. Las marcadas «próximamente» aún no tienen herramientas activas.</p>
+  <p class="footnote">Cada acción tiene una página con su definición. Las marcadas «próximamente» aún no tienen herramientas activas.</p>
 {% endblock %}

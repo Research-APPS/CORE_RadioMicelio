@@ -7,6 +7,14 @@ from django.http import HttpRequest
 from django.utils import timezone
 
 from airam_app.models import AiramSession
+from airam_app.services.workspace import (
+    default_workspace_state,
+    link_workspace_project,
+    promote_workspace_markers,
+    record_concept_uuid_event,
+    workspace_frame,
+    workspace_to_dict,
+)
 from airam_app.services.temario import (
     GRANULARITIES,
     combined_subtree_nodes,
@@ -82,6 +90,7 @@ def create_session(
 
     session = AiramSession.objects.create(
         title=_combined_title(nodes, taxonomy),
+        session_kind="temario",
         taxonomy=taxonomy,
         root_node=root_node,
         last_node=root_node,
@@ -93,7 +102,50 @@ def create_session(
     return session
 
 
+def create_workspace(request: HttpRequest, *, project_uuid: str = "") -> AiramSession:
+    parsed_project = None
+    if project_uuid:
+        try:
+            parsed_project = uuid_lib.UUID(project_uuid.strip())
+        except ValueError:
+            parsed_project = None
+
+    title = "Marco de trabajo"
+    if parsed_project:
+        from research_app.models import ProyectoInvestigacion
+        project = ProyectoInvestigacion.objects.filter(uuid=parsed_project).first()
+        if project:
+            title = f"Marco — {project.acron or project.titulo}"
+
+    return AiramSession.objects.create(
+        title=title,
+        session_kind="workspace",
+        taxonomy=None,
+        root_node=None,
+        project_uuid=parsed_project,
+        state=default_workspace_state(),
+        owner_username=request.user.username if request.user.is_authenticated else "",
+        session_key=_session_key(request),
+    )
+
+
+def get_or_create_workspace(request: HttpRequest) -> AiramSession:
+    sk = _session_key(request)
+    session = AiramSession.objects.filter(
+        session_kind="workspace", session_key=sk, is_bookmarked=False,
+    ).order_by("-updated_at").first()
+    if session:
+        return session
+    return create_workspace(request)
+
+
 def session_to_dict(session: AiramSession, *, include_view: bool = True) -> dict:
+    if session.is_workspace:
+        data = workspace_to_dict(session)
+        if not include_view:
+            data.pop("view", None)
+        return data
+
     combined_uuids = list((session.state or {}).get("combined_node_uuids") or [])
     if not combined_uuids:
         combined_uuids = [str(session.root_node.uuid)]
@@ -131,6 +183,17 @@ def session_to_dict(session: AiramSession, *, include_view: bool = True) -> dict
 
 
 def build_session_view(session: AiramSession) -> dict:
+    if session.is_workspace:
+        frame = workspace_frame(session)
+        return {
+            "mode": "workspace",
+            "frame": frame,
+            "can_continue": False,
+            "paragraphs": [
+                "Tu marco de trabajo emerge mientras exploras conceptos entre taxonomías.",
+            ],
+        }
+
     state = session.state or _default_state()
     exploring = state.get("exploring_concept_uuid")
 
@@ -164,6 +227,9 @@ def build_session_view(session: AiramSession) -> dict:
 
 
 def patch_session(session: AiramSession, payload: dict) -> AiramSession:
+    if session.is_workspace:
+        return patch_workspace(session, payload)
+
     action = payload.get("action", "continue")
     state = dict(session.state or _default_state())
 
@@ -229,6 +295,51 @@ def patch_session(session: AiramSession, payload: dict) -> AiramSession:
     return session
 
 
+def patch_workspace(session: AiramSession, payload: dict) -> AiramSession:
+    action = payload.get("action", "")
+    created_by = payload.get("created_by", "")
+
+    if action == "record_concept":
+        record_concept_uuid_event(
+            session,
+            str(payload.get("concept_uuid", "")).strip(),
+            str(payload.get("event_type", "visited")).strip() or "visited",
+        )
+    elif action == "link_project":
+        link_workspace_project(session, str(payload.get("project_uuid", "")).strip())
+    elif action == "promote_markers":
+        min_weight = int(payload.get("min_weight", 5) or 5)
+        promote_workspace_markers(
+            session,
+            min_weight=min_weight,
+            created_by=created_by,
+        )
+    elif action == "add_root":
+        root = payload.get("workspace_root") or {}
+        taxonomy_slug = str(root.get("taxonomy_slug", "")).strip()
+        node_uuid = str(root.get("node_uuid", "")).strip()
+        if taxonomy_slug and node_uuid:
+            node = TaxonomyNode.objects.select_related("taxonomy").filter(
+                uuid=node_uuid, taxonomy__slug=taxonomy_slug,
+            ).first()
+            if node:
+                state = dict(session.state or default_workspace_state())
+                roots = list(state.get("workspace_roots") or [])
+                entry = {
+                    "taxonomy_slug": taxonomy_slug,
+                    "node_uuid": str(node.uuid),
+                    "label": node.label,
+                }
+                if entry not in roots:
+                    roots.append(entry)
+                state["workspace_roots"] = roots
+                session.state = state
+                session.save(update_fields=["state", "updated_at"])
+    else:
+        raise ValueError(f"Acción workspace desconocida: {action}")
+    return session
+
+
 def bookmark_session(session: AiramSession) -> AiramSession:
     session.is_bookmarked = True
     session.bookmarked_at = timezone.now()
@@ -240,7 +351,7 @@ def get_session_for_request(request: HttpRequest, session_uuid: str) -> AiramSes
     try:
         session = AiramSession.objects.select_related(
             "taxonomy", "root_node", "last_node",
-        ).get(uuid=session_uuid)
+        ).prefetch_related("concept_weights").get(uuid=session_uuid)
     except AiramSession.DoesNotExist:
         return None
     if not _can_access(session, request):

@@ -1,3 +1,6 @@
 from django.contrib import admin
 
-# Register your models here.
+from airam_app.models import AiramConceptWeight, AiramSession
+
+admin.site.register(AiramSession)
+admin.site.register(AiramConceptWeight)

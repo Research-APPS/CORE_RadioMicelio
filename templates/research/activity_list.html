@@ -1,0 +1,35 @@
+{% extends "core/base.html" %}
+{% block title %}Investigaciones — {{ institute }}{% endblock %}
+{% block content %}
+  <h1 class="page-title">Investigaciones</h1>
+  <p class="lead">Actividades científicas vinculadas a uno o varios cuadernos.</p>
+
+  {% if user.is_authenticated %}
+  <p><a href="{% url 'research:activity_create' %}" class="wiki-link">+ Nueva investigación</a></p>
+  {% else %}
+  <p class="tagline"><a href="{% url 'cms:login' %}?next={{ request.path }}">Entrar</a> para crear o editar investigaciones.</p>
+  {% endif %}
+
+  <ul class="plain card" style="padding:0 1rem">
+    {% for act in activities %}
+    <li style="padding:0.75rem 0;border-bottom:1px solid var(--border)">
+      <strong>{{ act.title }}</strong>
+      <span style="color:var(--muted);font-size:0.85rem"> · {{ act.get_status_display }}</span>
+      <br><span class="tagline">Cuadernos:
+        {% for nb in act.notebooks_display %}
+        <a href="{% url 'research:proyecto_detail' uuid=nb.uuid %}">{{ nb.titulo }}{% if nb.acron %} ({{ nb.acron }}){% endif %}</a>{% if not forloop.last %}, {% endif %}
+        {% empty %}—{% endfor %}
+      </span>
+      <br><span class="tagline">Competencias: {{ act.capability_labels_display|join:", " }}</span>
+      {% if act.results.all %}
+      <br><span class="tagline">Resultados: {% for r in act.results.all %}{{ r.title }}{% if not forloop.last %}, {% endif %}{% endfor %}</span>
+      {% endif %}
+      {% if user.is_authenticated %}
+      · <a href="{% url 'research:activity_edit' uuid=act.uuid %}">Editar</a>
+      {% endif %}
+    </li>
+    {% empty %}
+    <li><p>Sin investigaciones registradas.</p></li>
+    {% endfor %}
+  </ul>
+{% endblock %}

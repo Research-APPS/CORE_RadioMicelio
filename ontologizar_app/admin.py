@@ -2,13 +2,14 @@ from django.contrib import admin
 from mptt.admin import MPTTModelAdmin
 from ontologizar_app.models import (
     AttributedRelation, Concept, ConceptDefinition, ConceptProperty, ConceptRelation,
-    Dictionary, Subject, SubjectMaterial, Taxonomy, TaxonomyNode,
+    Dictionary, Subject, SubjectMaterial, SubjectTaxonomy, Taxonomy, TaxonomyNode,
 )
 
 admin.site.register(Subject)
 admin.site.register(SubjectMaterial)
 admin.site.register(Dictionary)
 admin.site.register(Taxonomy)
+admin.site.register(SubjectTaxonomy)
 
 
 @admin.register(Concept)

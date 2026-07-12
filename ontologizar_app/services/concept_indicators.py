@@ -37,7 +37,11 @@ ANCHOR_PROPERTIES = "topic-properties"
 ANCHOR_CROSS = "topic-cross-ontology"
 ANCHOR_SOURCES = "topic-sources"
 
-NARRATIVE_ENTITY_TYPES = frozenset({"narrative_entity", "narrative_function", "work", "author"})
+NARRATIVE_ENTITY_TYPES = frozenset({
+    "narrative_entity", "narrative_function", "narrative_figure",
+    "narrative_motif", "narrative_symbol", "narrative_symbol_instance",
+    "work", "author",
+})
 META_VOCABULARY_KEYS = frozenset({"concept_type", "medium", "framework", "authority_layer", "scholarly_consensus"})
 
 

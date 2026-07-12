@@ -3,9 +3,9 @@ from dataclasses import dataclass, field
 from uuid import UUID
 
 from django.conf import settings
+from django.urls import reverse
 
-from core_micelio.core_urls import module_url
-from research_app.capability_registry import ProjectCapabilityDescriptor
+from research_app.capability_registry import ProjectCapabilityDescriptor, get_competency
 from research_app.models import (
     LearningMarker, ProyectoInvestigacion, ProjectCurriculumDeclaration,
     ScientificActivity, ScientificResult,
@@ -41,6 +41,16 @@ def _logs_descriptor(project_uuid):
     return get_logs_descriptor(project_uuid)
 
 
+def _distinct_project_markers(project):
+    """Un marcador por concepto (el más reciente)."""
+    seen = {}
+    for marker in project.markers.order_by("-created_at", "-id"):
+        key = str(marker.concept_uuid)
+        if key not in seen:
+            seen[key] = marker
+    return seen.values()
+
+
 def get_project_digital_profile(project_uuid: UUID) -> ProjectDigitalProfile | None:
     project = ProyectoInvestigacion.objects.filter(uuid=project_uuid, activo=True).first()
     if not project:
@@ -54,25 +64,61 @@ def get_project_digital_profile(project_uuid: UUID) -> ProjectDigitalProfile | N
             "dictionary": m.dictionary_slug,
             "taxonomy": m.taxonomy_slug,
             "status": m.status,
-            "jsonld_url": m.jsonld_url,
+            "status_label": m.get_status_display(),
+            "jsonld_url": reverse(
+                "research:marker_jsonld",
+                kwargs={"uuid": project.uuid, "concept_uuid": m.concept_uuid},
+            ),
+            "graph_url": reverse(
+                "ontologizar:concept_jsonld",
+                kwargs={"uuid": m.concept_uuid},
+            ) + "?graph=1",
             "note": m.note,
+            "topic_url": reverse("biblioteca:topic", kwargs={"uuid": m.concept_uuid}),
         }
-        for m in project.markers.all()
+        for m in _distinct_project_markers(project)
     ]
 
     declarations = list(
         project.declarations.values_list("capability_slug", flat=True)
     )
-    activities = [
-        {
+    activities = []
+    for a in ScientificActivity.objects.filter(
+        notebook_links__project=project,
+    ).prefetch_related("capability_links", "results", "notebook_links__project").distinct():
+        results_grouped = []
+        by_slug: dict[str, list] = {}
+        for r in a.results.all():
+            by_slug.setdefault(r.capability_slug, []).append({
+                "title": r.title,
+                "type": r.result_type,
+                "publish_url": r.publish_url,
+            })
+        for slug in a.get_capability_slugs():
+            cap = get_competency(slug)
+            items = by_slug.get(slug, [])
+            if items:
+                results_grouped.append({
+                    "capability_slug": slug,
+                    "capability_label": cap["label"] if cap else slug,
+                    "items": items,
+                })
+        activities.append({
             "slug": a.slug,
             "title": a.title,
             "capability": a.capability_slug,
+            "capabilities": a.get_capability_slugs(),
+            "capability_labels": a.get_capability_labels(),
+            "notebooks": [
+                {"uuid": str(nb.uuid), "titulo": nb.titulo, "acron": nb.acron}
+                for nb in a.get_notebooks()
+            ],
             "status": a.status,
+            "status_label": a.get_status_display(),
+            "uuid": str(a.uuid),
             "results": [r.title for r in a.results.all()],
-        }
-        for a in project.activities.all()
-    ]
+            "results_grouped": results_grouped,
+        })
 
     capabilities = []
     if "logs" in getattr(settings, "CORE_ENABLED_MODULES", []):
@@ -98,17 +144,3 @@ def get_project_digital_profile(project_uuid: UUID) -> ProjectDigitalProfile | N
         capabilities=capabilities,
         metrics=metrics,
     )
-
-
-def build_digital_profile_jsonld(profile: ProjectDigitalProfile) -> dict:
-    ns = getattr(settings, "CORE_JSONLD_NAMESPACE", "https://core.radiomicelio/ns/")
-    return {
-        "@context": ["https://schema.org/", {"core": ns}],
-        "@type": "ResearchProject",
-        "@id": module_url("research", f"proyectos/{profile.project_uuid}"),
-        "name": profile.titulo,
-        "alternateName": profile.acron or None,
-        "core:markers": profile.markers,
-        "core:curriculum": profile.curriculum,
-        "core:metrics": profile.metrics,
-    }

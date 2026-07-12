@@ -41,6 +41,9 @@ jobs:
           python manage.py migrate --database=research_db
           python manage.py migrate --database=ontologizar_db
           python manage.py seed_curriculum
+          python manage.py seed_narrativa_ontologia
+          python manage.py seed_quijote_ontologia
+          python manage.py align_quijote_narrativa
       - name: Build static wiki
         env:
           STATIC_SITE_CNAME: ${{ vars.STATIC_SITE_CNAME }}

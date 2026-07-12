@@ -1,7 +1,7 @@
 {% extends "core/base.html" %}
 {% block title %}CMS{% endblock %}
 {% block content %}<main class="page"><h1>CMS — Biblioteca</h1>
-<p><a href="{% url 'cms:taxonomy_create' %}">Nueva taxonomía</a> · <a href="/biblioteca/">Ver biblioteca pública</a></p>
+<p><a href="{% url 'cms:taxonomy_create' %}">Nueva taxonomía</a> · <a href="/biblioteca/">Ver biblioteca pública</a> · <a href="{% url 'research:activity_list' %}">Investigaciones</a></p>
 <h2>Taxonomías transversales</h2><ul>{% for t in taxonomies %}<li><a href="{% url 'cms:taxonomy_editor' t.uuid %}">{{ t.name }}</a></li>{% empty %}<li>Sin taxonomías</li>{% endfor %}</ul>
 <h2>Conceptos recientes</h2><ul>{% for c in concepts %}<li><a href="{% url 'cms:concept_edit' c.uuid %}">{{ c.label }}</a> <small>({{ c.dictionary.subject.name }})</small></li>{% endfor %}</ul>
 </main>{% endblock %}

@@ -7,6 +7,7 @@ from ontologizar_app.models import (
     Dictionary, Subject, SubjectMaterial, Taxonomy, TaxonomyNode,
 )
 from ontologizar_app.services.wikipedia import fetch_wikipedia_summary
+from ontologizar_app.services.subject_taxonomy import assign_subject_taxonomy
 from logs_app.models import EventLog, ProjectPlatformLink
 from research_app.models import (
     LearningMarker, ProyectoInvestigacion, ProjectCurriculumDeclaration,
@@ -372,6 +373,23 @@ class Command(BaseCommand):
         dict_patrimonio, _ = Dictionary.objects.get_or_create(subject=historia, slug="patrimonio-local", defaults={"name": "Patrimonio local"})
         dict_mapa, _ = Dictionary.objects.get_or_create(subject=geo, slug="mapa-local", defaults={"name": "Mapa del entorno"})
         dict_palabras, _ = Dictionary.objects.get_or_create(subject=lengua, slug="vocabulario-poetico", defaults={"name": "Vocabulario poético"})
+        dict_musica, _ = Dictionary.objects.get_or_create(
+            subject=musica, slug="vocabulario-musical",
+            defaults={"name": "Vocabulario musical", "description": "Términos para análisis sonoro escolar"},
+        )
+        dict_ciencias_vocab, _ = Dictionary.objects.get_or_create(
+            subject=ciencias, slug="vocabulario-natural",
+            defaults={"name": "Vocabulario de Ciencias Naturales", "description": "Conceptos transversales del currículo"},
+        )
+
+        legacy_musica_emo = Dictionary.objects.filter(subject=musica, slug="emociones")
+        if legacy_musica_emo.exists():
+            orphan_uuids = list(
+                Concept.objects.filter(dictionary__in=legacy_musica_emo).values_list("uuid", flat=True),
+            )
+            if orphan_uuids:
+                LearningMarker.objects.filter(concept_uuid__in=orphan_uuids).delete()
+            legacy_musica_emo.delete()
 
         # Taxonomías por asignatura (sin cruces entre dominios)
         tax_emociones, _ = Taxonomy.objects.get_or_create(
@@ -439,9 +457,22 @@ class Command(BaseCommand):
         tristeza = onto_emo["Tristeza"]
         melancolia = onto_emo["Melancolía"]
         metafora = concept_in_dict(dict_palabras, "Metáfora")
+        melodia = concept_in_dict(dict_musica, "Melodía")
+        paisaje_sonoro = concept_in_dict(dict_musica, "Paisaje sonoro")
+        ecosistema = concept_in_dict(dict_ciencias_vocab, "Ecosistema")
         fiesta = concept_in_dict(dict_patrimonio, "Fiesta del pueblo")
         plaza = concept_in_dict(dict_mapa, "Plaza mayor")
         rio = concept_in_dict(dict_mapa, "Río")
+
+        for concept, text in {
+            melodia: "Sucesión de alturas que articula la expresión emocional de una pieza.",
+            paisaje_sonoro: "Conjunto de sonidos de un entorno; base para registros de campo.",
+            ecosistema: "Comunidad de seres vivos y su medio; marco para observar hongos y biodiversidad.",
+        }.items():
+            ConceptDefinition.objects.get_or_create(
+                concept=concept, kind="definition",
+                defaults={"text": text, "is_active": True},
+            )
 
         ConceptProperty.objects.get_or_create(concept=micelio, key="dominio", defaults={"value": "micología"})
         ConceptProperty.objects.get_or_create(concept=conidioforo, key="hashtag", defaults={"value": "#ontoHongo"})
@@ -469,27 +500,110 @@ class Command(BaseCommand):
                 defaults={"value": "http://purl.obolibrary.org/obo/FUNGUS_0000001"},
             )
 
-        p1, _ = ProyectoInvestigacion.objects.get_or_create(acron="PFC-1", defaults={"titulo": "Emociones en un poema", "descripcion": "Cruza Lengua y Música"})
-        p2, _ = ProyectoInvestigacion.objects.get_or_create(acron="PFC-2", defaults={"titulo": "El bosque y sus sonidos", "descripcion": "Ciencias y Música"})
-        p3, _ = ProyectoInvestigacion.objects.get_or_create(acron="PFC-3", defaults={"titulo": "Mi pueblo en el mapa", "descripcion": "Geografía e Historia"})
+        p1, _ = ProyectoInvestigacion.objects.get_or_create(
+            acron="PFC-1",
+            defaults={
+                "titulo": "Emociones en un poema",
+                "descripcion": "Cruza Lengua, Música y Emociones: léxico afectivo, metáfora y melodía.",
+            },
+        )
+        p2, _ = ProyectoInvestigacion.objects.get_or_create(
+            acron="PFC-2",
+            defaults={
+                "titulo": "El bosque y sus sonidos",
+                "descripcion": "Cruza Ciencias Naturales, Micología y Música: ecosistema, hongos y paisaje sonoro.",
+            },
+        )
+        p3, _ = ProyectoInvestigacion.objects.get_or_create(
+            acron="PFC-3",
+            defaults={
+                "titulo": "Mi pueblo en el mapa",
+                "descripcion": "Cruza Geografía e Historia: espacio local y tradiciones documentadas.",
+            },
+        )
+        for proj, desc in [
+            (p1, "Cruza Lengua, Música y Emociones: léxico afectivo, metáfora y melodía."),
+            (p2, "Cruza Ciencias Naturales, Micología y Música: ecosistema, hongos y paisaje sonoro."),
+            (p3, "Cruza Geografía e Historia: espacio local y tradiciones documentadas."),
+        ]:
+            if proj.descripcion != desc:
+                proj.descripcion = desc
+                proj.save(update_fields=["descripcion"])
 
         for proj, caps in [(p1, ["ontology", "publish"]), (p2, ["ontology", "logs"]), (p3, ["geodata", "publish"])]:
             for c in caps:
                 ProjectCurriculumDeclaration.objects.get_or_create(project=proj, capability_slug=c)
 
-        for proj, concept_obj, status in [
-            (p1, alegria, "used"), (p1, metafora, "cited"), (p1, tristeza, "selected"), (p1, melancolia, "interesting"),
-            (p2, micelio, "used"), (p2, conidioforo, "interesting"), (p2, espora, "interesting"), (p2, bosque, "cited"),
-            (p3, plaza, "used"), (p3, fiesta, "cited"), (p3, rio, "selected"),
-        ]:
-            LearningMarker.from_concept(proj, concept_obj, status=status, created_by="seed", base_url=base).save()
+        LearningMarker.objects.filter(project__in=[p1, p2, p3]).delete()
+        valid_uuids = list(Concept.objects.values_list("uuid", flat=True))
+        if valid_uuids:
+            LearningMarker.objects.exclude(concept_uuid__in=valid_uuids).delete()
 
-        act1, _ = ScientificActivity.objects.get_or_create(project=p1, slug="analizar-poema", defaults={"title": "Analizar emociones en un poema", "capability_slug": "ontology"})
-        ScientificResult.objects.get_or_create(activity=act1, title="informe-emociones-poema.pdf", defaults={"result_type": "report", "published_at": timezone.now()})
-        act2, _ = ScientificActivity.objects.get_or_create(project=p2, slug="observar-hongos", defaults={"title": "Observación de hongos", "capability_slug": "ontology"})
-        ScientificResult.objects.get_or_create(activity=act2, title="ficha-hongos.jsonld", defaults={"result_type": "jsonld", "publish_url": f"{base}/biblioteca/temas/{micelio.uuid}/", "published_at": timezone.now()})
-        act3, _ = ScientificActivity.objects.get_or_create(project=p3, slug="mapa-pueblo", defaults={"title": "Mapa del pueblo", "capability_slug": "geodata"})
-        ScientificResult.objects.get_or_create(activity=act3, title="mapa-pueblo.geojson", defaults={"result_type": "geojson", "published_at": timezone.now()})
+        # (proyecto, concepto, estado, nota de investigación)
+        project_markers = [
+            (p1, alegria, "used", "Emoción dominante en el estribillo del poema."),
+            (p1, tristeza, "selected", "Contraste afectivo en la segunda estrofa."),
+            (p1, melancolia, "interesting", "Matiz para la lectura crítica."),
+            (p1, metafora, "cited", "Recurso literario central del análisis."),
+            (p1, melodia, "cited", "Contorno melódico de la pieza estudiada."),
+            (p2, ecosistema, "cited", "Marco del currículo de Ciencias Naturales."),
+            (p2, bosque, "used", "Lugar de observación y muestreo."),
+            (p2, micelio, "used", "Estructura fúngica observada in situ."),
+            (p2, espora, "interesting", "Dispersión y colonización del sustrato."),
+            (p2, paisaje_sonoro, "selected", "Registro sonoro del entorno forestal."),
+            (p3, plaza, "used", "Punto de referencia del mapa escolar."),
+            (p3, rio, "selected", "Elemento hidrográfico del entorno."),
+            (p3, fiesta, "cited", "Tradición local documentada en el proyecto."),
+        ]
+        for proj, concept_obj, status, note in project_markers:
+            LearningMarker.upsert_for_concept(
+                proj, concept_obj, status=status, note=note, created_by="seed", base_url=base,
+            )
+
+        act1, _ = ScientificActivity.objects.get_or_create(
+            slug="analizar-poema",
+            defaults={"title": "Analizar emociones en un poema", "capability_slug": "ontology"},
+        )
+        act1.set_notebooks([p1])
+        act1.set_capabilities(["ontology", "narrate", "publish"])
+        ScientificResult.objects.get_or_create(
+            activity=act1, title="informe-emociones-poema.pdf",
+            defaults={"result_type": "report", "capability_slug": "publish", "published_at": timezone.now()},
+        )
+        act2, _ = ScientificActivity.objects.get_or_create(
+            slug="observar-hongos",
+            defaults={"title": "Observación de hongos", "capability_slug": "ontology"},
+        )
+        act2.set_notebooks([p2, p1])
+        act2.set_capabilities(["ontology", "dataset", "publish"])
+        ScientificResult.objects.get_or_create(
+            activity=act2, title="ficha-hongos.jsonld",
+            defaults={
+                "result_type": "jsonld",
+                "capability_slug": "ontology",
+                "publish_url": f"{base}/biblioteca/temas/{micelio.uuid}/",
+                "published_at": timezone.now(),
+            },
+        )
+        act3, _ = ScientificActivity.objects.get_or_create(
+            slug="mapa-pueblo",
+            defaults={"title": "Mapa del pueblo", "capability_slug": "geodata"},
+        )
+        act3.set_notebooks([p3])
+        act3.set_capabilities(["geodata", "publish"])
+        ScientificResult.objects.get_or_create(
+            activity=act3, title="mapa-pueblo.geojson",
+            defaults={"result_type": "geojson", "capability_slug": "geodata", "published_at": timezone.now()},
+        )
+
+        assign_subject_taxonomy(neurociencia, tax_neuro, role="class", is_primary=True)
+        assign_subject_taxonomy(emociones_subj, tax_emociones, role="class", is_primary=True)
+        assign_subject_taxonomy(micologia, tax_hongos, role="class", is_primary=True)
+        assign_subject_taxonomy(quimica, tax_quimica, role="class", is_primary=True)
+        assign_subject_taxonomy(historia, tax_patrimonio, role="thematic")
+        assign_subject_taxonomy(geo, tax_lugares, role="thematic")
+        assign_subject_taxonomy(lengua, tax_metaforas, role="thematic")
+        assign_subject_taxonomy(ciencias, tax_ecologia, role="thematic")
 
         self.stdout.write(self.style.SUCCESS(
             f"Seed OK — conceptos: {Concept.objects.count()}, taxonomías: {Taxonomy.objects.count()}, marcadores: {LearningMarker.objects.count()}"

@@ -1,0 +1,38 @@
+{% extends "core/base.html" %}
+{% load static %}
+{% block title %}Ontología — {{ proyecto.titulo }}{% endblock %}
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'core/css/ontology_graph.css' %}">
+{% endblock %}
+{% block content %}
+  <p class="breadcrumb">
+    <a href="{% url 'research:proyecto_list' %}">Cuadernos</a> /
+    <a href="{% url 'research:proyecto_detail' uuid=proyecto.uuid %}">{{ proyecto.titulo }}{% if proyecto.acron %} ({{ proyecto.acron }}){% endif %}</a> /
+    Ontología
+  </p>
+  <h1 class="page-title">Ontología del cuaderno</h1>
+  <p class="lead">Clases, propiedades y relaciones — síntesis legible con resaltado de sintaxis.</p>
+
+  <div class="ontology-legend">
+    <span class="ontology-legend__item ontology-legend__item--class">Clases</span>
+    <span class="ontology-legend__item ontology-legend__item--property">Propiedades</span>
+    <span class="ontology-legend__item ontology-legend__item--relation">Relaciones</span>
+    <span class="ontology-legend__item ontology-legend__item--project">Cuaderno</span>
+  </div>
+
+  <div class="ontology-synth-toolbar">
+    <button type="button" class="ontology-synth-btn" data-action="copy">Copiar síntesis</button>
+  </div>
+
+  <div class="ontology-synth" id="ontology-synth" aria-label="Síntesis ontológica del cuaderno">
+    <pre class="ontology-synth__pre"><code id="ontology-synth-code"></code></pre>
+  </div>
+
+  <p class="ontology-synth-footer">
+    <a href="{% url 'research:digital_profile_json' uuid=proyecto.uuid %}?format=jsonld">JSON-LD completo</a>
+    · <a href="{% url 'research:proyecto_ontology_json' uuid=proyecto.uuid %}">ontologia.json</a>
+  </p>
+
+  {{ graph|json_script:"ontology-graph-data" }}
+  <script src="{% static 'core/js/ontology_graph.js' %}" defer></script>
+{% endblock %}

@@ -399,13 +399,19 @@
 
     var conceptBtn = e.target.closest('[data-concept-uuid]');
     if (conceptBtn && currentSession) {
+      var conceptUuid = conceptBtn.getAttribute('data-concept-uuid');
       api('sessions/' + currentSession.uuid + '/', {
         method: 'PATCH',
         body: JSON.stringify({
           action: 'explore_concept',
-          concept_uuid: conceptBtn.getAttribute('data-concept-uuid'),
+          concept_uuid: conceptUuid,
         }),
-      }).then(renderView);
+      }).then(function (data) {
+        renderView(data);
+        if (window.AIRAM_WORKSPACE) {
+          window.AIRAM_WORKSPACE.recordConcept(conceptUuid, 'visited');
+        }
+      });
       return;
     }
 

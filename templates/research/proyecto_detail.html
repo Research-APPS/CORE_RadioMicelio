@@ -1,12 +1,13 @@
 {% extends "core/base.html" %}
 {% block title %}{{ proyecto.titulo }} — {{ institute }}{% endblock %}
 {% block content %}
-  <p class="breadcrumb"><a href="/research/">Cuadernos</a> / {{ proyecto.acron|default:proyecto.titulo }}</p>
+  <p class="breadcrumb"><a href="/research/">Cuadernos</a> / {{ proyecto.titulo }}{% if proyecto.acron %} ({{ proyecto.acron }}){% endif %}</p>
   <h1 class="page-title">{{ proyecto.titulo }}</h1>
   {% if proyecto.descripcion %}<p class="lead">{{ proyecto.descripcion }}</p>{% endif %}
   <p style="font-size:0.875rem">
     <a href="{% url 'research:digital_profile_json' uuid=proyecto.uuid %}">digital-profile.json</a>
     · <a href="{% url 'research:digital_profile_json' uuid=proyecto.uuid %}?format=jsonld">JSON-LD</a>
+    · <a href="{% url 'research:proyecto_ontology' uuid=proyecto.uuid %}">Ver ontología</a>
   </p>
 
   {% if profile and profile.markers %}
@@ -15,9 +16,11 @@
     <ul class="plain card" style="padding:0 1rem">
       {% for m in profile.markers %}
       <li>
-        <strong>{{ m.concept_label }}</strong>
-        <span style="color:var(--muted);font-size:0.85rem"> — {{ m.subject }} / {{ m.status }}</span>
+        <a href="{{ m.topic_url }}" class="wiki-link"><strong>{{ m.concept_label }}</strong></a>
+        <span style="color:var(--muted);font-size:0.85rem"> — {{ m.subject }} · {{ m.status_label }}</span>
+        {% if m.note %}<br><span class="tagline">{{ m.note }}</span>{% endif %}
         {% if m.jsonld_url %} · <a href="{{ m.jsonld_url }}">JSON-LD</a>{% endif %}
+        {% if m.topic_url %} · <a href="{{ m.topic_url }}">Ficha</a>{% endif %}
       </li>
       {% endfor %}
     </ul>
@@ -25,15 +28,27 @@
   {% endif %}
 
   <section class="section">
-    <p class="section-label">Investigación</p>
+    <p class="section-label">
+      Investigación
+      {% if user.is_authenticated %}<span style="font-weight:normal;font-size:0.85rem"> — <a href="{% url 'research:activity_list' %}">Gestionar</a></span>{% endif %}
+    </p>
     {% if profile and profile.curriculum.activities %}
     <div class="grid-2">
       {% for act in profile.curriculum.activities %}
       <article class="cap-card">
-        <span class="status">Activa</span>
+        <span class="status">{{ act.status_label }}</span>
         <h3>{{ act.title }}</h3>
-        <p>Competencia: {{ act.capability }}</p>
-        {% if act.results %}<p>Resultados: {{ act.results|join:", " }}</p>{% endif %}
+        <p>Competencias: {{ act.capability_labels|join:", " }}</p>
+        {% if act.results_grouped %}
+        <ul class="plain" style="margin:0.35rem 0;font-size:0.85rem">
+          {% for group in act.results_grouped %}
+          <li><strong>{{ group.capability_label }}</strong>: {% for r in group.items %}{{ r.title }}{% if not forloop.last %}, {% endif %}{% endfor %}</li>
+          {% endfor %}
+        </ul>
+        {% elif act.results %}<p>Resultados: {{ act.results|join:", " }}</p>{% endif %}
+        {% if user.is_authenticated %}
+        <p><a href="{% url 'research:activity_edit' uuid=act.uuid %}">Editar</a></p>
+        {% endif %}
       </article>
       {% endfor %}
     </div>

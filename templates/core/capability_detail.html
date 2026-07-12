@@ -1,8 +1,12 @@
 {% extends "core/base.html" %}
 {% block title %}{{ capability.label }} — {{ institute }}{% endblock %}
 {% block content %}
-  <p class="breadcrumb"><a href="/#capacidades">Competencias</a> / {{ capability.label }}</p>
+  <p class="breadcrumb"><a href="{% url 'home' %}#capacidades">Capacidades</a> / {{ capability.label }}</p>
   <h1 class="page-title">{{ capability.label }}</h1>
+
+  {% if capability.intro_note %}
+  <p class="lead" style="font-size:1.05rem">{{ capability.intro_note }}</p>
+  {% endif %}
 
   <section class="section">
     <p class="section-label">Qué es</p>
@@ -27,15 +31,15 @@
   </section>
 
   {% if not capability.mvp_active %}
-    <div class="card"><p><strong>Próximamente.</strong> Esta competencia está definida en el currículo pero aún no tiene herramientas activas en {{ institute }}.</p></div>
+    <div class="card"><p><strong>Próximamente.</strong> Esta capacidad está definida en el currículo pero aún no tiene herramientas activas en {{ institute }}.</p></div>
   {% elif not implemented %}
-    <div class="card"><p>La competencia está prevista pero el módulo necesario no está activo en este despliegue.</p></div>
+    <div class="card"><p>La capacidad está prevista pero el módulo necesario no está activo en este despliegue.</p></div>
   {% elif capability.public_slug == "medir" %}
     <p class="section-label">Herramientas</p>
     <ul class="cap-list">
       {% for p in platforms %}
       <li>
-        <a class="cap-item" href="/logs/{{ p.slug }}/">
+        <a class="cap-item" href="{% url 'logs:platform_dashboard' platform_slug=p.slug %}">
           <strong>{{ p.label }}</strong>
           <span class="tagline">{{ p.description }}</span>
         </a>
@@ -69,6 +73,71 @@
       <li>{{ r.kind }}: <a href="{{ r.url }}">{{ r.title }}</a></li>
       {% endfor %}
     </ul>
+  {% elif capability.public_slug == "narrar" %}
+    <p class="section-label">Biblioteca narrativa</p>
+    {% if biblioteca_links %}
+    <ul class="cap-list">
+      {% for link in biblioteca_links %}
+      <li>
+        <a class="cap-item" href="{{ link.url }}">
+          <strong>{{ link.title }}</strong>
+          <span class="tagline">{{ link.description }}</span>
+        </a>
+      </li>
+      {% endfor %}
+    </ul>
+    {% else %}
+    <div class="card"><p>El vocabulario narrativo (#ontoNarrativa) aún no está sembrado en esta base de datos. Ejecuta <code>python manage.py seed_narrativa_ontologia</code> para activar los enlaces.</p></div>
+    {% endif %}
+  {% elif capability.public_slug == "arquetipar" %}
+    <p class="section-label">Figuras narrativas del meta-vocabulario</p>
+    {% if figures %}
+    <ul class="plain card" style="padding:0 1rem">
+      {% for fig in figures %}
+      <li><a href="{{ fig.url }}">{{ fig.title }}</a></li>
+      {% endfor %}
+    </ul>
+    {% else %}
+    <div class="card"><p>Las figuras narrativas (Personaje, Grupo, Autor…) aparecerán cuando el vocabulario #ontoNarrativa esté sembrado.</p></div>
+    {% endif %}
+    {% if biblioteca_links %}
+    <p style="margin-top:1rem"><a class="btn-link" href="{{ biblioteca_links.0.url }}">Explorar taxonomía narrativa</a></p>
+    {% endif %}
+  {% elif capability.public_slug == "interpretar" %}
+    <p class="section-label">Corpus e interpretaciones documentadas</p>
+    {% if biblioteca_links %}
+    <ul class="cap-list" style="margin-bottom:1rem">
+      {% for link in biblioteca_links %}
+      <li>
+        <a class="cap-item" href="{{ link.url }}">
+          <strong>{{ link.title }}</strong>
+          <span class="tagline">{{ link.description }}</span>
+        </a>
+      </li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+    {% if interpretations %}
+    <ul class="plain card" style="padding:0 1rem">
+      {% for item in interpretations %}
+      <li>
+        <a href="{{ item.url }}"><strong>{{ item.concept }}</strong></a>
+        {% for reading in item.readings %}
+        — {{ reading.relation_type }} → {{ reading.target }}
+        {% if reading.framework %}<em>({{ reading.framework }})</em>{% endif %}
+        {% endfor %}
+      </li>
+      {% endfor %}
+    </ul>
+    {% elif results %}
+    <ul class="plain card" style="padding:0 1rem">
+      {% for r in results %}
+      <li><a href="{{ r.url }}">{{ r.title }}</a></li>
+      {% endfor %}
+    </ul>
+    {% else %}
+    <div class="card"><p>Los corpus documentales e interpretaciones aparecerán tras sembrar el vocabulario narrativo y alinear un corpus piloto (p. ej. <code>align_quijote_narrativa</code>).</p></div>
+    {% endif %}
   {% endif %}
 
   {% if implementation %}

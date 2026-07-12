@@ -23,10 +23,24 @@ from ontologizar_app.services.concept_indicators import (
     topic_indicator_anchors,
 )
 from ontologizar_app.services.knowledge_depth import build_taxonomy_tree_roots
+from ontologizar_app.services.subject_curriculum import (
+    ROLE_LABELS, concept_classifications, subject_curriculum_profile,
+)
 from ontologizar_app.services.taxonomy_nodes import add_taxonomy_node
 from research_app.models import LearningMarker
 
 CMS_LOGIN = "/cms/login/"
+
+
+def _topic_markers(concept):
+    """Una entrada por cuaderno que cita este concepto."""
+    seen = {}
+    for marker in LearningMarker.objects.filter(
+        concept_uuid=concept.uuid,
+    ).select_related("project").order_by("-created_at", "-id"):
+        if marker.project_id not in seen:
+            seen[marker.project_id] = marker
+    return list(seen.values())
 
 
 def biblioteca_index(request):
@@ -38,10 +52,22 @@ def biblioteca_index(request):
 
 def subject_detail(request, slug):
     subject = get_object_or_404(Subject, slug=slug, is_active=True)
+    profile = subject_curriculum_profile(subject)
+    taxonomy_sections = []
+    for role in ("class", "property", "thematic"):
+        rows = profile.taxonomies_by_role.get(role, [])
+        if rows:
+            taxonomy_sections.append({
+                "role": role,
+                "role_label": ROLE_LABELS[role],
+                "rows": rows,
+            })
     return render(request, "cms/public/subject.html", {
         "subject": subject,
         "body_html": render_subject_body(subject, site_root=site_root_path(settings.SITE_URL)),
         "edit_url": reverse("biblioteca:subject_edit", kwargs={"slug": subject.slug}),
+        "curriculum": profile,
+        "taxonomy_sections": taxonomy_sections,
     })
 
 
@@ -101,12 +127,12 @@ def topic_detail(request, uuid):
         ),
         uuid=uuid,
     )
-    markers = LearningMarker.objects.filter(concept_uuid=concept.uuid).select_related("project")
+    markers = _topic_markers(concept)
     root = site_root_path(settings.SITE_URL)
     return render(request, "cms/public/topic.html", {
         "concept": concept,
         "body_html": render_topic_body(concept, site_root=root),
-        "taxonomies": concept.taxonomies(),
+        "classifications": concept_classifications(concept),
         "markers": markers,
         "jsonld": topic_page_jsonld(concept, request),
         "indicators": compute_concept_indicators(concept),
