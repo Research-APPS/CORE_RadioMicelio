@@ -46,3 +46,11 @@ python manage.py runserver
 ```bash
 docker compose up --build
 ```
+
+## Reproducibilidad e instancias
+
+CORE aspira a ser una infraestructura **replicable** por distintos centros: el
+mismo código sirve a N instituciones y solo cambian configuración y datos.
+
+- [`INSTANCE_CONTRACT.md`](INSTANCE_CONTRACT.md) — modelo de qué configura una instancia (código vs. configuración vs. datos).
+- [`ROADMAP_REPRODUCIBILIDAD.md`](ROADMAP_REPRODUCIBILIDAD.md) — secuencia R1–R4, problemas concretos a corregir (secretos en Compose, `seed_demo` en arranque, nº de bases, SQLite versionadas) y generalización de la capa semántica.
