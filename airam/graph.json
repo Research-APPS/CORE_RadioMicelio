@@ -1,0 +1,2896 @@
+{
+  "nodes": [
+    {
+      "id": "centro:radio-micelio",
+      "type": "Institute",
+      "label": "CORE Radio Micelio"
+    },
+    {
+      "id": "asignatura:ciencias-naturales",
+      "type": "Subject",
+      "label": "Ciencias Naturales",
+      "uuid": "5014eef7-3932-4d4b-a7e9-60950bd3013f"
+    },
+    {
+      "id": "material:ciencias-naturales:unidad-hongos",
+      "type": "SubjectMaterial",
+      "label": "Unidad 3: Los hongos"
+    },
+    {
+      "id": "diccionario:ciencias-naturales:vocabulario-natural",
+      "type": "Dictionary",
+      "label": "Vocabulario de Ciencias Naturales"
+    },
+    {
+      "id": "asignatura:emociones",
+      "type": "Subject",
+      "label": "Emociones",
+      "uuid": "61f0916c-61b5-46bd-ae03-7f4ecd322eba"
+    },
+    {
+      "id": "material:emociones:intro-emociones",
+      "type": "SubjectMaterial",
+      "label": "Introducción a las emociones"
+    },
+    {
+      "id": "diccionario:emociones:ontoemo",
+      "type": "Dictionary",
+      "label": "Vocabulario emocional"
+    },
+    {
+      "id": "asignatura:geografia",
+      "type": "Subject",
+      "label": "Geografía",
+      "uuid": "793c73d5-c94c-4586-ab4f-7285d3191ca4"
+    },
+    {
+      "id": "diccionario:geografia:mapa-local",
+      "type": "Dictionary",
+      "label": "Mapa del entorno"
+    },
+    {
+      "id": "asignatura:historia",
+      "type": "Subject",
+      "label": "Historia",
+      "uuid": "9a1361a7-84d7-4603-b16e-ebbaf0e60fe3"
+    },
+    {
+      "id": "diccionario:historia:patrimonio-local",
+      "type": "Dictionary",
+      "label": "Patrimonio local"
+    },
+    {
+      "id": "asignatura:lengua",
+      "type": "Subject",
+      "label": "Lengua y Literatura",
+      "uuid": "2296fcc4-08eb-4e8e-8526-57be1f17b5db"
+    },
+    {
+      "id": "material:lengua:poesia-emociones",
+      "type": "SubjectMaterial",
+      "label": "La poesía y las emociones"
+    },
+    {
+      "id": "diccionario:lengua:quijote",
+      "type": "Dictionary",
+      "label": "El Quijote"
+    },
+    {
+      "id": "diccionario:lengua:vocabulario-poetico",
+      "type": "Dictionary",
+      "label": "Vocabulario poético"
+    },
+    {
+      "id": "asignatura:micologia",
+      "type": "Subject",
+      "label": "Micología",
+      "uuid": "5a802f80-0d1e-4530-8c4d-c0ea4114aa34"
+    },
+    {
+      "id": "material:micologia:intro-micologia",
+      "type": "SubjectMaterial",
+      "label": "Introducción a la micología"
+    },
+    {
+      "id": "diccionario:micologia:ontohongo",
+      "type": "Dictionary",
+      "label": "Vocabulario micológico"
+    },
+    {
+      "id": "asignatura:musica",
+      "type": "Subject",
+      "label": "Música",
+      "uuid": "fb6fb108-80ed-43ff-824f-7a9d41fc2863"
+    },
+    {
+      "id": "diccionario:musica:vocabulario-musical",
+      "type": "Dictionary",
+      "label": "Vocabulario musical"
+    },
+    {
+      "id": "asignatura:narrativa",
+      "type": "Subject",
+      "label": "Narrativa",
+      "uuid": "cc4370e7-6fc3-4d8c-9485-9e48c16500e0"
+    },
+    {
+      "id": "material:narrativa:intro-narrativa",
+      "type": "SubjectMaterial",
+      "label": "Introducción a la narrativa"
+    },
+    {
+      "id": "diccionario:narrativa:ontonarrativa",
+      "type": "Dictionary",
+      "label": "Vocabulario narrativo"
+    },
+    {
+      "id": "asignatura:neurociencia",
+      "type": "Subject",
+      "label": "Neurociencia",
+      "uuid": "5af31dbf-4e08-4f3b-87f9-7bd9ef51ecb5"
+    },
+    {
+      "id": "material:neurociencia:intro-neuro",
+      "type": "SubjectMaterial",
+      "label": "Sistema nervioso y emoción"
+    },
+    {
+      "id": "diccionario:neurociencia:ontoneuro",
+      "type": "Dictionary",
+      "label": "Sistema nervioso"
+    },
+    {
+      "id": "asignatura:quimica",
+      "type": "Subject",
+      "label": "Química",
+      "uuid": "090e0574-0ac3-45a0-a4e8-d86b3e5e416c"
+    },
+    {
+      "id": "material:quimica:intro-quimica",
+      "type": "SubjectMaterial",
+      "label": "Introducción a la química"
+    },
+    {
+      "id": "diccionario:quimica:ontoquim",
+      "type": "Dictionary",
+      "label": "Vocabulario químico"
+    },
+    {
+      "id": "taxonomia:ecologia",
+      "type": "Taxonomy",
+      "label": "Ecología"
+    },
+    {
+      "id": "taxonomia:quijote",
+      "type": "Taxonomy",
+      "label": "El Quijote"
+    },
+    {
+      "id": "concepto:c8709797-34e9-4731-b96e-f839b682c404",
+      "type": "Concept",
+      "label": "Don Quijote",
+      "uuid": "c8709797-34e9-4731-b96e-f839b682c404"
+    },
+    {
+      "id": "concepto:1e078446-8184-4c08-b1ce-c97aa76e6088",
+      "type": "Concept",
+      "label": "Dulcinea del Toboso",
+      "uuid": "1e078446-8184-4c08-b1ce-c97aa76e6088"
+    },
+    {
+      "id": "concepto:0ec78b66-169f-4aaf-b072-c5ba19313937",
+      "type": "Concept",
+      "label": "Sancho Panza",
+      "uuid": "0ec78b66-169f-4aaf-b072-c5ba19313937"
+    },
+    {
+      "id": "taxonomia:emociones",
+      "type": "Taxonomy",
+      "label": "Emociones (#ontoEmo)"
+    },
+    {
+      "id": "concepto:d51cd9af-382d-43ea-91bd-a5a267d7ab88",
+      "type": "Concept",
+      "label": "Contexto expresivo",
+      "uuid": "d51cd9af-382d-43ea-91bd-a5a267d7ab88"
+    },
+    {
+      "id": "concepto:13392b5b-d95c-41db-b83d-019e5fbc8b8e",
+      "type": "Concept",
+      "label": "Causa / estímulo",
+      "uuid": "13392b5b-d95c-41db-b83d-019e5fbc8b8e"
+    },
+    {
+      "id": "concepto:b15fb10d-cb06-4ef2-b0d6-c0a02a3ca019",
+      "type": "Concept",
+      "label": "Escena narrativa",
+      "uuid": "b15fb10d-cb06-4ef2-b0d6-c0a02a3ca019"
+    },
+    {
+      "id": "concepto:d1866a80-f3c8-4972-b519-e27cca96bf5d",
+      "type": "Concept",
+      "label": "Expresión corporal",
+      "uuid": "d1866a80-f3c8-4972-b519-e27cca96bf5d"
+    },
+    {
+      "id": "concepto:88cf4e48-3963-41d6-a4ed-7015204b0fb0",
+      "type": "Concept",
+      "label": "Personaje afectado",
+      "uuid": "88cf4e48-3963-41d6-a4ed-7015204b0fb0"
+    },
+    {
+      "id": "concepto:6f8b8fa1-fea8-4763-9db5-d748d2070c5f",
+      "type": "Concept",
+      "label": "Dimensiones (EmotionML / ONYX)",
+      "uuid": "6f8b8fa1-fea8-4763-9db5-d748d2070c5f"
+    },
+    {
+      "id": "concepto:1446f7f5-f229-4b7c-ad44-089a84c9bea1",
+      "type": "Concept",
+      "label": "Activación",
+      "uuid": "1446f7f5-f229-4b7c-ad44-089a84c9bea1"
+    },
+    {
+      "id": "concepto:346d5db5-0463-4eaf-8bb4-4097b617a866",
+      "type": "Concept",
+      "label": "Dominancia",
+      "uuid": "346d5db5-0463-4eaf-8bb4-4097b617a866"
+    },
+    {
+      "id": "concepto:f86c98bd-18ce-4b23-87a7-6b441efa1530",
+      "type": "Concept",
+      "label": "Intensidad",
+      "uuid": "f86c98bd-18ce-4b23-87a7-6b441efa1530"
+    },
+    {
+      "id": "concepto:24c77e74-700d-4708-bd6c-48ec66f59de3",
+      "type": "Concept",
+      "label": "Valencia",
+      "uuid": "24c77e74-700d-4708-bd6c-48ec66f59de3"
+    },
+    {
+      "id": "concepto:d989c7c4-4bb2-4606-849b-e17d624372b6",
+      "type": "Concept",
+      "label": "Emoción",
+      "uuid": "d989c7c4-4bb2-4606-849b-e17d624372b6"
+    },
+    {
+      "id": "concepto:3990d863-660e-4de0-8056-ca98f6ecdbe2",
+      "type": "Concept",
+      "label": "Estados de ánimo",
+      "uuid": "3990d863-660e-4de0-8056-ca98f6ecdbe2"
+    },
+    {
+      "id": "concepto:e1142eeb-acb4-4032-8471-519a4db90361",
+      "type": "Concept",
+      "label": "Ansiedad",
+      "uuid": "e1142eeb-acb4-4032-8471-519a4db90361"
+    },
+    {
+      "id": "concepto:5e109bca-d359-4a0c-9f98-4897d259f2e0",
+      "type": "Concept",
+      "label": "Calma",
+      "uuid": "5e109bca-d359-4a0c-9f98-4897d259f2e0"
+    },
+    {
+      "id": "concepto:7f32da63-f81f-4f2e-ada3-8ccffb049321",
+      "type": "Concept",
+      "label": "Euforia",
+      "uuid": "7f32da63-f81f-4f2e-ada3-8ccffb049321"
+    },
+    {
+      "id": "concepto:dfaf9618-a422-4291-83db-4a08d3bf5862",
+      "type": "Concept",
+      "label": "Melancolía",
+      "uuid": "dfaf9618-a422-4291-83db-4a08d3bf5862"
+    },
+    {
+      "id": "concepto:479d1f64-ae15-4a13-be66-c2b4b02fde76",
+      "type": "Concept",
+      "label": "Sentimientos",
+      "uuid": "479d1f64-ae15-4a13-be66-c2b4b02fde76"
+    },
+    {
+      "id": "concepto:d7ef34aa-4604-46c8-97fa-febc43c8a33d",
+      "type": "Concept",
+      "label": "Empatía",
+      "uuid": "d7ef34aa-4604-46c8-97fa-febc43c8a33d"
+    },
+    {
+      "id": "concepto:c6e8009a-0b1d-4537-b8ce-fd87bcf93778",
+      "type": "Concept",
+      "label": "Nostalgia",
+      "uuid": "c6e8009a-0b1d-4537-b8ce-fd87bcf93778"
+    },
+    {
+      "id": "concepto:9379e10a-28d9-4f25-a480-f841b1a14782",
+      "type": "Concept",
+      "label": "Vergüenza",
+      "uuid": "9379e10a-28d9-4f25-a480-f841b1a14782"
+    },
+    {
+      "id": "concepto:f29680c4-24b0-4c69-a597-bf194f9c6148",
+      "type": "Concept",
+      "label": "Tipos básicos",
+      "uuid": "f29680c4-24b0-4c69-a597-bf194f9c6148"
+    },
+    {
+      "id": "concepto:dd302279-edcf-482b-bf9c-bd3e2248e27c",
+      "type": "Concept",
+      "label": "Alegría",
+      "uuid": "dd302279-edcf-482b-bf9c-bd3e2248e27c"
+    },
+    {
+      "id": "concepto:600d4d3c-55e2-4238-a849-c9aa8dcac218",
+      "type": "Concept",
+      "label": "Asco",
+      "uuid": "600d4d3c-55e2-4238-a849-c9aa8dcac218"
+    },
+    {
+      "id": "concepto:5a5ddf86-e324-4ec3-a53d-249b6488da38",
+      "type": "Concept",
+      "label": "Ira",
+      "uuid": "5a5ddf86-e324-4ec3-a53d-249b6488da38"
+    },
+    {
+      "id": "concepto:04417230-bca6-4719-8c75-5256a81180c3",
+      "type": "Concept",
+      "label": "Miedo",
+      "uuid": "04417230-bca6-4719-8c75-5256a81180c3"
+    },
+    {
+      "id": "concepto:28e78c34-e840-4931-a861-b6e913a064f8",
+      "type": "Concept",
+      "label": "Sorpresa",
+      "uuid": "28e78c34-e840-4931-a861-b6e913a064f8"
+    },
+    {
+      "id": "concepto:9e8ac6e1-4b35-44d3-9923-a33c984cc84f",
+      "type": "Concept",
+      "label": "Tristeza",
+      "uuid": "9e8ac6e1-4b35-44d3-9923-a33c984cc84f"
+    },
+    {
+      "id": "taxonomia:hongos",
+      "type": "Taxonomy",
+      "label": "Hongos (#ontoHongo)"
+    },
+    {
+      "id": "concepto:f6aa509d-2fe6-4908-a97b-6a26c4381355",
+      "type": "Concept",
+      "label": "Anatomía fúngica",
+      "uuid": "f6aa509d-2fe6-4908-a97b-6a26c4381355"
+    },
+    {
+      "id": "concepto:b8f7f1e1-4ad2-4e56-9532-2129ba3dd23b",
+      "type": "Concept",
+      "label": "Ascocarpo",
+      "uuid": "b8f7f1e1-4ad2-4e56-9532-2129ba3dd23b"
+    },
+    {
+      "id": "concepto:881f7277-b735-4f99-9824-5078bab683ac",
+      "type": "Concept",
+      "label": "Basidio",
+      "uuid": "881f7277-b735-4f99-9824-5078bab683ac"
+    },
+    {
+      "id": "concepto:46692a26-7cee-4979-bbd7-84a71ad3dfa6",
+      "type": "Concept",
+      "label": "Conidióforo",
+      "uuid": "46692a26-7cee-4979-bbd7-84a71ad3dfa6"
+    },
+    {
+      "id": "concepto:cd85b279-3a05-448c-b8aa-792d51e86afa",
+      "type": "Concept",
+      "label": "Conidio",
+      "uuid": "cd85b279-3a05-448c-b8aa-792d51e86afa"
+    },
+    {
+      "id": "concepto:20dc7016-50ef-430c-90ea-946fe7396c3c",
+      "type": "Concept",
+      "label": "Espora",
+      "uuid": "20dc7016-50ef-430c-90ea-946fe7396c3c"
+    },
+    {
+      "id": "concepto:60355bfb-dbde-4554-8e36-a0f2505470be",
+      "type": "Concept",
+      "label": "Cuerpo fructífero",
+      "uuid": "60355bfb-dbde-4554-8e36-a0f2505470be"
+    },
+    {
+      "id": "concepto:4facef73-8e40-4d12-9254-928109288133",
+      "type": "Concept",
+      "label": "Hifa",
+      "uuid": "4facef73-8e40-4d12-9254-928109288133"
+    },
+    {
+      "id": "concepto:5f3eb372-8b53-476b-90bb-f43a2acd6f18",
+      "type": "Concept",
+      "label": "Micelio",
+      "uuid": "5f3eb372-8b53-476b-90bb-f43a2acd6f18"
+    },
+    {
+      "id": "concepto:54050baf-92b8-4cca-be14-3edc45c7259a",
+      "type": "Concept",
+      "label": "Aplicaciones",
+      "uuid": "54050baf-92b8-4cca-be14-3edc45c7259a"
+    },
+    {
+      "id": "concepto:0858e005-8aad-4318-99f2-318941fa1d0c",
+      "type": "Concept",
+      "label": "Alimentación",
+      "uuid": "0858e005-8aad-4318-99f2-318941fa1d0c"
+    },
+    {
+      "id": "concepto:40c11e3f-37c0-4172-bbea-804fae80e311",
+      "type": "Concept",
+      "label": "Biotecnología",
+      "uuid": "40c11e3f-37c0-4172-bbea-804fae80e311"
+    },
+    {
+      "id": "concepto:045a0ba0-f50b-43ca-8ae4-c7ca7d543621",
+      "type": "Concept",
+      "label": "Dispersión",
+      "uuid": "045a0ba0-f50b-43ca-8ae4-c7ca7d543621"
+    },
+    {
+      "id": "concepto:495b4fa6-87d5-4a36-bb8c-67662614d010",
+      "type": "Concept",
+      "label": "Medicina",
+      "uuid": "495b4fa6-87d5-4a36-bb8c-67662614d010"
+    },
+    {
+      "id": "concepto:1a37a16f-691a-40ce-b306-9022cc5d2faa",
+      "type": "Concept",
+      "label": "Ciclo vital",
+      "uuid": "1a37a16f-691a-40ce-b306-9022cc5d2faa"
+    },
+    {
+      "id": "concepto:3ffa69bf-6980-4af8-baf7-c3e015e9ae26",
+      "type": "Concept",
+      "label": "Crecimiento",
+      "uuid": "3ffa69bf-6980-4af8-baf7-c3e015e9ae26"
+    },
+    {
+      "id": "concepto:cdd56389-7c88-48c9-8745-6fe97df65867",
+      "type": "Concept",
+      "label": "Fructificación",
+      "uuid": "cdd56389-7c88-48c9-8745-6fe97df65867"
+    },
+    {
+      "id": "concepto:9505dc3d-b0d4-4f98-93ac-0213f118767d",
+      "type": "Concept",
+      "label": "Germinación",
+      "uuid": "9505dc3d-b0d4-4f98-93ac-0213f118767d"
+    },
+    {
+      "id": "concepto:893e4455-c9a1-4533-a934-25c6f8fa40aa",
+      "type": "Concept",
+      "label": "Ecología",
+      "uuid": "893e4455-c9a1-4533-a934-25c6f8fa40aa"
+    },
+    {
+      "id": "concepto:9b60d67b-2e40-4a35-a7da-10b2bb41766b",
+      "type": "Concept",
+      "label": "Bosque",
+      "uuid": "9b60d67b-2e40-4a35-a7da-10b2bb41766b"
+    },
+    {
+      "id": "concepto:78d283c8-be9c-4e3f-99d6-a49a28d0ec5f",
+      "type": "Concept",
+      "label": "Micorrízico",
+      "uuid": "78d283c8-be9c-4e3f-99d6-a49a28d0ec5f"
+    },
+    {
+      "id": "concepto:3403acf9-c098-4478-b7f0-6b5c57c34686",
+      "type": "Concept",
+      "label": "Parásito",
+      "uuid": "3403acf9-c098-4478-b7f0-6b5c57c34686"
+    },
+    {
+      "id": "concepto:484ca0a7-5258-46d8-ade1-168aaf98cb43",
+      "type": "Concept",
+      "label": "Saprófito",
+      "uuid": "484ca0a7-5258-46d8-ade1-168aaf98cb43"
+    },
+    {
+      "id": "concepto:57b70e08-878c-4eab-af76-25b1f78d8168",
+      "type": "Concept",
+      "label": "Hongos ibéricos",
+      "uuid": "57b70e08-878c-4eab-af76-25b1f78d8168"
+    },
+    {
+      "id": "concepto:cfd36d8d-72dc-458b-a73e-edc1420a7bbc",
+      "type": "Concept",
+      "label": "Taxonomía",
+      "uuid": "cfd36d8d-72dc-458b-a73e-edc1420a7bbc"
+    },
+    {
+      "id": "concepto:0474e434-93ae-432d-a6d3-6deb5b316981",
+      "type": "Concept",
+      "label": "Ascomycota",
+      "uuid": "0474e434-93ae-432d-a6d3-6deb5b316981"
+    },
+    {
+      "id": "concepto:f8d2a7e9-492f-470b-8b18-d85c0035ef33",
+      "type": "Concept",
+      "label": "Basidiomycota",
+      "uuid": "f8d2a7e9-492f-470b-8b18-d85c0035ef33"
+    },
+    {
+      "id": "concepto:37db0f6e-9263-4b97-bf8d-51feb29dae81",
+      "type": "Concept",
+      "label": "Mucoromycota",
+      "uuid": "37db0f6e-9263-4b97-bf8d-51feb29dae81"
+    },
+    {
+      "id": "concepto:2e7572e7-4235-49e5-94c1-2f5baed73bb0",
+      "type": "Concept",
+      "label": "¿Qué es un hongo?",
+      "uuid": "2e7572e7-4235-49e5-94c1-2f5baed73bb0"
+    },
+    {
+      "id": "taxonomia:lugares",
+      "type": "Taxonomy",
+      "label": "Lugares del municipio"
+    },
+    {
+      "id": "taxonomia:metaforas",
+      "type": "Taxonomy",
+      "label": "Metáforas"
+    },
+    {
+      "id": "taxonomia:narrativa",
+      "type": "Taxonomy",
+      "label": "Narrativa — estructural (#ontoNarrativa)"
+    },
+    {
+      "id": "concepto:0b9f1989-65dc-4d24-b548-f4bb858e8fb5",
+      "type": "Concept",
+      "label": "Conflicto",
+      "uuid": "0b9f1989-65dc-4d24-b548-f4bb858e8fb5"
+    },
+    {
+      "id": "concepto:93045e4d-ddc8-4714-8f6e-224955485ab0",
+      "type": "Concept",
+      "label": "Reconocimiento",
+      "uuid": "93045e4d-ddc8-4714-8f6e-224955485ab0"
+    },
+    {
+      "id": "concepto:a7e8fb6e-2b94-4296-a5e2-30b329bd4d1b",
+      "type": "Concept",
+      "label": "Transformación",
+      "uuid": "a7e8fb6e-2b94-4296-a5e2-30b329bd4d1b"
+    },
+    {
+      "id": "concepto:835a68b0-31cd-4a04-8e2e-5c20732d8c90",
+      "type": "Concept",
+      "label": "Autor",
+      "uuid": "835a68b0-31cd-4a04-8e2e-5c20732d8c90"
+    },
+    {
+      "id": "concepto:69d8690e-f546-441f-9efb-9b2e71a1b808",
+      "type": "Concept",
+      "label": "Evento",
+      "uuid": "69d8690e-f546-441f-9efb-9b2e71a1b808"
+    },
+    {
+      "id": "concepto:41b4b27f-9050-47bf-bf6a-280ecf67ea7b",
+      "type": "Concept",
+      "label": "Grupo",
+      "uuid": "41b4b27f-9050-47bf-bf6a-280ecf67ea7b"
+    },
+    {
+      "id": "concepto:d156c583-181b-4804-a9c3-78609ce7af33",
+      "type": "Concept",
+      "label": "Lugar",
+      "uuid": "d156c583-181b-4804-a9c3-78609ce7af33"
+    },
+    {
+      "id": "concepto:a1848f08-2dd5-48e0-9ee3-dfb2cc277aa0",
+      "type": "Concept",
+      "label": "Objeto",
+      "uuid": "a1848f08-2dd5-48e0-9ee3-dfb2cc277aa0"
+    },
+    {
+      "id": "concepto:190df272-84c9-473e-9a26-7150e6c4f91f",
+      "type": "Concept",
+      "label": "Obra",
+      "uuid": "190df272-84c9-473e-9a26-7150e6c4f91f"
+    },
+    {
+      "id": "concepto:dd7b8987-9957-4841-80e4-b1694b062083",
+      "type": "Concept",
+      "label": "Personaje",
+      "uuid": "dd7b8987-9957-4841-80e4-b1694b062083"
+    },
+    {
+      "id": "taxonomia:narrativa-arquetipico",
+      "type": "Taxonomy",
+      "label": "Narrativa — figuras (#ontoNarrativa)"
+    },
+    {
+      "id": "concepto:2c53b8e4-bb07-41b7-870b-3ad24bfcf5cf",
+      "type": "Concept",
+      "label": "Antagonista",
+      "uuid": "2c53b8e4-bb07-41b7-870b-3ad24bfcf5cf"
+    },
+    {
+      "id": "concepto:2478f080-8f6b-4d3c-88d1-0de0fdf35f13",
+      "type": "Concept",
+      "label": "Doncella",
+      "uuid": "2478f080-8f6b-4d3c-88d1-0de0fdf35f13"
+    },
+    {
+      "id": "concepto:ac5e89e5-ffc2-4c48-bbe7-38edc478f411",
+      "type": "Concept",
+      "label": "Guardián",
+      "uuid": "ac5e89e5-ffc2-4c48-bbe7-38edc478f411"
+    },
+    {
+      "id": "concepto:ea8610c9-f991-4679-bede-05ddaf9d05ec",
+      "type": "Concept",
+      "label": "Héroe idealista",
+      "uuid": "ea8610c9-f991-4679-bede-05ddaf9d05ec"
+    },
+    {
+      "id": "concepto:aab6e8ca-ad6d-42d4-b6ca-77dc04f1cf33",
+      "type": "Concept",
+      "label": "Mentor",
+      "uuid": "aab6e8ca-ad6d-42d4-b6ca-77dc04f1cf33"
+    },
+    {
+      "id": "concepto:74e30093-7bdc-48ed-8be6-b102ce30170a",
+      "type": "Concept",
+      "label": "Sombra",
+      "uuid": "74e30093-7bdc-48ed-8be6-b102ce30170a"
+    },
+    {
+      "id": "concepto:cff625d0-3e86-4bf9-ac16-3b5a0f68b0f0",
+      "type": "Concept",
+      "label": "Trickster",
+      "uuid": "cff625d0-3e86-4bf9-ac16-3b5a0f68b0f0"
+    },
+    {
+      "id": "taxonomia:narrativa-tematico",
+      "type": "Taxonomy",
+      "label": "Narrativa — motivos (#ontoNarrativa)"
+    },
+    {
+      "id": "concepto:c6178f72-c291-4ffb-8a8e-627cb8120bc0",
+      "type": "Concept",
+      "label": "Asesinato",
+      "uuid": "c6178f72-c291-4ffb-8a8e-627cb8120bc0"
+    },
+    {
+      "id": "concepto:9d2319c8-372f-46b2-93b7-e4b365e6fb25",
+      "type": "Concept",
+      "label": "Boda",
+      "uuid": "9d2319c8-372f-46b2-93b7-e4b365e6fb25"
+    },
+    {
+      "id": "concepto:12b2cef9-6627-45f6-8d7e-ae68f0438e0c",
+      "type": "Concept",
+      "label": "Descubrimiento",
+      "uuid": "12b2cef9-6627-45f6-8d7e-ae68f0438e0c"
+    },
+    {
+      "id": "concepto:b74151c6-76db-4767-ac30-3355d6a4540a",
+      "type": "Concept",
+      "label": "Duelo",
+      "uuid": "b74151c6-76db-4767-ac30-3355d6a4540a"
+    },
+    {
+      "id": "concepto:bfc362fb-e50a-4ac0-8c02-96d0f72ab1d4",
+      "type": "Concept",
+      "label": "Encierro",
+      "uuid": "bfc362fb-e50a-4ac0-8c02-96d0f72ab1d4"
+    },
+    {
+      "id": "concepto:ca8c66b6-3f33-46d0-a189-f5f93f69ff80",
+      "type": "Concept",
+      "label": "Exilio",
+      "uuid": "ca8c66b6-3f33-46d0-a189-f5f93f69ff80"
+    },
+    {
+      "id": "concepto:cda1e88d-9c12-4281-8e79-598d883ba706",
+      "type": "Concept",
+      "label": "Revelación",
+      "uuid": "cda1e88d-9c12-4281-8e79-598d883ba706"
+    },
+    {
+      "id": "concepto:d580e940-a754-4846-9e14-edeffe8be529",
+      "type": "Concept",
+      "label": "Traición",
+      "uuid": "d580e940-a754-4846-9e14-edeffe8be529"
+    },
+    {
+      "id": "taxonomia:narrativa-simbolico",
+      "type": "Taxonomy",
+      "label": "Narrativa — símbolos (#ontoNarrativa)"
+    },
+    {
+      "id": "concepto:1496caeb-2496-45c5-9c23-95a38fac18e9",
+      "type": "Concept",
+      "label": "Agua",
+      "uuid": "1496caeb-2496-45c5-9c23-95a38fac18e9"
+    },
+    {
+      "id": "concepto:e1f7ce5c-68c5-4d68-83e6-7a1665ce10a7",
+      "type": "Concept",
+      "label": "Camino",
+      "uuid": "e1f7ce5c-68c5-4d68-83e6-7a1665ce10a7"
+    },
+    {
+      "id": "concepto:825bec65-4877-4528-b090-4ae106f587a7",
+      "type": "Concept",
+      "label": "Fuego",
+      "uuid": "825bec65-4877-4528-b090-4ae106f587a7"
+    },
+    {
+      "id": "concepto:a1d77fe9-00e6-42bf-a67d-e59a915e0fc8",
+      "type": "Concept",
+      "label": "Símbolo",
+      "uuid": "a1d77fe9-00e6-42bf-a67d-e59a915e0fc8"
+    },
+    {
+      "id": "taxonomia:neurociencia",
+      "type": "Taxonomy",
+      "label": "Neurociencia (#ontoNeuro)"
+    },
+    {
+      "id": "concepto:5a545091-2c59-4027-bf43-f1235a6f9ea1",
+      "type": "Concept",
+      "label": "Correlatos de la emoción",
+      "uuid": "5a545091-2c59-4027-bf43-f1235a6f9ea1"
+    },
+    {
+      "id": "concepto:46be8a06-356c-42c1-b051-0553eb67285f",
+      "type": "Concept",
+      "label": "Memoria emocional",
+      "uuid": "46be8a06-356c-42c1-b051-0553eb67285f"
+    },
+    {
+      "id": "concepto:961a15a7-c020-4458-b1aa-c394e08a6ade",
+      "type": "Concept",
+      "label": "Procesamiento afectivo",
+      "uuid": "961a15a7-c020-4458-b1aa-c394e08a6ade"
+    },
+    {
+      "id": "concepto:20de74e6-f144-4b54-be41-e974bc63a454",
+      "type": "Concept",
+      "label": "Respuesta al estrés",
+      "uuid": "20de74e6-f144-4b54-be41-e974bc63a454"
+    },
+    {
+      "id": "concepto:62967ebe-c841-4a54-b181-9ed8dcab956b",
+      "type": "Concept",
+      "label": "Sistema nervioso",
+      "uuid": "62967ebe-c841-4a54-b181-9ed8dcab956b"
+    },
+    {
+      "id": "concepto:e8aac3bb-52f2-4742-9dc0-f8c09a4889bd",
+      "type": "Concept",
+      "label": "Neurona",
+      "uuid": "e8aac3bb-52f2-4742-9dc0-f8c09a4889bd"
+    },
+    {
+      "id": "concepto:b0c8c193-f420-4247-9e50-60989ae98046",
+      "type": "Concept",
+      "label": "Neurotransmisores",
+      "uuid": "b0c8c193-f420-4247-9e50-60989ae98046"
+    },
+    {
+      "id": "concepto:e04ea714-bb49-42ad-a93e-59c9f48cdebf",
+      "type": "Concept",
+      "label": "Dopamina",
+      "uuid": "e04ea714-bb49-42ad-a93e-59c9f48cdebf"
+    },
+    {
+      "id": "concepto:669dfaae-7180-4972-bad7-da4e474c3b15",
+      "type": "Concept",
+      "label": "Noradrenalina",
+      "uuid": "669dfaae-7180-4972-bad7-da4e474c3b15"
+    },
+    {
+      "id": "concepto:8a66db7c-c3df-40ca-a816-d02b1c51286e",
+      "type": "Concept",
+      "label": "Serotonina",
+      "uuid": "8a66db7c-c3df-40ca-a816-d02b1c51286e"
+    },
+    {
+      "id": "concepto:3247c6dd-f5f7-419e-8267-2766f1b85e9a",
+      "type": "Concept",
+      "label": "Regiones cerebrales",
+      "uuid": "3247c6dd-f5f7-419e-8267-2766f1b85e9a"
+    },
+    {
+      "id": "concepto:5eab4c64-97c4-4f3e-810a-34910eab52c7",
+      "type": "Concept",
+      "label": "Amígdala",
+      "uuid": "5eab4c64-97c4-4f3e-810a-34910eab52c7"
+    },
+    {
+      "id": "concepto:35bf72ae-b751-4436-b9d9-c2cba2a28a94",
+      "type": "Concept",
+      "label": "Corteza prefrontal",
+      "uuid": "35bf72ae-b751-4436-b9d9-c2cba2a28a94"
+    },
+    {
+      "id": "concepto:4b600462-5426-4aa0-9920-7d4bfe16f05e",
+      "type": "Concept",
+      "label": "Hipocampo",
+      "uuid": "4b600462-5426-4aa0-9920-7d4bfe16f05e"
+    },
+    {
+      "id": "concepto:582b0ea4-f45b-460c-9560-a9ba3fcfdce0",
+      "type": "Concept",
+      "label": "Sinapsis",
+      "uuid": "582b0ea4-f45b-460c-9560-a9ba3fcfdce0"
+    },
+    {
+      "id": "concepto:470aaffc-aa6d-4a51-83d3-b86918a58545",
+      "type": "Concept",
+      "label": "Sistemas",
+      "uuid": "470aaffc-aa6d-4a51-83d3-b86918a58545"
+    },
+    {
+      "id": "concepto:fa7c4f77-ce55-403a-a4ae-1cd198f45651",
+      "type": "Concept",
+      "label": "Sistema límbico",
+      "uuid": "fa7c4f77-ce55-403a-a4ae-1cd198f45651"
+    },
+    {
+      "id": "concepto:03943edc-12b8-498c-80d2-c4ee5b7e53aa",
+      "type": "Concept",
+      "label": "Tronco encefálico",
+      "uuid": "03943edc-12b8-498c-80d2-c4ee5b7e53aa"
+    },
+    {
+      "id": "taxonomia:quimica",
+      "type": "Taxonomy",
+      "label": "Química (#ontoQuim)"
+    },
+    {
+      "id": "concepto:002aa7e7-013a-409d-b1ad-e4ef4edf3eb5",
+      "type": "Concept",
+      "label": "Química",
+      "uuid": "002aa7e7-013a-409d-b1ad-e4ef4edf3eb5"
+    },
+    {
+      "id": "concepto:814bea65-2449-4c06-914d-b78015e75dc5",
+      "type": "Concept",
+      "label": "Estructura atómica",
+      "uuid": "814bea65-2449-4c06-914d-b78015e75dc5"
+    },
+    {
+      "id": "concepto:38dfe4cc-8f96-4aeb-81ea-830763ff0235",
+      "type": "Concept",
+      "label": "Electrones de valencia",
+      "uuid": "38dfe4cc-8f96-4aeb-81ea-830763ff0235"
+    },
+    {
+      "id": "concepto:b0d0f3d2-d654-4b33-b536-12c21e1b1d98",
+      "type": "Concept",
+      "label": "Enlace químico",
+      "uuid": "b0d0f3d2-d654-4b33-b536-12c21e1b1d98"
+    },
+    {
+      "id": "concepto:afb7421a-3c59-47bb-9e2e-1e948d6f45e4",
+      "type": "Concept",
+      "label": "Valencia química",
+      "uuid": "afb7421a-3c59-47bb-9e2e-1e948d6f45e4"
+    },
+    {
+      "id": "concepto:70275694-2c00-4f93-bff7-83efaf8501c4",
+      "type": "Concept",
+      "label": "Estado de oxidación",
+      "uuid": "70275694-2c00-4f93-bff7-83efaf8501c4"
+    },
+    {
+      "id": "concepto:70d3e12c-3706-4e4f-ab5e-b87951b53dc8",
+      "type": "Concept",
+      "label": "Regla del octeto",
+      "uuid": "70d3e12c-3706-4e4f-ab5e-b87951b53dc8"
+    },
+    {
+      "id": "taxonomia:tradiciones",
+      "type": "Taxonomy",
+      "label": "Tradiciones"
+    },
+    {
+      "id": "concepto:0f65c47e-1464-4681-ab5b-86f59ae2416b",
+      "type": "Concept",
+      "label": "Don Quijote de la Mancha",
+      "uuid": "0f65c47e-1464-4681-ab5b-86f59ae2416b"
+    },
+    {
+      "id": "proyecto:PFC-2",
+      "type": "Project",
+      "label": "El bosque y sus sonidos",
+      "uuid": "46a592d8-fd20-468d-ab24-7303ece01db8"
+    },
+    {
+      "id": "marcador:dfbc0bbb-4acb-44b9-ad17-f526a9f2be62",
+      "type": "Marker",
+      "label": "Paisaje sonoro",
+      "status": "selected"
+    },
+    {
+      "id": "marcador:bae58123-86d4-4e50-9a4b-95d24324011f",
+      "type": "Marker",
+      "label": "Espora",
+      "status": "interesting"
+    },
+    {
+      "id": "marcador:4b6eb747-3b3e-4dfe-b7aa-17a9bdc8eef1",
+      "type": "Marker",
+      "label": "Micelio",
+      "status": "used"
+    },
+    {
+      "id": "marcador:b8d1403b-ed39-424b-ae36-a7a955ea74f4",
+      "type": "Marker",
+      "label": "Bosque",
+      "status": "used"
+    },
+    {
+      "id": "marcador:0fc914ec-d111-4ef1-b341-2dc8d110a739",
+      "type": "Marker",
+      "label": "Ecosistema",
+      "status": "cited"
+    },
+    {
+      "id": "actividad:PFC-2:observar-hongos",
+      "type": "Activity",
+      "label": "Observación de hongos"
+    },
+    {
+      "id": "resultado:5280f29c-695b-4fca-9a03-6d9deb398ead",
+      "type": "Result",
+      "label": "ficha-hongos.jsonld",
+      "result_type": "jsonld"
+    },
+    {
+      "id": "proyecto:PFC-1",
+      "type": "Project",
+      "label": "Emociones en un poema",
+      "uuid": "954687b5-ef3c-4f97-a65f-4012532dbee6"
+    },
+    {
+      "id": "marcador:0de0eca0-d35e-4a61-9933-2e84aeeaf334",
+      "type": "Marker",
+      "label": "Melodía",
+      "status": "cited"
+    },
+    {
+      "id": "marcador:063b38eb-006f-4bb1-a386-5650dc63a470",
+      "type": "Marker",
+      "label": "Metáfora",
+      "status": "cited"
+    },
+    {
+      "id": "marcador:22a872e7-7100-48b8-a476-cf3d997f697c",
+      "type": "Marker",
+      "label": "Melancolía",
+      "status": "interesting"
+    },
+    {
+      "id": "marcador:c7e7f9cb-44d8-4f97-bb8d-cb6f69fe0805",
+      "type": "Marker",
+      "label": "Tristeza",
+      "status": "selected"
+    },
+    {
+      "id": "marcador:a340076f-1d2e-4cf4-9af0-05deb1f5fe44",
+      "type": "Marker",
+      "label": "Alegría",
+      "status": "used"
+    },
+    {
+      "id": "actividad:PFC-1:analizar-poema",
+      "type": "Activity",
+      "label": "Analizar emociones en un poema"
+    },
+    {
+      "id": "resultado:8b3801e5-f68e-4618-b219-abd2198dd6b9",
+      "type": "Result",
+      "label": "informe-emociones-poema.pdf",
+      "result_type": "report"
+    },
+    {
+      "id": "actividad:PFC-1:observar-hongos",
+      "type": "Activity",
+      "label": "Observación de hongos"
+    },
+    {
+      "id": "resultado:5280f29c-695b-4fca-9a03-6d9deb398ead",
+      "type": "Result",
+      "label": "ficha-hongos.jsonld",
+      "result_type": "jsonld"
+    },
+    {
+      "id": "proyecto:PFC-3",
+      "type": "Project",
+      "label": "Mi pueblo en el mapa",
+      "uuid": "8df56b1d-8645-4ca7-a19d-37912135a4cc"
+    },
+    {
+      "id": "marcador:94a058fc-39a3-4bba-b08d-06b5328639e8",
+      "type": "Marker",
+      "label": "Fiesta del pueblo",
+      "status": "cited"
+    },
+    {
+      "id": "marcador:5a23c4df-3865-4c87-a88f-73184afa6d41",
+      "type": "Marker",
+      "label": "Río",
+      "status": "selected"
+    },
+    {
+      "id": "marcador:7e7ac058-cb51-4782-8f88-7af87737ca8e",
+      "type": "Marker",
+      "label": "Plaza mayor",
+      "status": "used"
+    },
+    {
+      "id": "actividad:PFC-3:mapa-pueblo",
+      "type": "Activity",
+      "label": "Mapa del pueblo"
+    },
+    {
+      "id": "resultado:d6dd6f6d-3c09-4339-93ea-0d64a250befd",
+      "type": "Result",
+      "label": "mapa-pueblo.geojson",
+      "result_type": "geojson"
+    }
+  ],
+  "edges": [
+    {
+      "from": "centro:radio-micelio",
+      "to": "asignatura:ciencias-naturales",
+      "relation": "has_subject"
+    },
+    {
+      "from": "asignatura:ciencias-naturales",
+      "to": "material:ciencias-naturales:unidad-hongos",
+      "relation": "has_material"
+    },
+    {
+      "from": "asignatura:ciencias-naturales",
+      "to": "diccionario:ciencias-naturales:vocabulario-natural",
+      "relation": "has_dictionary"
+    },
+    {
+      "from": "asignatura:ciencias-naturales",
+      "to": "taxonomia:ecologia",
+      "relation": "uses_taxonomy",
+      "role": "thematic",
+      "taxonomy_group": ""
+    },
+    {
+      "from": "centro:radio-micelio",
+      "to": "asignatura:emociones",
+      "relation": "has_subject"
+    },
+    {
+      "from": "asignatura:emociones",
+      "to": "material:emociones:intro-emociones",
+      "relation": "has_material"
+    },
+    {
+      "from": "asignatura:emociones",
+      "to": "diccionario:emociones:ontoemo",
+      "relation": "has_dictionary"
+    },
+    {
+      "from": "asignatura:emociones",
+      "to": "taxonomia:emociones",
+      "relation": "uses_taxonomy",
+      "role": "class",
+      "taxonomy_group": ""
+    },
+    {
+      "from": "centro:radio-micelio",
+      "to": "asignatura:geografia",
+      "relation": "has_subject"
+    },
+    {
+      "from": "asignatura:geografia",
+      "to": "diccionario:geografia:mapa-local",
+      "relation": "has_dictionary"
+    },
+    {
+      "from": "asignatura:geografia",
+      "to": "taxonomia:lugares",
+      "relation": "uses_taxonomy",
+      "role": "thematic",
+      "taxonomy_group": ""
+    },
+    {
+      "from": "centro:radio-micelio",
+      "to": "asignatura:historia",
+      "relation": "has_subject"
+    },
+    {
+      "from": "asignatura:historia",
+      "to": "diccionario:historia:patrimonio-local",
+      "relation": "has_dictionary"
+    },
+    {
+      "from": "asignatura:historia",
+      "to": "taxonomia:tradiciones",
+      "relation": "uses_taxonomy",
+      "role": "thematic",
+      "taxonomy_group": ""
+    },
+    {
+      "from": "centro:radio-micelio",
+      "to": "asignatura:lengua",
+      "relation": "has_subject"
+    },
+    {
+      "from": "asignatura:lengua",
+      "to": "material:lengua:poesia-emociones",
+      "relation": "has_material"
+    },
+    {
+      "from": "asignatura:lengua",
+      "to": "diccionario:lengua:quijote",
+      "relation": "has_dictionary"
+    },
+    {
+      "from": "asignatura:lengua",
+      "to": "diccionario:lengua:vocabulario-poetico",
+      "relation": "has_dictionary"
+    },
+    {
+      "from": "asignatura:lengua",
+      "to": "taxonomia:metaforas",
+      "relation": "uses_taxonomy",
+      "role": "thematic",
+      "taxonomy_group": ""
+    },
+    {
+      "from": "asignatura:lengua",
+      "to": "taxonomia:quijote",
+      "relation": "uses_taxonomy",
+      "role": "class",
+      "taxonomy_group": "corpus"
+    },
+    {
+      "from": "centro:radio-micelio",
+      "to": "asignatura:micologia",
+      "relation": "has_subject"
+    },
+    {
+      "from": "asignatura:micologia",
+      "to": "material:micologia:intro-micologia",
+      "relation": "has_material"
+    },
+    {
+      "from": "asignatura:micologia",
+      "to": "diccionario:micologia:ontohongo",
+      "relation": "has_dictionary"
+    },
+    {
+      "from": "asignatura:micologia",
+      "to": "taxonomia:hongos",
+      "relation": "uses_taxonomy",
+      "role": "class",
+      "taxonomy_group": ""
+    },
+    {
+      "from": "centro:radio-micelio",
+      "to": "asignatura:musica",
+      "relation": "has_subject"
+    },
+    {
+      "from": "asignatura:musica",
+      "to": "diccionario:musica:vocabulario-musical",
+      "relation": "has_dictionary"
+    },
+    {
+      "from": "centro:radio-micelio",
+      "to": "asignatura:narrativa",
+      "relation": "has_subject"
+    },
+    {
+      "from": "asignatura:narrativa",
+      "to": "material:narrativa:intro-narrativa",
+      "relation": "has_material"
+    },
+    {
+      "from": "asignatura:narrativa",
+      "to": "diccionario:narrativa:ontonarrativa",
+      "relation": "has_dictionary"
+    },
+    {
+      "from": "asignatura:narrativa",
+      "to": "taxonomia:narrativa",
+      "relation": "uses_taxonomy",
+      "role": "class",
+      "taxonomy_group": "estructural"
+    },
+    {
+      "from": "asignatura:narrativa",
+      "to": "taxonomia:narrativa-arquetipico",
+      "relation": "uses_taxonomy",
+      "role": "class",
+      "taxonomy_group": "arquetipico"
+    },
+    {
+      "from": "asignatura:narrativa",
+      "to": "taxonomia:narrativa-tematico",
+      "relation": "uses_taxonomy",
+      "role": "class",
+      "taxonomy_group": "tematico"
+    },
+    {
+      "from": "asignatura:narrativa",
+      "to": "taxonomia:narrativa-simbolico",
+      "relation": "uses_taxonomy",
+      "role": "class",
+      "taxonomy_group": "simbolico"
+    },
+    {
+      "from": "centro:radio-micelio",
+      "to": "asignatura:neurociencia",
+      "relation": "has_subject"
+    },
+    {
+      "from": "asignatura:neurociencia",
+      "to": "material:neurociencia:intro-neuro",
+      "relation": "has_material"
+    },
+    {
+      "from": "asignatura:neurociencia",
+      "to": "diccionario:neurociencia:ontoneuro",
+      "relation": "has_dictionary"
+    },
+    {
+      "from": "asignatura:neurociencia",
+      "to": "taxonomia:neurociencia",
+      "relation": "uses_taxonomy",
+      "role": "class",
+      "taxonomy_group": ""
+    },
+    {
+      "from": "centro:radio-micelio",
+      "to": "asignatura:quimica",
+      "relation": "has_subject"
+    },
+    {
+      "from": "asignatura:quimica",
+      "to": "material:quimica:intro-quimica",
+      "relation": "has_material"
+    },
+    {
+      "from": "asignatura:quimica",
+      "to": "diccionario:quimica:ontoquim",
+      "relation": "has_dictionary"
+    },
+    {
+      "from": "asignatura:quimica",
+      "to": "taxonomia:quimica",
+      "relation": "uses_taxonomy",
+      "role": "class",
+      "taxonomy_group": ""
+    },
+    {
+      "from": "centro:radio-micelio",
+      "to": "taxonomia:ecologia",
+      "relation": "has_taxonomy"
+    },
+    {
+      "from": "centro:radio-micelio",
+      "to": "taxonomia:quijote",
+      "relation": "has_taxonomy"
+    },
+    {
+      "from": "diccionario:lengua:quijote",
+      "to": "concepto:c8709797-34e9-4731-b96e-f839b682c404",
+      "relation": "has_concept"
+    },
+    {
+      "from": "taxonomia:quijote",
+      "to": "concepto:c8709797-34e9-4731-b96e-f839b682c404",
+      "relation": "classifies"
+    },
+    {
+      "from": "diccionario:lengua:quijote",
+      "to": "concepto:1e078446-8184-4c08-b1ce-c97aa76e6088",
+      "relation": "has_concept"
+    },
+    {
+      "from": "taxonomia:quijote",
+      "to": "concepto:1e078446-8184-4c08-b1ce-c97aa76e6088",
+      "relation": "classifies"
+    },
+    {
+      "from": "diccionario:lengua:quijote",
+      "to": "concepto:0ec78b66-169f-4aaf-b072-c5ba19313937",
+      "relation": "has_concept"
+    },
+    {
+      "from": "taxonomia:quijote",
+      "to": "concepto:0ec78b66-169f-4aaf-b072-c5ba19313937",
+      "relation": "classifies"
+    },
+    {
+      "from": "centro:radio-micelio",
+      "to": "taxonomia:emociones",
+      "relation": "has_taxonomy"
+    },
+    {
+      "from": "diccionario:emociones:ontoemo",
+      "to": "concepto:d51cd9af-382d-43ea-91bd-a5a267d7ab88",
+      "relation": "has_concept"
+    },
+    {
+      "from": "taxonomia:emociones",
+      "to": "concepto:d51cd9af-382d-43ea-91bd-a5a267d7ab88",
+      "relation": "classifies"
+    },
+    {
+      "from": "diccionario:emociones:ontoemo",
+      "to": "concepto:13392b5b-d95c-41db-b83d-019e5fbc8b8e",
+      "relation": "has_concept"
+    },
+    {
+      "from": "taxonomia:emociones",
+      "to": "concepto:13392b5b-d95c-41db-b83d-019e5fbc8b8e",
+      "relation": "classifies"
+    },
+    {
+      "from": "diccionario:emociones:ontoemo",
+      "to": "concepto:b15fb10d-cb06-4ef2-b0d6-c0a02a3ca019",
+      "relation": "has_concept"
+    },
+    {
+      "from": "taxonomia:emociones",
+      "to": "concepto:b15fb10d-cb06-4ef2-b0d6-c0a02a3ca019",
+      "relation": "classifies"
+    },
+    {
+      "from": "diccionario:emociones:ontoemo",
+      "to": "concepto:d1866a80-f3c8-4972-b519-e27cca96bf5d",
+      "relation": "has_concept"
+    },
+    {
+      "from": "taxonomia:emociones",
+      "to": "concepto:d1866a80-f3c8-4972-b519-e27cca96bf5d",
+      "relation": "classifies"
+    },
+    {
+      "from": "diccionario:emociones:ontoemo",
+      "to": "concepto:88cf4e48-3963-41d6-a4ed-7015204b0fb0",
+      "relation": "has_concept"
+    },
+    {
+      "from": "taxonomia:emociones",
+      "to": "concepto:88cf4e48-3963-41d6-a4ed-7015204b0fb0",
+      "relation": "classifies"
+    },
+    {
+      "from": "diccionario:emociones:ontoemo",
+      "to": "concepto:6f8b8fa1-fea8-4763-9db5-d748d2070c5f",
+      "relation": "has_concept"
+    },
+    {
+      "from": "taxonomia:emociones",
+      "to": "concepto:6f8b8fa1-fea8-4763-9db5-d748d2070c5f",
+      "relation": "classifies"
+    },
+    {
+      "from": "diccionario:emociones:ontoemo",
+      "to": "concepto:1446f7f5-f229-4b7c-ad44-089a84c9bea1",
+      "relation": "has_concept"
+    },
+    {
+      "from": "taxonomia:emociones",
+      "to": "concepto:1446f7f5-f229-4b7c-ad44-089a84c9bea1",
+      "relation": "classifies"
+    },
+    {
+      "from": "diccionario:emociones:ontoemo",
+      "to": "concepto:346d5db5-0463-4eaf-8bb4-4097b617a866",
+      "relation": "has_concept"
+    },
+    {
+      "from": "taxonomia:emociones",
+      "to": "concepto:346d5db5-0463-4eaf-8bb4-4097b617a866",
+      "relation": "classifies"
+    },
+    {
+      "from": "diccionario:emociones:ontoemo",
+      "to": "concepto:f86c98bd-18ce-4b23-87a7-6b441efa1530",
+      "relation": "has_concept"
+    },
+    {
+      "from": "taxonomia:emociones",
+      "to": "concepto:f86c98bd-18ce-4b23-87a7-6b441efa1530",
+      "relation": "classifies"
+    },
+    {
+      "from": "diccionario:emociones:ontoemo",
+      "to": "concepto:24c77e74-700d-4708-bd6c-48ec66f59de3",
+      "relation": "has_concept"
+    },
+    {
+      "from": "taxonomia:emociones",
+      "to": "concepto:24c77e74-700d-4708-bd6c-48ec66f59de3",
+      "relation": "classifies"
+    },
+    {
+      "from": "diccionario:emociones:ontoemo",
+      "to": "concepto:d989c7c4-4bb2-4606-849b-e17d624372b6",
+      "relation": "has_concept"
+    },
+    {
+      "from": "taxonomia:emociones",
+      "to": "concepto:d989c7c4-4bb2-4606-849b-e17d624372b6",
+      "relation": "classifies"
+    },
+    {
+      "from": "diccionario:emociones:ontoemo",
+      "to": "concepto:3990d863-660e-4de0-8056-ca98f6ecdbe2",
+      "relation": "has_concept"
+    },
+    {
+      "from": "taxonomia:emociones",
+      "to": "concepto:3990d863-660e-4de0-8056-ca98f6ecdbe2",
+      "relation": "classifies"
+    },
+    {
+      "from": "diccionario:emociones:ontoemo",
+      "to": "concepto:e1142eeb-acb4-4032-8471-519a4db90361",
+      "relation": "has_concept"
+    },
+    {
+      "from": "taxonomia:emociones",
+      "to": "concepto:e1142eeb-acb4-4032-8471-519a4db90361",
+      "relation": "classifies"
+    },
+    {
+      "from": "diccionario:emociones:ontoemo",
+      "to": "concepto:5e109bca-d359-4a0c-9f98-4897d259f2e0",
+      "relation": "has_concept"
+    },
+    {
+      "from": "taxonomia:emociones",
+      "to": "concepto:5e109bca-d359-4a0c-9f98-4897d259f2e0",
+      "relation": "classifies"
+    },
+    {
+      "from": "diccionario:emociones:ontoemo",
+      "to": "concepto:7f32da63-f81f-4f2e-ada3-8ccffb049321",
+      "relation": "has_concept"
+    },
+    {
+      "from": "taxonomia:emociones",
+      "to": "concepto:7f32da63-f81f-4f2e-ada3-8ccffb049321",
+      "relation": "classifies"
+    },
+    {
+      "from": "diccionario:emociones:ontoemo",
+      "to": "concepto:dfaf9618-a422-4291-83db-4a08d3bf5862",
+      "relation": "has_concept"
+    },
+    {
+      "from": "taxonomia:emociones",
+      "to": "concepto:dfaf9618-a422-4291-83db-4a08d3bf5862",
+      "relation": "classifies"
+    },
+    {
+      "from": "diccionario:emociones:ontoemo",
+      "to": "concepto:479d1f64-ae15-4a13-be66-c2b4b02fde76",
+      "relation": "has_concept"
+    },
+    {
+      "from": "taxonomia:emociones",
+      "to": "concepto:479d1f64-ae15-4a13-be66-c2b4b02fde76",
+      "relation": "classifies"
+    },
+    {
+      "from": "diccionario:emociones:ontoemo",
+      "to": "concepto:d7ef34aa-4604-46c8-97fa-febc43c8a33d",
+      "relation": "has_concept"
+    },
+    {
+      "from": "taxonomia:emociones",
+      "to": "concepto:d7ef34aa-4604-46c8-97fa-febc43c8a33d",
+      "relation": "classifies"
+    },
+    {
+      "from": "diccionario:emociones:ontoemo",
+      "to": "concepto:c6e8009a-0b1d-4537-b8ce-fd87bcf93778",
+      "relation": "has_concept"
+    },
+    {
+      "from": "taxonomia:emociones",
+      "to": "concepto:c6e8009a-0b1d-4537-b8ce-fd87bcf93778",
+      "relation": "classifies"
+    },
+    {
+      "from": "diccionario:emociones:ontoemo",
+      "to": "concepto:9379e10a-28d9-4f25-a480-f841b1a14782",
+      "relation": "has_concept"
+    },
+    {
+      "from": "taxonomia:emociones",
+      "to": "concepto:9379e10a-28d9-4f25-a480-f841b1a14782",
+      "relation": "classifies"
+    },
+    {
+      "from": "diccionario:emociones:ontoemo",
+      "to": "concepto:f29680c4-24b0-4c69-a597-bf194f9c6148",
+      "relation": "has_concept"
+    },
+    {
+      "from": "taxonomia:emociones",
+      "to": "concepto:f29680c4-24b0-4c69-a597-bf194f9c6148",
+      "relation": "classifies"
+    },
+    {
+      "from": "diccionario:emociones:ontoemo",
+      "to": "concepto:dd302279-edcf-482b-bf9c-bd3e2248e27c",
+      "relation": "has_concept"
+    },
+    {
+      "from": "taxonomia:emociones",
+      "to": "concepto:dd302279-edcf-482b-bf9c-bd3e2248e27c",
+      "relation": "classifies"
+    },
+    {
+      "from": "diccionario:emociones:ontoemo",
+      "to": "concepto:600d4d3c-55e2-4238-a849-c9aa8dcac218",
+      "relation": "has_concept"
+    },
+    {
+      "from": "taxonomia:emociones",
+      "to": "concepto:600d4d3c-55e2-4238-a849-c9aa8dcac218",
+      "relation": "classifies"
+    },
+    {
+      "from": "diccionario:emociones:ontoemo",
+      "to": "concepto:5a5ddf86-e324-4ec3-a53d-249b6488da38",
+      "relation": "has_concept"
+    },
+    {
+      "from": "taxonomia:emociones",
+      "to": "concepto:5a5ddf86-e324-4ec3-a53d-249b6488da38",
+      "relation": "classifies"
+    },
+    {
+      "from": "diccionario:emociones:ontoemo",
+      "to": "concepto:04417230-bca6-4719-8c75-5256a81180c3",
+      "relation": "has_concept"
+    },
+    {
+      "from": "taxonomia:emociones",
+      "to": "concepto:04417230-bca6-4719-8c75-5256a81180c3",
+      "relation": "classifies"
+    },
+    {
+      "from": "diccionario:emociones:ontoemo",
+      "to": "concepto:28e78c34-e840-4931-a861-b6e913a064f8",
+      "relation": "has_concept"
+    },
+    {
+      "from": "taxonomia:emociones",
+      "to": "concepto:28e78c34-e840-4931-a861-b6e913a064f8",
+      "relation": "classifies"
+    },
+    {
+      "from": "diccionario:emociones:ontoemo",
+      "to": "concepto:9e8ac6e1-4b35-44d3-9923-a33c984cc84f",
+      "relation": "has_concept"
+    },
+    {
+      "from": "taxonomia:emociones",
+      "to": "concepto:9e8ac6e1-4b35-44d3-9923-a33c984cc84f",
+      "relation": "classifies"
+    },
+    {
+      "from": "centro:radio-micelio",
+      "to": "taxonomia:hongos",
+      "relation": "has_taxonomy"
+    },
+    {
+      "from": "diccionario:micologia:ontohongo",
+      "to": "concepto:f6aa509d-2fe6-4908-a97b-6a26c4381355",
+      "relation": "has_concept"
+    },
+    {
+      "from": "taxonomia:hongos",
+      "to": "concepto:f6aa509d-2fe6-4908-a97b-6a26c4381355",
+      "relation": "classifies"
+    },
+    {
+      "from": "diccionario:micologia:ontohongo",
+      "to": "concepto:b8f7f1e1-4ad2-4e56-9532-2129ba3dd23b",
+      "relation": "has_concept"
+    },
+    {
+      "from": "taxonomia:hongos",
+      "to": "concepto:b8f7f1e1-4ad2-4e56-9532-2129ba3dd23b",
+      "relation": "classifies"
+    },
+    {
+      "from": "diccionario:micologia:ontohongo",
+      "to": "concepto:881f7277-b735-4f99-9824-5078bab683ac",
+      "relation": "has_concept"
+    },
+    {
+      "from": "taxonomia:hongos",
+      "to": "concepto:881f7277-b735-4f99-9824-5078bab683ac",
+      "relation": "classifies"
+    },
+    {
+      "from": "diccionario:micologia:ontohongo",
+      "to": "concepto:46692a26-7cee-4979-bbd7-84a71ad3dfa6",
+      "relation": "has_concept"
+    },
+    {
+      "from": "taxonomia:hongos",
+      "to": "concepto:46692a26-7cee-4979-bbd7-84a71ad3dfa6",
+      "relation": "classifies"
+    },
+    {
+      "from": "diccionario:micologia:ontohongo",
+      "to": "concepto:cd85b279-3a05-448c-b8aa-792d51e86afa",
+      "relation": "has_concept"
+    },
+    {
+      "from": "taxonomia:hongos",
+      "to": "concepto:cd85b279-3a05-448c-b8aa-792d51e86afa",
+      "relation": "classifies"
+    },
+    {
+      "from": "diccionario:micologia:ontohongo",
+      "to": "concepto:20dc7016-50ef-430c-90ea-946fe7396c3c",
+      "relation": "has_concept"
+    },
+    {
+      "from": "taxonomia:hongos",
+      "to": "concepto:20dc7016-50ef-430c-90ea-946fe7396c3c",
+      "relation": "classifies"
+    },
+    {
+      "from": "diccionario:micologia:ontohongo",
+      "to": "concepto:60355bfb-dbde-4554-8e36-a0f2505470be",
+      "relation": "has_concept"
+    },
+    {
+      "from": "taxonomia:hongos",
+      "to": "concepto:60355bfb-dbde-4554-8e36-a0f2505470be",
+      "relation": "classifies"
+    },
+    {
+      "from": "diccionario:micologia:ontohongo",
+      "to": "concepto:4facef73-8e40-4d12-9254-928109288133",
+      "relation": "has_concept"
+    },
+    {
+      "from": "taxonomia:hongos",
+      "to": "concepto:4facef73-8e40-4d12-9254-928109288133",
+      "relation": "classifies"
+    },
+    {
+      "from": "diccionario:micologia:ontohongo",
+      "to": "concepto:5f3eb372-8b53-476b-90bb-f43a2acd6f18",
+      "relation": "has_concept"
+    },
+    {
+      "from": "taxonomia:hongos",
+      "to": "concepto:5f3eb372-8b53-476b-90bb-f43a2acd6f18",
+      "relation": "classifies"
+    },
+    {
+      "from": "diccionario:micologia:ontohongo",
+      "to": "concepto:54050baf-92b8-4cca-be14-3edc45c7259a",
+      "relation": "has_concept"
+    },
+    {
+      "from": "taxonomia:hongos",
+      "to": "concepto:54050baf-92b8-4cca-be14-3edc45c7259a",
+      "relation": "classifies"
+    },
+    {
+      "from": "diccionario:micologia:ontohongo",
+      "to": "concepto:0858e005-8aad-4318-99f2-318941fa1d0c",
+      "relation": "has_concept"
+    },
+    {
+      "from": "taxonomia:hongos",
+      "to": "concepto:0858e005-8aad-4318-99f2-318941fa1d0c",
+      "relation": "classifies"
+    },
+    {
+      "from": "diccionario:micologia:ontohongo",
+      "to": "concepto:40c11e3f-37c0-4172-bbea-804fae80e311",
+      "relation": "has_concept"
+    },
+    {
+      "from": "taxonomia:hongos",
+      "to": "concepto:40c11e3f-37c0-4172-bbea-804fae80e311",
+      "relation": "classifies"
+    },
+    {
+      "from": "diccionario:micologia:ontohongo",
+      "to": "concepto:045a0ba0-f50b-43ca-8ae4-c7ca7d543621",
+      "relation": "has_concept"
+    },
+    {
+      "from": "taxonomia:hongos",
+      "to": "concepto:045a0ba0-f50b-43ca-8ae4-c7ca7d543621",
+      "relation": "classifies"
+    },
+    {
+      "from": "diccionario:micologia:ontohongo",
+      "to": "concepto:495b4fa6-87d5-4a36-bb8c-67662614d010",
+      "relation": "has_concept"
+    },
+    {
+      "from": "taxonomia:hongos",
+      "to": "concepto:495b4fa6-87d5-4a36-bb8c-67662614d010",
+      "relation": "classifies"
+    },
+    {
+      "from": "diccionario:micologia:ontohongo",
+      "to": "concepto:1a37a16f-691a-40ce-b306-9022cc5d2faa",
+      "relation": "has_concept"
+    },
+    {
+      "from": "taxonomia:hongos",
+      "to": "concepto:1a37a16f-691a-40ce-b306-9022cc5d2faa",
+      "relation": "classifies"
+    },
+    {
+      "from": "diccionario:micologia:ontohongo",
+      "to": "concepto:3ffa69bf-6980-4af8-baf7-c3e015e9ae26",
+      "relation": "has_concept"
+    },
+    {
+      "from": "taxonomia:hongos",
+      "to": "concepto:3ffa69bf-6980-4af8-baf7-c3e015e9ae26",
+      "relation": "classifies"
+    },
+    {
+      "from": "diccionario:micologia:ontohongo",
+      "to": "concepto:cdd56389-7c88-48c9-8745-6fe97df65867",
+      "relation": "has_concept"
+    },
+    {
+      "from": "taxonomia:hongos",
+      "to": "concepto:cdd56389-7c88-48c9-8745-6fe97df65867",
+      "relation": "classifies"
+    },
+    {
+      "from": "diccionario:micologia:ontohongo",
+      "to": "concepto:9505dc3d-b0d4-4f98-93ac-0213f118767d",
+      "relation": "has_concept"
+    },
+    {
+      "from": "taxonomia:hongos",
+      "to": "concepto:9505dc3d-b0d4-4f98-93ac-0213f118767d",
+      "relation": "classifies"
+    },
+    {
+      "from": "diccionario:micologia:ontohongo",
+      "to": "concepto:893e4455-c9a1-4533-a934-25c6f8fa40aa",
+      "relation": "has_concept"
+    },
+    {
+      "from": "taxonomia:hongos",
+      "to": "concepto:893e4455-c9a1-4533-a934-25c6f8fa40aa",
+      "relation": "classifies"
+    },
+    {
+      "from": "diccionario:micologia:ontohongo",
+      "to": "concepto:9b60d67b-2e40-4a35-a7da-10b2bb41766b",
+      "relation": "has_concept"
+    },
+    {
+      "from": "taxonomia:hongos",
+      "to": "concepto:9b60d67b-2e40-4a35-a7da-10b2bb41766b",
+      "relation": "classifies"
+    },
+    {
+      "from": "diccionario:micologia:ontohongo",
+      "to": "concepto:78d283c8-be9c-4e3f-99d6-a49a28d0ec5f",
+      "relation": "has_concept"
+    },
+    {
+      "from": "taxonomia:hongos",
+      "to": "concepto:78d283c8-be9c-4e3f-99d6-a49a28d0ec5f",
+      "relation": "classifies"
+    },
+    {
+      "from": "diccionario:micologia:ontohongo",
+      "to": "concepto:3403acf9-c098-4478-b7f0-6b5c57c34686",
+      "relation": "has_concept"
+    },
+    {
+      "from": "taxonomia:hongos",
+      "to": "concepto:3403acf9-c098-4478-b7f0-6b5c57c34686",
+      "relation": "classifies"
+    },
+    {
+      "from": "diccionario:micologia:ontohongo",
+      "to": "concepto:484ca0a7-5258-46d8-ade1-168aaf98cb43",
+      "relation": "has_concept"
+    },
+    {
+      "from": "taxonomia:hongos",
+      "to": "concepto:484ca0a7-5258-46d8-ade1-168aaf98cb43",
+      "relation": "classifies"
+    },
+    {
+      "from": "diccionario:micologia:ontohongo",
+      "to": "concepto:57b70e08-878c-4eab-af76-25b1f78d8168",
+      "relation": "has_concept"
+    },
+    {
+      "from": "taxonomia:hongos",
+      "to": "concepto:57b70e08-878c-4eab-af76-25b1f78d8168",
+      "relation": "classifies"
+    },
+    {
+      "from": "diccionario:micologia:ontohongo",
+      "to": "concepto:cfd36d8d-72dc-458b-a73e-edc1420a7bbc",
+      "relation": "has_concept"
+    },
+    {
+      "from": "taxonomia:hongos",
+      "to": "concepto:cfd36d8d-72dc-458b-a73e-edc1420a7bbc",
+      "relation": "classifies"
+    },
+    {
+      "from": "diccionario:micologia:ontohongo",
+      "to": "concepto:0474e434-93ae-432d-a6d3-6deb5b316981",
+      "relation": "has_concept"
+    },
+    {
+      "from": "taxonomia:hongos",
+      "to": "concepto:0474e434-93ae-432d-a6d3-6deb5b316981",
+      "relation": "classifies"
+    },
+    {
+      "from": "diccionario:micologia:ontohongo",
+      "to": "concepto:f8d2a7e9-492f-470b-8b18-d85c0035ef33",
+      "relation": "has_concept"
+    },
+    {
+      "from": "taxonomia:hongos",
+      "to": "concepto:f8d2a7e9-492f-470b-8b18-d85c0035ef33",
+      "relation": "classifies"
+    },
+    {
+      "from": "diccionario:micologia:ontohongo",
+      "to": "concepto:37db0f6e-9263-4b97-bf8d-51feb29dae81",
+      "relation": "has_concept"
+    },
+    {
+      "from": "taxonomia:hongos",
+      "to": "concepto:37db0f6e-9263-4b97-bf8d-51feb29dae81",
+      "relation": "classifies"
+    },
+    {
+      "from": "diccionario:micologia:ontohongo",
+      "to": "concepto:2e7572e7-4235-49e5-94c1-2f5baed73bb0",
+      "relation": "has_concept"
+    },
+    {
+      "from": "taxonomia:hongos",
+      "to": "concepto:2e7572e7-4235-49e5-94c1-2f5baed73bb0",
+      "relation": "classifies"
+    },
+    {
+      "from": "centro:radio-micelio",
+      "to": "taxonomia:lugares",
+      "relation": "has_taxonomy"
+    },
+    {
+      "from": "centro:radio-micelio",
+      "to": "taxonomia:metaforas",
+      "relation": "has_taxonomy"
+    },
+    {
+      "from": "centro:radio-micelio",
+      "to": "taxonomia:narrativa",
+      "relation": "has_taxonomy"
+    },
+    {
+      "from": "diccionario:narrativa:ontonarrativa",
+      "to": "concepto:0b9f1989-65dc-4d24-b548-f4bb858e8fb5",
+      "relation": "has_concept"
+    },
+    {
+      "from": "taxonomia:narrativa",
+      "to": "concepto:0b9f1989-65dc-4d24-b548-f4bb858e8fb5",
+      "relation": "classifies"
+    },
+    {
+      "from": "diccionario:narrativa:ontonarrativa",
+      "to": "concepto:93045e4d-ddc8-4714-8f6e-224955485ab0",
+      "relation": "has_concept"
+    },
+    {
+      "from": "taxonomia:narrativa",
+      "to": "concepto:93045e4d-ddc8-4714-8f6e-224955485ab0",
+      "relation": "classifies"
+    },
+    {
+      "from": "diccionario:narrativa:ontonarrativa",
+      "to": "concepto:a7e8fb6e-2b94-4296-a5e2-30b329bd4d1b",
+      "relation": "has_concept"
+    },
+    {
+      "from": "taxonomia:narrativa",
+      "to": "concepto:a7e8fb6e-2b94-4296-a5e2-30b329bd4d1b",
+      "relation": "classifies"
+    },
+    {
+      "from": "diccionario:narrativa:ontonarrativa",
+      "to": "concepto:835a68b0-31cd-4a04-8e2e-5c20732d8c90",
+      "relation": "has_concept"
+    },
+    {
+      "from": "taxonomia:narrativa",
+      "to": "concepto:835a68b0-31cd-4a04-8e2e-5c20732d8c90",
+      "relation": "classifies"
+    },
+    {
+      "from": "diccionario:narrativa:ontonarrativa",
+      "to": "concepto:69d8690e-f546-441f-9efb-9b2e71a1b808",
+      "relation": "has_concept"
+    },
+    {
+      "from": "taxonomia:narrativa",
+      "to": "concepto:69d8690e-f546-441f-9efb-9b2e71a1b808",
+      "relation": "classifies"
+    },
+    {
+      "from": "diccionario:narrativa:ontonarrativa",
+      "to": "concepto:41b4b27f-9050-47bf-bf6a-280ecf67ea7b",
+      "relation": "has_concept"
+    },
+    {
+      "from": "taxonomia:narrativa",
+      "to": "concepto:41b4b27f-9050-47bf-bf6a-280ecf67ea7b",
+      "relation": "classifies"
+    },
+    {
+      "from": "diccionario:narrativa:ontonarrativa",
+      "to": "concepto:d156c583-181b-4804-a9c3-78609ce7af33",
+      "relation": "has_concept"
+    },
+    {
+      "from": "taxonomia:narrativa",
+      "to": "concepto:d156c583-181b-4804-a9c3-78609ce7af33",
+      "relation": "classifies"
+    },
+    {
+      "from": "diccionario:narrativa:ontonarrativa",
+      "to": "concepto:a1848f08-2dd5-48e0-9ee3-dfb2cc277aa0",
+      "relation": "has_concept"
+    },
+    {
+      "from": "taxonomia:narrativa",
+      "to": "concepto:a1848f08-2dd5-48e0-9ee3-dfb2cc277aa0",
+      "relation": "classifies"
+    },
+    {
+      "from": "diccionario:narrativa:ontonarrativa",
+      "to": "concepto:190df272-84c9-473e-9a26-7150e6c4f91f",
+      "relation": "has_concept"
+    },
+    {
+      "from": "taxonomia:narrativa",
+      "to": "concepto:190df272-84c9-473e-9a26-7150e6c4f91f",
+      "relation": "classifies"
+    },
+    {
+      "from": "diccionario:narrativa:ontonarrativa",
+      "to": "concepto:dd7b8987-9957-4841-80e4-b1694b062083",
+      "relation": "has_concept"
+    },
+    {
+      "from": "taxonomia:narrativa",
+      "to": "concepto:dd7b8987-9957-4841-80e4-b1694b062083",
+      "relation": "classifies"
+    },
+    {
+      "from": "centro:radio-micelio",
+      "to": "taxonomia:narrativa-arquetipico",
+      "relation": "has_taxonomy"
+    },
+    {
+      "from": "diccionario:narrativa:ontonarrativa",
+      "to": "concepto:2c53b8e4-bb07-41b7-870b-3ad24bfcf5cf",
+      "relation": "has_concept"
+    },
+    {
+      "from": "taxonomia:narrativa-arquetipico",
+      "to": "concepto:2c53b8e4-bb07-41b7-870b-3ad24bfcf5cf",
+      "relation": "classifies"
+    },
+    {
+      "from": "diccionario:narrativa:ontonarrativa",
+      "to": "concepto:2478f080-8f6b-4d3c-88d1-0de0fdf35f13",
+      "relation": "has_concept"
+    },
+    {
+      "from": "taxonomia:narrativa-arquetipico",
+      "to": "concepto:2478f080-8f6b-4d3c-88d1-0de0fdf35f13",
+      "relation": "classifies"
+    },
+    {
+      "from": "diccionario:narrativa:ontonarrativa",
+      "to": "concepto:ac5e89e5-ffc2-4c48-bbe7-38edc478f411",
+      "relation": "has_concept"
+    },
+    {
+      "from": "taxonomia:narrativa-arquetipico",
+      "to": "concepto:ac5e89e5-ffc2-4c48-bbe7-38edc478f411",
+      "relation": "classifies"
+    },
+    {
+      "from": "diccionario:narrativa:ontonarrativa",
+      "to": "concepto:ea8610c9-f991-4679-bede-05ddaf9d05ec",
+      "relation": "has_concept"
+    },
+    {
+      "from": "taxonomia:narrativa-arquetipico",
+      "to": "concepto:ea8610c9-f991-4679-bede-05ddaf9d05ec",
+      "relation": "classifies"
+    },
+    {
+      "from": "diccionario:narrativa:ontonarrativa",
+      "to": "concepto:aab6e8ca-ad6d-42d4-b6ca-77dc04f1cf33",
+      "relation": "has_concept"
+    },
+    {
+      "from": "taxonomia:narrativa-arquetipico",
+      "to": "concepto:aab6e8ca-ad6d-42d4-b6ca-77dc04f1cf33",
+      "relation": "classifies"
+    },
+    {
+      "from": "diccionario:narrativa:ontonarrativa",
+      "to": "concepto:74e30093-7bdc-48ed-8be6-b102ce30170a",
+      "relation": "has_concept"
+    },
+    {
+      "from": "taxonomia:narrativa-arquetipico",
+      "to": "concepto:74e30093-7bdc-48ed-8be6-b102ce30170a",
+      "relation": "classifies"
+    },
+    {
+      "from": "diccionario:narrativa:ontonarrativa",
+      "to": "concepto:cff625d0-3e86-4bf9-ac16-3b5a0f68b0f0",
+      "relation": "has_concept"
+    },
+    {
+      "from": "taxonomia:narrativa-arquetipico",
+      "to": "concepto:cff625d0-3e86-4bf9-ac16-3b5a0f68b0f0",
+      "relation": "classifies"
+    },
+    {
+      "from": "centro:radio-micelio",
+      "to": "taxonomia:narrativa-tematico",
+      "relation": "has_taxonomy"
+    },
+    {
+      "from": "diccionario:narrativa:ontonarrativa",
+      "to": "concepto:c6178f72-c291-4ffb-8a8e-627cb8120bc0",
+      "relation": "has_concept"
+    },
+    {
+      "from": "taxonomia:narrativa-tematico",
+      "to": "concepto:c6178f72-c291-4ffb-8a8e-627cb8120bc0",
+      "relation": "classifies"
+    },
+    {
+      "from": "diccionario:narrativa:ontonarrativa",
+      "to": "concepto:9d2319c8-372f-46b2-93b7-e4b365e6fb25",
+      "relation": "has_concept"
+    },
+    {
+      "from": "taxonomia:narrativa-tematico",
+      "to": "concepto:9d2319c8-372f-46b2-93b7-e4b365e6fb25",
+      "relation": "classifies"
+    },
+    {
+      "from": "diccionario:narrativa:ontonarrativa",
+      "to": "concepto:12b2cef9-6627-45f6-8d7e-ae68f0438e0c",
+      "relation": "has_concept"
+    },
+    {
+      "from": "taxonomia:narrativa-tematico",
+      "to": "concepto:12b2cef9-6627-45f6-8d7e-ae68f0438e0c",
+      "relation": "classifies"
+    },
+    {
+      "from": "diccionario:narrativa:ontonarrativa",
+      "to": "concepto:b74151c6-76db-4767-ac30-3355d6a4540a",
+      "relation": "has_concept"
+    },
+    {
+      "from": "taxonomia:narrativa-tematico",
+      "to": "concepto:b74151c6-76db-4767-ac30-3355d6a4540a",
+      "relation": "classifies"
+    },
+    {
+      "from": "diccionario:narrativa:ontonarrativa",
+      "to": "concepto:bfc362fb-e50a-4ac0-8c02-96d0f72ab1d4",
+      "relation": "has_concept"
+    },
+    {
+      "from": "taxonomia:narrativa-tematico",
+      "to": "concepto:bfc362fb-e50a-4ac0-8c02-96d0f72ab1d4",
+      "relation": "classifies"
+    },
+    {
+      "from": "diccionario:narrativa:ontonarrativa",
+      "to": "concepto:ca8c66b6-3f33-46d0-a189-f5f93f69ff80",
+      "relation": "has_concept"
+    },
+    {
+      "from": "taxonomia:narrativa-tematico",
+      "to": "concepto:ca8c66b6-3f33-46d0-a189-f5f93f69ff80",
+      "relation": "classifies"
+    },
+    {
+      "from": "diccionario:narrativa:ontonarrativa",
+      "to": "concepto:cda1e88d-9c12-4281-8e79-598d883ba706",
+      "relation": "has_concept"
+    },
+    {
+      "from": "taxonomia:narrativa-tematico",
+      "to": "concepto:cda1e88d-9c12-4281-8e79-598d883ba706",
+      "relation": "classifies"
+    },
+    {
+      "from": "diccionario:narrativa:ontonarrativa",
+      "to": "concepto:d580e940-a754-4846-9e14-edeffe8be529",
+      "relation": "has_concept"
+    },
+    {
+      "from": "taxonomia:narrativa-tematico",
+      "to": "concepto:d580e940-a754-4846-9e14-edeffe8be529",
+      "relation": "classifies"
+    },
+    {
+      "from": "centro:radio-micelio",
+      "to": "taxonomia:narrativa-simbolico",
+      "relation": "has_taxonomy"
+    },
+    {
+      "from": "diccionario:narrativa:ontonarrativa",
+      "to": "concepto:1496caeb-2496-45c5-9c23-95a38fac18e9",
+      "relation": "has_concept"
+    },
+    {
+      "from": "taxonomia:narrativa-simbolico",
+      "to": "concepto:1496caeb-2496-45c5-9c23-95a38fac18e9",
+      "relation": "classifies"
+    },
+    {
+      "from": "diccionario:narrativa:ontonarrativa",
+      "to": "concepto:e1f7ce5c-68c5-4d68-83e6-7a1665ce10a7",
+      "relation": "has_concept"
+    },
+    {
+      "from": "taxonomia:narrativa-simbolico",
+      "to": "concepto:e1f7ce5c-68c5-4d68-83e6-7a1665ce10a7",
+      "relation": "classifies"
+    },
+    {
+      "from": "diccionario:narrativa:ontonarrativa",
+      "to": "concepto:825bec65-4877-4528-b090-4ae106f587a7",
+      "relation": "has_concept"
+    },
+    {
+      "from": "taxonomia:narrativa-simbolico",
+      "to": "concepto:825bec65-4877-4528-b090-4ae106f587a7",
+      "relation": "classifies"
+    },
+    {
+      "from": "diccionario:narrativa:ontonarrativa",
+      "to": "concepto:a1d77fe9-00e6-42bf-a67d-e59a915e0fc8",
+      "relation": "has_concept"
+    },
+    {
+      "from": "taxonomia:narrativa-simbolico",
+      "to": "concepto:a1d77fe9-00e6-42bf-a67d-e59a915e0fc8",
+      "relation": "classifies"
+    },
+    {
+      "from": "centro:radio-micelio",
+      "to": "taxonomia:neurociencia",
+      "relation": "has_taxonomy"
+    },
+    {
+      "from": "diccionario:neurociencia:ontoneuro",
+      "to": "concepto:5a545091-2c59-4027-bf43-f1235a6f9ea1",
+      "relation": "has_concept"
+    },
+    {
+      "from": "taxonomia:neurociencia",
+      "to": "concepto:5a545091-2c59-4027-bf43-f1235a6f9ea1",
+      "relation": "classifies"
+    },
+    {
+      "from": "diccionario:neurociencia:ontoneuro",
+      "to": "concepto:46be8a06-356c-42c1-b051-0553eb67285f",
+      "relation": "has_concept"
+    },
+    {
+      "from": "taxonomia:neurociencia",
+      "to": "concepto:46be8a06-356c-42c1-b051-0553eb67285f",
+      "relation": "classifies"
+    },
+    {
+      "from": "diccionario:neurociencia:ontoneuro",
+      "to": "concepto:961a15a7-c020-4458-b1aa-c394e08a6ade",
+      "relation": "has_concept"
+    },
+    {
+      "from": "taxonomia:neurociencia",
+      "to": "concepto:961a15a7-c020-4458-b1aa-c394e08a6ade",
+      "relation": "classifies"
+    },
+    {
+      "from": "diccionario:neurociencia:ontoneuro",
+      "to": "concepto:20de74e6-f144-4b54-be41-e974bc63a454",
+      "relation": "has_concept"
+    },
+    {
+      "from": "taxonomia:neurociencia",
+      "to": "concepto:20de74e6-f144-4b54-be41-e974bc63a454",
+      "relation": "classifies"
+    },
+    {
+      "from": "diccionario:neurociencia:ontoneuro",
+      "to": "concepto:62967ebe-c841-4a54-b181-9ed8dcab956b",
+      "relation": "has_concept"
+    },
+    {
+      "from": "taxonomia:neurociencia",
+      "to": "concepto:62967ebe-c841-4a54-b181-9ed8dcab956b",
+      "relation": "classifies"
+    },
+    {
+      "from": "diccionario:neurociencia:ontoneuro",
+      "to": "concepto:e8aac3bb-52f2-4742-9dc0-f8c09a4889bd",
+      "relation": "has_concept"
+    },
+    {
+      "from": "taxonomia:neurociencia",
+      "to": "concepto:e8aac3bb-52f2-4742-9dc0-f8c09a4889bd",
+      "relation": "classifies"
+    },
+    {
+      "from": "diccionario:neurociencia:ontoneuro",
+      "to": "concepto:b0c8c193-f420-4247-9e50-60989ae98046",
+      "relation": "has_concept"
+    },
+    {
+      "from": "taxonomia:neurociencia",
+      "to": "concepto:b0c8c193-f420-4247-9e50-60989ae98046",
+      "relation": "classifies"
+    },
+    {
+      "from": "diccionario:neurociencia:ontoneuro",
+      "to": "concepto:e04ea714-bb49-42ad-a93e-59c9f48cdebf",
+      "relation": "has_concept"
+    },
+    {
+      "from": "taxonomia:neurociencia",
+      "to": "concepto:e04ea714-bb49-42ad-a93e-59c9f48cdebf",
+      "relation": "classifies"
+    },
+    {
+      "from": "diccionario:neurociencia:ontoneuro",
+      "to": "concepto:669dfaae-7180-4972-bad7-da4e474c3b15",
+      "relation": "has_concept"
+    },
+    {
+      "from": "taxonomia:neurociencia",
+      "to": "concepto:669dfaae-7180-4972-bad7-da4e474c3b15",
+      "relation": "classifies"
+    },
+    {
+      "from": "diccionario:neurociencia:ontoneuro",
+      "to": "concepto:8a66db7c-c3df-40ca-a816-d02b1c51286e",
+      "relation": "has_concept"
+    },
+    {
+      "from": "taxonomia:neurociencia",
+      "to": "concepto:8a66db7c-c3df-40ca-a816-d02b1c51286e",
+      "relation": "classifies"
+    },
+    {
+      "from": "diccionario:neurociencia:ontoneuro",
+      "to": "concepto:3247c6dd-f5f7-419e-8267-2766f1b85e9a",
+      "relation": "has_concept"
+    },
+    {
+      "from": "taxonomia:neurociencia",
+      "to": "concepto:3247c6dd-f5f7-419e-8267-2766f1b85e9a",
+      "relation": "classifies"
+    },
+    {
+      "from": "diccionario:neurociencia:ontoneuro",
+      "to": "concepto:5eab4c64-97c4-4f3e-810a-34910eab52c7",
+      "relation": "has_concept"
+    },
+    {
+      "from": "taxonomia:neurociencia",
+      "to": "concepto:5eab4c64-97c4-4f3e-810a-34910eab52c7",
+      "relation": "classifies"
+    },
+    {
+      "from": "diccionario:neurociencia:ontoneuro",
+      "to": "concepto:35bf72ae-b751-4436-b9d9-c2cba2a28a94",
+      "relation": "has_concept"
+    },
+    {
+      "from": "taxonomia:neurociencia",
+      "to": "concepto:35bf72ae-b751-4436-b9d9-c2cba2a28a94",
+      "relation": "classifies"
+    },
+    {
+      "from": "diccionario:neurociencia:ontoneuro",
+      "to": "concepto:4b600462-5426-4aa0-9920-7d4bfe16f05e",
+      "relation": "has_concept"
+    },
+    {
+      "from": "taxonomia:neurociencia",
+      "to": "concepto:4b600462-5426-4aa0-9920-7d4bfe16f05e",
+      "relation": "classifies"
+    },
+    {
+      "from": "diccionario:neurociencia:ontoneuro",
+      "to": "concepto:582b0ea4-f45b-460c-9560-a9ba3fcfdce0",
+      "relation": "has_concept"
+    },
+    {
+      "from": "taxonomia:neurociencia",
+      "to": "concepto:582b0ea4-f45b-460c-9560-a9ba3fcfdce0",
+      "relation": "classifies"
+    },
+    {
+      "from": "diccionario:neurociencia:ontoneuro",
+      "to": "concepto:470aaffc-aa6d-4a51-83d3-b86918a58545",
+      "relation": "has_concept"
+    },
+    {
+      "from": "taxonomia:neurociencia",
+      "to": "concepto:470aaffc-aa6d-4a51-83d3-b86918a58545",
+      "relation": "classifies"
+    },
+    {
+      "from": "diccionario:neurociencia:ontoneuro",
+      "to": "concepto:fa7c4f77-ce55-403a-a4ae-1cd198f45651",
+      "relation": "has_concept"
+    },
+    {
+      "from": "taxonomia:neurociencia",
+      "to": "concepto:fa7c4f77-ce55-403a-a4ae-1cd198f45651",
+      "relation": "classifies"
+    },
+    {
+      "from": "diccionario:neurociencia:ontoneuro",
+      "to": "concepto:03943edc-12b8-498c-80d2-c4ee5b7e53aa",
+      "relation": "has_concept"
+    },
+    {
+      "from": "taxonomia:neurociencia",
+      "to": "concepto:03943edc-12b8-498c-80d2-c4ee5b7e53aa",
+      "relation": "classifies"
+    },
+    {
+      "from": "centro:radio-micelio",
+      "to": "taxonomia:quimica",
+      "relation": "has_taxonomy"
+    },
+    {
+      "from": "diccionario:quimica:ontoquim",
+      "to": "concepto:002aa7e7-013a-409d-b1ad-e4ef4edf3eb5",
+      "relation": "has_concept"
+    },
+    {
+      "from": "taxonomia:quimica",
+      "to": "concepto:002aa7e7-013a-409d-b1ad-e4ef4edf3eb5",
+      "relation": "classifies"
+    },
+    {
+      "from": "diccionario:quimica:ontoquim",
+      "to": "concepto:814bea65-2449-4c06-914d-b78015e75dc5",
+      "relation": "has_concept"
+    },
+    {
+      "from": "taxonomia:quimica",
+      "to": "concepto:814bea65-2449-4c06-914d-b78015e75dc5",
+      "relation": "classifies"
+    },
+    {
+      "from": "diccionario:quimica:ontoquim",
+      "to": "concepto:38dfe4cc-8f96-4aeb-81ea-830763ff0235",
+      "relation": "has_concept"
+    },
+    {
+      "from": "taxonomia:quimica",
+      "to": "concepto:38dfe4cc-8f96-4aeb-81ea-830763ff0235",
+      "relation": "classifies"
+    },
+    {
+      "from": "diccionario:quimica:ontoquim",
+      "to": "concepto:b0d0f3d2-d654-4b33-b536-12c21e1b1d98",
+      "relation": "has_concept"
+    },
+    {
+      "from": "taxonomia:quimica",
+      "to": "concepto:b0d0f3d2-d654-4b33-b536-12c21e1b1d98",
+      "relation": "classifies"
+    },
+    {
+      "from": "diccionario:quimica:ontoquim",
+      "to": "concepto:afb7421a-3c59-47bb-9e2e-1e948d6f45e4",
+      "relation": "has_concept"
+    },
+    {
+      "from": "taxonomia:quimica",
+      "to": "concepto:afb7421a-3c59-47bb-9e2e-1e948d6f45e4",
+      "relation": "classifies"
+    },
+    {
+      "from": "diccionario:quimica:ontoquim",
+      "to": "concepto:70275694-2c00-4f93-bff7-83efaf8501c4",
+      "relation": "has_concept"
+    },
+    {
+      "from": "taxonomia:quimica",
+      "to": "concepto:70275694-2c00-4f93-bff7-83efaf8501c4",
+      "relation": "classifies"
+    },
+    {
+      "from": "diccionario:quimica:ontoquim",
+      "to": "concepto:70d3e12c-3706-4e4f-ab5e-b87951b53dc8",
+      "relation": "has_concept"
+    },
+    {
+      "from": "taxonomia:quimica",
+      "to": "concepto:70d3e12c-3706-4e4f-ab5e-b87951b53dc8",
+      "relation": "classifies"
+    },
+    {
+      "from": "centro:radio-micelio",
+      "to": "taxonomia:tradiciones",
+      "relation": "has_taxonomy"
+    },
+    {
+      "from": "concepto:4facef73-8e40-4d12-9254-928109288133",
+      "to": "concepto:5f3eb372-8b53-476b-90bb-f43a2acd6f18",
+      "relation": "partOf"
+    },
+    {
+      "from": "concepto:46692a26-7cee-4979-bbd7-84a71ad3dfa6",
+      "to": "concepto:cd85b279-3a05-448c-b8aa-792d51e86afa",
+      "relation": "narrower"
+    },
+    {
+      "from": "concepto:46692a26-7cee-4979-bbd7-84a71ad3dfa6",
+      "to": "concepto:20dc7016-50ef-430c-90ea-946fe7396c3c",
+      "relation": "related"
+    },
+    {
+      "from": "concepto:cd85b279-3a05-448c-b8aa-792d51e86afa",
+      "to": "concepto:20dc7016-50ef-430c-90ea-946fe7396c3c",
+      "relation": "narrower"
+    },
+    {
+      "from": "concepto:20dc7016-50ef-430c-90ea-946fe7396c3c",
+      "to": "concepto:045a0ba0-f50b-43ca-8ae4-c7ca7d543621",
+      "relation": "related"
+    },
+    {
+      "from": "concepto:045a0ba0-f50b-43ca-8ae4-c7ca7d543621",
+      "to": "concepto:9b60d67b-2e40-4a35-a7da-10b2bb41766b",
+      "relation": "related"
+    },
+    {
+      "from": "concepto:5f3eb372-8b53-476b-90bb-f43a2acd6f18",
+      "to": "concepto:9b60d67b-2e40-4a35-a7da-10b2bb41766b",
+      "relation": "partOf"
+    },
+    {
+      "from": "concepto:dd302279-edcf-482b-bf9c-bd3e2248e27c",
+      "to": "concepto:24c77e74-700d-4708-bd6c-48ec66f59de3",
+      "relation": "related"
+    },
+    {
+      "from": "concepto:9e8ac6e1-4b35-44d3-9923-a33c984cc84f",
+      "to": "concepto:24c77e74-700d-4708-bd6c-48ec66f59de3",
+      "relation": "related"
+    },
+    {
+      "from": "concepto:dfaf9618-a422-4291-83db-4a08d3bf5862",
+      "to": "concepto:9e8ac6e1-4b35-44d3-9923-a33c984cc84f",
+      "relation": "narrower"
+    },
+    {
+      "from": "concepto:dfaf9618-a422-4291-83db-4a08d3bf5862",
+      "to": "concepto:c6e8009a-0b1d-4537-b8ce-fd87bcf93778",
+      "relation": "related"
+    },
+    {
+      "from": "concepto:f86c98bd-18ce-4b23-87a7-6b441efa1530",
+      "to": "concepto:1446f7f5-f229-4b7c-ad44-089a84c9bea1",
+      "relation": "related"
+    },
+    {
+      "from": "concepto:b15fb10d-cb06-4ef2-b0d6-c0a02a3ca019",
+      "to": "concepto:13392b5b-d95c-41db-b83d-019e5fbc8b8e",
+      "relation": "related"
+    },
+    {
+      "from": "concepto:afb7421a-3c59-47bb-9e2e-1e948d6f45e4",
+      "to": "concepto:38dfe4cc-8f96-4aeb-81ea-830763ff0235",
+      "relation": "related"
+    },
+    {
+      "from": "concepto:afb7421a-3c59-47bb-9e2e-1e948d6f45e4",
+      "to": "concepto:70d3e12c-3706-4e4f-ab5e-b87951b53dc8",
+      "relation": "related"
+    },
+    {
+      "from": "concepto:afb7421a-3c59-47bb-9e2e-1e948d6f45e4",
+      "to": "concepto:70275694-2c00-4f93-bff7-83efaf8501c4",
+      "relation": "related"
+    },
+    {
+      "from": "concepto:afb7421a-3c59-47bb-9e2e-1e948d6f45e4",
+      "to": "concepto:b0d0f3d2-d654-4b33-b536-12c21e1b1d98",
+      "relation": "related"
+    },
+    {
+      "from": "concepto:70d3e12c-3706-4e4f-ab5e-b87951b53dc8",
+      "to": "concepto:afb7421a-3c59-47bb-9e2e-1e948d6f45e4",
+      "relation": "narrower"
+    },
+    {
+      "from": "concepto:70275694-2c00-4f93-bff7-83efaf8501c4",
+      "to": "concepto:afb7421a-3c59-47bb-9e2e-1e948d6f45e4",
+      "relation": "narrower"
+    },
+    {
+      "from": "concepto:190df272-84c9-473e-9a26-7150e6c4f91f",
+      "to": "concepto:dd7b8987-9957-4841-80e4-b1694b062083",
+      "relation": "contiene"
+    },
+    {
+      "from": "concepto:190df272-84c9-473e-9a26-7150e6c4f91f",
+      "to": "concepto:69d8690e-f546-441f-9efb-9b2e71a1b808",
+      "relation": "contiene"
+    },
+    {
+      "from": "concepto:190df272-84c9-473e-9a26-7150e6c4f91f",
+      "to": "concepto:d156c583-181b-4804-a9c3-78609ce7af33",
+      "relation": "contiene"
+    },
+    {
+      "from": "concepto:dd7b8987-9957-4841-80e4-b1694b062083",
+      "to": "concepto:69d8690e-f546-441f-9efb-9b2e71a1b808",
+      "relation": "participa_en"
+    },
+    {
+      "from": "concepto:69d8690e-f546-441f-9efb-9b2e71a1b808",
+      "to": "concepto:d156c583-181b-4804-a9c3-78609ce7af33",
+      "relation": "ocurre_en"
+    },
+    {
+      "from": "concepto:835a68b0-31cd-4a04-8e2e-5c20732d8c90",
+      "to": "concepto:190df272-84c9-473e-9a26-7150e6c4f91f",
+      "relation": "related"
+    },
+    {
+      "from": "concepto:ea8610c9-f991-4679-bede-05ddaf9d05ec",
+      "to": "concepto:0b9f1989-65dc-4d24-b548-f4bb858e8fb5",
+      "relation": "related"
+    },
+    {
+      "from": "concepto:aab6e8ca-ad6d-42d4-b6ca-77dc04f1cf33",
+      "to": "concepto:a7e8fb6e-2b94-4296-a5e2-30b329bd4d1b",
+      "relation": "related"
+    },
+    {
+      "from": "diccionario:lengua:quijote",
+      "to": "concepto:0f65c47e-1464-4681-ab5b-86f59ae2416b",
+      "relation": "has_concept"
+    },
+    {
+      "from": "concepto:0f65c47e-1464-4681-ab5b-86f59ae2416b",
+      "to": "concepto:c8709797-34e9-4731-b96e-f839b682c404",
+      "relation": "contiene"
+    },
+    {
+      "from": "concepto:0f65c47e-1464-4681-ab5b-86f59ae2416b",
+      "to": "concepto:0ec78b66-169f-4aaf-b072-c5ba19313937",
+      "relation": "contiene"
+    },
+    {
+      "from": "concepto:0f65c47e-1464-4681-ab5b-86f59ae2416b",
+      "to": "concepto:1e078446-8184-4c08-b1ce-c97aa76e6088",
+      "relation": "contiene"
+    },
+    {
+      "from": "concepto:0ec78b66-169f-4aaf-b072-c5ba19313937",
+      "to": "concepto:c8709797-34e9-4731-b96e-f839b682c404",
+      "relation": "escudero_de"
+    },
+    {
+      "from": "concepto:c8709797-34e9-4731-b96e-f839b682c404",
+      "to": "concepto:93045e4d-ddc8-4714-8f6e-224955485ab0",
+      "relation": "interpreted_as"
+    },
+    {
+      "from": "concepto:c8709797-34e9-4731-b96e-f839b682c404",
+      "to": "concepto:ea8610c9-f991-4679-bede-05ddaf9d05ec",
+      "relation": "interpreted_as"
+    },
+    {
+      "from": "centro:radio-micelio",
+      "to": "proyecto:PFC-2",
+      "relation": "has_project"
+    },
+    {
+      "from": "proyecto:PFC-2",
+      "to": "marcador:dfbc0bbb-4acb-44b9-ad17-f526a9f2be62",
+      "relation": "marks"
+    },
+    {
+      "from": "marcador:dfbc0bbb-4acb-44b9-ad17-f526a9f2be62",
+      "to": "concepto:11811f3a-0add-4873-9f8a-cfcc1ad0c08d",
+      "relation": "references_concept"
+    },
+    {
+      "from": "proyecto:PFC-2",
+      "to": "asignatura:musica",
+      "relation": "touches_subject"
+    },
+    {
+      "from": "proyecto:PFC-2",
+      "to": "marcador:bae58123-86d4-4e50-9a4b-95d24324011f",
+      "relation": "marks"
+    },
+    {
+      "from": "marcador:bae58123-86d4-4e50-9a4b-95d24324011f",
+      "to": "concepto:20dc7016-50ef-430c-90ea-946fe7396c3c",
+      "relation": "references_concept"
+    },
+    {
+      "from": "proyecto:PFC-2",
+      "to": "asignatura:micologia",
+      "relation": "touches_subject"
+    },
+    {
+      "from": "proyecto:PFC-2",
+      "to": "marcador:4b6eb747-3b3e-4dfe-b7aa-17a9bdc8eef1",
+      "relation": "marks"
+    },
+    {
+      "from": "marcador:4b6eb747-3b3e-4dfe-b7aa-17a9bdc8eef1",
+      "to": "concepto:5f3eb372-8b53-476b-90bb-f43a2acd6f18",
+      "relation": "references_concept"
+    },
+    {
+      "from": "proyecto:PFC-2",
+      "to": "asignatura:micologia",
+      "relation": "touches_subject"
+    },
+    {
+      "from": "proyecto:PFC-2",
+      "to": "marcador:b8d1403b-ed39-424b-ae36-a7a955ea74f4",
+      "relation": "marks"
+    },
+    {
+      "from": "marcador:b8d1403b-ed39-424b-ae36-a7a955ea74f4",
+      "to": "concepto:9b60d67b-2e40-4a35-a7da-10b2bb41766b",
+      "relation": "references_concept"
+    },
+    {
+      "from": "proyecto:PFC-2",
+      "to": "asignatura:micologia",
+      "relation": "touches_subject"
+    },
+    {
+      "from": "proyecto:PFC-2",
+      "to": "marcador:0fc914ec-d111-4ef1-b341-2dc8d110a739",
+      "relation": "marks"
+    },
+    {
+      "from": "marcador:0fc914ec-d111-4ef1-b341-2dc8d110a739",
+      "to": "concepto:e8a1d10b-2435-4072-8e70-04d410a4a7e7",
+      "relation": "references_concept"
+    },
+    {
+      "from": "proyecto:PFC-2",
+      "to": "asignatura:ciencias-naturales",
+      "relation": "touches_subject"
+    },
+    {
+      "from": "proyecto:PFC-2",
+      "to": "actividad:PFC-2:observar-hongos",
+      "relation": "has_activity"
+    },
+    {
+      "from": "actividad:PFC-2:observar-hongos",
+      "to": "resultado:5280f29c-695b-4fca-9a03-6d9deb398ead",
+      "relation": "produces"
+    },
+    {
+      "from": "centro:radio-micelio",
+      "to": "proyecto:PFC-1",
+      "relation": "has_project"
+    },
+    {
+      "from": "proyecto:PFC-1",
+      "to": "marcador:0de0eca0-d35e-4a61-9933-2e84aeeaf334",
+      "relation": "marks"
+    },
+    {
+      "from": "marcador:0de0eca0-d35e-4a61-9933-2e84aeeaf334",
+      "to": "concepto:c4f142ea-1b6e-40ff-b1eb-9a25fa5675c5",
+      "relation": "references_concept"
+    },
+    {
+      "from": "proyecto:PFC-1",
+      "to": "asignatura:musica",
+      "relation": "touches_subject"
+    },
+    {
+      "from": "proyecto:PFC-1",
+      "to": "marcador:063b38eb-006f-4bb1-a386-5650dc63a470",
+      "relation": "marks"
+    },
+    {
+      "from": "marcador:063b38eb-006f-4bb1-a386-5650dc63a470",
+      "to": "concepto:3c5a9fe0-ee24-49c0-9e30-23db4dfba74a",
+      "relation": "references_concept"
+    },
+    {
+      "from": "proyecto:PFC-1",
+      "to": "asignatura:lengua",
+      "relation": "touches_subject"
+    },
+    {
+      "from": "proyecto:PFC-1",
+      "to": "marcador:22a872e7-7100-48b8-a476-cf3d997f697c",
+      "relation": "marks"
+    },
+    {
+      "from": "marcador:22a872e7-7100-48b8-a476-cf3d997f697c",
+      "to": "concepto:dfaf9618-a422-4291-83db-4a08d3bf5862",
+      "relation": "references_concept"
+    },
+    {
+      "from": "proyecto:PFC-1",
+      "to": "asignatura:emociones",
+      "relation": "touches_subject"
+    },
+    {
+      "from": "proyecto:PFC-1",
+      "to": "marcador:c7e7f9cb-44d8-4f97-bb8d-cb6f69fe0805",
+      "relation": "marks"
+    },
+    {
+      "from": "marcador:c7e7f9cb-44d8-4f97-bb8d-cb6f69fe0805",
+      "to": "concepto:9e8ac6e1-4b35-44d3-9923-a33c984cc84f",
+      "relation": "references_concept"
+    },
+    {
+      "from": "proyecto:PFC-1",
+      "to": "asignatura:emociones",
+      "relation": "touches_subject"
+    },
+    {
+      "from": "proyecto:PFC-1",
+      "to": "marcador:a340076f-1d2e-4cf4-9af0-05deb1f5fe44",
+      "relation": "marks"
+    },
+    {
+      "from": "marcador:a340076f-1d2e-4cf4-9af0-05deb1f5fe44",
+      "to": "concepto:dd302279-edcf-482b-bf9c-bd3e2248e27c",
+      "relation": "references_concept"
+    },
+    {
+      "from": "proyecto:PFC-1",
+      "to": "asignatura:emociones",
+      "relation": "touches_subject"
+    },
+    {
+      "from": "proyecto:PFC-1",
+      "to": "actividad:PFC-1:analizar-poema",
+      "relation": "has_activity"
+    },
+    {
+      "from": "actividad:PFC-1:analizar-poema",
+      "to": "resultado:8b3801e5-f68e-4618-b219-abd2198dd6b9",
+      "relation": "produces"
+    },
+    {
+      "from": "proyecto:PFC-1",
+      "to": "actividad:PFC-1:observar-hongos",
+      "relation": "has_activity"
+    },
+    {
+      "from": "actividad:PFC-1:observar-hongos",
+      "to": "resultado:5280f29c-695b-4fca-9a03-6d9deb398ead",
+      "relation": "produces"
+    },
+    {
+      "from": "centro:radio-micelio",
+      "to": "proyecto:PFC-3",
+      "relation": "has_project"
+    },
+    {
+      "from": "proyecto:PFC-3",
+      "to": "marcador:94a058fc-39a3-4bba-b08d-06b5328639e8",
+      "relation": "marks"
+    },
+    {
+      "from": "marcador:94a058fc-39a3-4bba-b08d-06b5328639e8",
+      "to": "concepto:94d0e2ac-99a8-45e0-8911-1d52b4506579",
+      "relation": "references_concept"
+    },
+    {
+      "from": "proyecto:PFC-3",
+      "to": "asignatura:historia",
+      "relation": "touches_subject"
+    },
+    {
+      "from": "proyecto:PFC-3",
+      "to": "marcador:5a23c4df-3865-4c87-a88f-73184afa6d41",
+      "relation": "marks"
+    },
+    {
+      "from": "marcador:5a23c4df-3865-4c87-a88f-73184afa6d41",
+      "to": "concepto:ee209cf7-2de4-48fa-be5c-4d2eeaa6ce67",
+      "relation": "references_concept"
+    },
+    {
+      "from": "proyecto:PFC-3",
+      "to": "asignatura:geografia",
+      "relation": "touches_subject"
+    },
+    {
+      "from": "proyecto:PFC-3",
+      "to": "marcador:7e7ac058-cb51-4782-8f88-7af87737ca8e",
+      "relation": "marks"
+    },
+    {
+      "from": "marcador:7e7ac058-cb51-4782-8f88-7af87737ca8e",
+      "to": "concepto:44f023d7-8bb9-4a5e-9d52-5301f730e489",
+      "relation": "references_concept"
+    },
+    {
+      "from": "proyecto:PFC-3",
+      "to": "asignatura:geografia",
+      "relation": "touches_subject"
+    },
+    {
+      "from": "proyecto:PFC-3",
+      "to": "actividad:PFC-3:mapa-pueblo",
+      "relation": "has_activity"
+    },
+    {
+      "from": "actividad:PFC-3:mapa-pueblo",
+      "to": "resultado:d6dd6f6d-3c09-4339-93ea-0d64a250befd",
+      "relation": "produces"
+    }
+  ]
+}

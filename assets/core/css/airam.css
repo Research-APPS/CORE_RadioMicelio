@@ -1,0 +1,425 @@
+.taxonomy-airam-btn {
+  flex-shrink: 0;
+  margin-left: 0.35rem;
+  padding: 0.1rem 0.35rem;
+  font-size: 0.75rem;
+  line-height: 1;
+  color: var(--accent);
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  cursor: pointer;
+  opacity: 0.55;
+}
+
+.taxonomy-airam-btn:hover {
+  opacity: 1;
+  border-color: #c5d9ee;
+  background: #f0f6fc;
+}
+
+.taxonomy-airam-queue-btn {
+  flex-shrink: 0;
+  margin-left: 0.15rem;
+  padding: 0.1rem 0.3rem;
+  font-size: 0.8rem;
+  line-height: 1;
+  color: var(--muted);
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  cursor: pointer;
+  opacity: 0.5;
+}
+
+.taxonomy-airam-queue-btn:hover,
+.taxonomy-airam-queue-btn--active {
+  opacity: 1;
+  color: var(--accent);
+  border-color: #c5d9ee;
+  background: #f0f6fc;
+}
+
+.taxonomy-tree-btn--airam {
+  border-color: var(--accent);
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.airam-panel__builder {
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px dashed var(--border);
+}
+
+.airam-panel__builder-title {
+  margin: 0 0 0.35rem;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+}
+
+.airam-panel__queue {
+  list-style: none;
+  margin: 0 0 0.5rem;
+  padding: 0;
+  font-size: 0.85rem;
+}
+
+.airam-panel__queue-empty {
+  color: var(--muted);
+  font-size: 0.8rem;
+}
+
+.airam-panel__queue-item,
+.airam-panel__class-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding: 0.2rem 0;
+}
+
+.airam-panel__queue-remove,
+.airam-panel__class-remove {
+  border: none;
+  background: none;
+  color: var(--muted);
+  cursor: pointer;
+  font-size: 1rem;
+  line-height: 1;
+  padding: 0 0.25rem;
+}
+
+.airam-panel__builder-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.airam-panel__btn--sm {
+  padding: 0.3rem 0.6rem;
+  font-size: 0.78rem;
+}
+
+.airam-panel__classes {
+  list-style: none;
+  margin: 0 0 0.5rem;
+  padding: 0;
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+.airam-panel__classes:not([hidden])::before {
+  content: "Clases en este temario:";
+  display: block;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.25rem;
+}
+
+.taxonomy-node__leaf {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+}
+
+.taxonomy-node__summary {
+  flex-wrap: wrap;
+}
+
+.airam-panel {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: min(22rem, 92vw);
+  height: 100vh;
+  z-index: 200;
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  border-left: 1px solid var(--border);
+  box-shadow: -4px 0 24px rgba(0, 0, 0, 0.08);
+}
+
+.airam-panel[hidden] {
+  display: none !important;
+}
+
+.airam-panel__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.85rem 1rem;
+  border-bottom: 1px solid var(--border);
+  background: #f5f9fc;
+}
+
+.airam-panel__title {
+  margin: 0;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+}
+
+.airam-panel__close {
+  border: none;
+  background: none;
+  font-size: 1.35rem;
+  line-height: 1;
+  cursor: pointer;
+  color: var(--muted);
+}
+
+.airam-panel__meta {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.85rem;
+}
+
+.airam-panel__session-title {
+  margin: 0 0 0.5rem;
+  font-weight: 600;
+}
+
+.airam-panel__granularity-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--muted);
+}
+
+.airam-panel__granularity-label select {
+  flex: 1;
+  font-size: 0.85rem;
+  padding: 0.25rem 0.4rem;
+}
+
+.airam-panel__body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1rem;
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.airam-panel__body p {
+  margin: 0 0 0.85rem;
+}
+
+.airam-panel__concept-btn {
+  display: inline;
+  padding: 0;
+  border: none;
+  background: none;
+  color: var(--accent);
+  text-decoration: underline;
+  cursor: pointer;
+  font: inherit;
+}
+
+.airam-panel__progress {
+  font-size: 0.75rem;
+  color: var(--muted);
+  margin-bottom: 0.75rem;
+}
+
+.airam-panel__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  border-top: 1px solid var(--border);
+}
+
+.airam-panel__btn {
+  padding: 0.45rem 0.85rem;
+  font-size: 0.85rem;
+  border: 1px solid var(--accent);
+  border-radius: 6px;
+  background: var(--accent);
+  color: #fff;
+  cursor: pointer;
+}
+
+.airam-panel__btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.airam-panel__btn--ghost {
+  background: #fff;
+  color: var(--accent);
+}
+
+.airam-panel__footer {
+  margin: 0;
+  padding: 0.65rem 1rem 1rem;
+  font-size: 0.75rem;
+  color: var(--muted);
+  border-top: 1px solid var(--border);
+  background: #fafaf9;
+}
+
+.airam-dialog {
+  position: fixed;
+  inset: 0;
+  z-index: 300;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.35);
+}
+
+.airam-dialog[hidden] {
+  display: none !important;
+}
+
+.airam-dialog__box {
+  background: #fff;
+  padding: 1.25rem;
+  border-radius: var(--radius);
+  max-width: 22rem;
+  margin: 1rem;
+  box-shadow: var(--shadow);
+}
+
+.airam-dialog__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.airam-panel__saved {
+  color: #2d5a2e;
+  font-size: 0.8rem;
+  margin-top: 0.35rem;
+}
+
+.airam-workspace {
+  position: fixed;
+  right: 1rem;
+  bottom: 1rem;
+  z-index: 40;
+  width: min(18rem, calc(100vw - 2rem));
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  font-size: 0.85rem;
+}
+
+.airam-workspace__header {
+  padding: 0.35rem 0.5rem;
+}
+
+.airam-workspace__toggle {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding: 0.45rem 0.55rem;
+  border: none;
+  border-radius: 6px;
+  background: #f0f6fc;
+  color: var(--accent);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.airam-workspace__count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.35rem;
+  height: 1.35rem;
+  padding: 0 0.35rem;
+  border-radius: 999px;
+  background: var(--accent);
+  color: #fff;
+  font-size: 0.72rem;
+}
+
+.airam-workspace__body {
+  padding: 0 0.65rem 0.65rem;
+  border-top: 1px dashed var(--border);
+}
+
+.airam-workspace__hint {
+  margin: 0.5rem 0 0.35rem;
+  color: var(--muted);
+  font-size: 0.75rem;
+}
+
+.airam-workspace__project {
+  margin: 0 0 0.35rem;
+  font-size: 0.78rem;
+  color: #2d5a2e;
+}
+
+.airam-workspace__frame {
+  list-style: none;
+  margin: 0 0 0.5rem;
+  padding: 0;
+  max-height: 10rem;
+  overflow-y: auto;
+}
+
+.airam-workspace__item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.35rem;
+  padding: 0.2rem 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.airam-workspace__link {
+  color: inherit;
+  text-decoration: none;
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.airam-workspace__link:hover {
+  color: var(--accent);
+}
+
+.airam-workspace__weight {
+  flex-shrink: 0;
+  font-size: 0.72rem;
+  color: var(--muted);
+}
+
+.airam-workspace__empty {
+  color: var(--muted);
+  font-size: 0.78rem;
+  padding: 0.25rem 0;
+}
+
+.airam-workspace__project-label {
+  display: block;
+  font-size: 0.75rem;
+  margin-bottom: 0.35rem;
+}
+
+.airam-workspace__project-label select {
+  display: block;
+  width: 100%;
+  margin-top: 0.2rem;
+}
+
+.airam-workspace__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}

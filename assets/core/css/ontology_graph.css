@@ -1,0 +1,154 @@
+.ontology-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin: 1rem 0;
+}
+
+.ontology-legend__item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+.ontology-legend__item::before {
+  content: "";
+  width: 0.85rem;
+  height: 0.85rem;
+  border-radius: 3px;
+}
+
+.ontology-legend__item--class::before {
+  background: #4ec9b0;
+}
+
+.ontology-legend__item--property::before {
+  background: #9cdcfe;
+}
+
+.ontology-legend__item--relation::before {
+  background: #c586c0;
+}
+
+.ontology-legend__item--project::before {
+  background: #dcdcaa;
+}
+
+.ontology-synth-toolbar {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 0.5rem;
+}
+
+.ontology-synth-btn {
+  border: 1px solid #3c3c3c;
+  background: #2d2d2d;
+  color: #d4d4d4;
+  font-size: 0.75rem;
+  padding: 0.3rem 0.65rem;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.ontology-synth-btn:hover {
+  background: #3c3c3c;
+}
+
+.ontology-synth {
+  background: #1e1e1e;
+  border: 1px solid #3c3c3c;
+  border-radius: 8px;
+  overflow: auto;
+  max-height: 75vh;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+}
+
+.ontology-synth__pre {
+  margin: 0;
+  padding: 1.1rem 1.25rem;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-size: 0.84rem;
+  line-height: 1.65;
+  tab-size: 2;
+  color: #d4d4d4;
+  white-space: pre;
+}
+
+.ontology-synth__pre code {
+  font: inherit;
+}
+
+.syn-kw {
+  color: #c586c0;
+}
+
+.syn-project {
+  color: #dcdcaa;
+  font-weight: 600;
+}
+
+.syn-class {
+  color: #4ec9b0;
+  font-weight: 600;
+}
+
+.syn-class-link {
+  color: #4ec9b0;
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-color: rgba(78, 201, 176, 0.45);
+}
+
+.syn-class-link:hover {
+  color: #6ee7d1;
+}
+
+.syn-class-inferred {
+  opacity: 0.72;
+  font-style: italic;
+}
+
+.syn-prop-key {
+  color: #9cdcfe;
+}
+
+.syn-prop-val {
+  color: #ce9178;
+}
+
+.syn-rel-type {
+  color: #c586c0;
+}
+
+.syn-arrow {
+  color: #808080;
+}
+
+.syn-tag {
+  color: #6a9955;
+}
+
+.syn-comment {
+  color: #6a9955;
+  font-style: italic;
+}
+
+.syn-muted {
+  color: #808080;
+}
+
+.syn-punct {
+  color: #d4d4d4;
+}
+
+.ontology-synth-footer {
+  margin-top: 0.75rem;
+  font-size: 0.875rem;
+}
+
+.ontology-empty {
+  color: #888;
+  font-size: 0.9rem;
+}
